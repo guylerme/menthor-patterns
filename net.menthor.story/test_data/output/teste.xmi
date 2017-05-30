@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ASCII"?>
+<stories:Story xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stories="http://stories.bernardofbbraga.com.br">
+  <elements xsi:type="stories:Node" label="Node 1"/>
+  <elements xsi:type="stories:Node" label="Node 2">
+    <states label="State 1"/>
+  </elements>
+  <elements xsi:type="stories:World" label="World 0" next="teste.xmi#World 1"/>
+  <elements xsi:type="stories:World" label="World 1" next="teste.xmi#World 2" prev="teste.xmi#World 0"/>
+  <elements xsi:type="stories:World" label="World 2" prev="teste.xmi#World 1"/>
+</stories:Story>
