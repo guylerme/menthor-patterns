@@ -218,6 +218,7 @@ public class MenuBarUI extends GenericMenuBar {
 		evaluation.addSeparator();
 		createMenuItem(evaluation, "Visual Simulation (Alloy)", CommandType.ALLOY_SETTINGS, background);		
 		evaluation.addSeparator();
+		createMenuItem(evaluation, "OntoUML Patterns", CommandType.SEARCH_FOR_PATTERNS, background);
 		createMenuItem(evaluation, "Semantic Anti-Patterns", CommandType.SEARCH_FOR_ANTIPATTERNS, background);
 		createMenuItem(evaluation, "Parthood Transitivities", CommandType.VALIDATE_PARTHOOD_TRANSITIVITY, background);
 	}

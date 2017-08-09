@@ -31,6 +31,7 @@ import net.menthor.editor.v2.managers.GlossaryManager;
 import net.menthor.editor.v2.managers.HelpManager;
 import net.menthor.editor.v2.managers.OwlFeature;
 import net.menthor.editor.v2.managers.ParthoodFeature;
+import net.menthor.editor.v2.managers.PatternManager;
 import net.menthor.editor.v2.managers.SbvrFeature;
 import net.menthor.editor.v2.managers.StatisticsManager;
 import net.menthor.editor.v2.ui.controller.CursorUIController;
@@ -106,7 +107,9 @@ public class CommandListener extends AbstractCommandListener {
 			}else if(methodcall.getMethod().getDeclaringClass() == AlloyFeature.class){
 				return methodcall.call(AlloyFeature.get());
 			}else if(methodcall.getMethod().getDeclaringClass() == AntiPatternManager.class){
-				return methodcall.call(AntiPatternManager.get());				
+				return methodcall.call(AntiPatternManager.get());
+			} else if (methodcall.getMethod().getDeclaringClass() == PatternManager.class){
+				return methodcall.call(PatternManager.get());	
 			}else if(methodcall.getMethod().getDeclaringClass() == ChangeCommander.class){
 				return methodcall.call(ChangeCommander.get());
 			}else if(methodcall.getMethod().getDeclaringClass() == ClipboardCommanderMode.class){

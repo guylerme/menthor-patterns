@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="org.eclipse.swt"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/net.menthor.ontouml2sbvr"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/net.menthor.ontouml2simpleowl"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/net.menthor.xmi2ontouml"/>
@@ -65,5 +60,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/net.menthor.common/lib/eclipse-kepler-sr1/org.apache.commons.io_2.2.0.v201405211200.jar"/>
 	<classpathentry kind="lib" path="/net.menthor.common/lib/apple/rt.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/net.menthor.patternRecognition"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/net.menthor.pattern"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

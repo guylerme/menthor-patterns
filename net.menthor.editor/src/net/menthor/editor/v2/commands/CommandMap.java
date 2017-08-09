@@ -58,6 +58,7 @@ import net.menthor.editor.v2.managers.GlossaryManager;
 import net.menthor.editor.v2.managers.HelpManager;
 import net.menthor.editor.v2.managers.OwlFeature;
 import net.menthor.editor.v2.managers.ParthoodFeature;
+import net.menthor.editor.v2.managers.PatternManager;
 import net.menthor.editor.v2.managers.SbvrFeature;
 import net.menthor.editor.v2.ui.controller.DialogUIController;
 import net.menthor.editor.v2.ui.controller.ExportUIController;
@@ -304,6 +305,7 @@ public class CommandMap {
 			importManager();
 			syntaxManager();
 			antiPatternManager();
+			patternManager();
 			owlManager();
 			sbvrManager();
 			alloyManager();
@@ -531,6 +533,11 @@ public class CommandMap {
 	private void antiPatternManager() throws NoSuchMethodException, SecurityException{
 		cmdMap.put(CommandType.SEARCH_FOR_ANTIPATTERNS, 
 				new MethodCall(AntiPatternManager.class.getMethod("detectAntiPatterns")));
+	}
+	
+	private void patternManager() throws NoSuchMethodException, SecurityException{
+		cmdMap.put(CommandType.SEARCH_FOR_PATTERNS, 
+				new MethodCall(PatternManager.class.getMethod("detectPatterns")));
 	}
 	
 	private void parthoodManager()throws NoSuchMethodException, SecurityException{

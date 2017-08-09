@@ -48,6 +48,7 @@ import net.menthor.editor.v2.OclDocument;
 import net.menthor.editor.v2.OntoumlDiagram;
 import net.menthor.editor.v2.ui.MenthorEditor;
 import net.menthor.editor.v2.util.DirectoryUtil;
+import net.menthor.patternRecognition.PatternList;
 
 /** The UmlProject is serialized to a binary file in order to store the diagrams and its graphics allElements. */
 public class UmlProject implements Serializable {
@@ -63,6 +64,11 @@ public class UmlProject implements Serializable {
 	private transient AntiPatternList antipatterns;	
 	public AntiPatternList getAntipatterns() { return antipatterns; }
 	public void setAntipatterns(AntiPatternList antipatterns) { this.antipatterns = antipatterns; }
+	
+	private transient PatternList patterns;	
+	public PatternList getPatterns() { return patterns; }
+	public void setPatterns(PatternList patterns) { this.patterns = patterns; }
+	
 	
 	private transient List<OclDocument> oclDocList = new ArrayList<OclDocument>();
 	public List<OclDocument> getOclDocList() { return oclDocList; }

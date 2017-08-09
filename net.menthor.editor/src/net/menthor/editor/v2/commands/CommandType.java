@@ -140,6 +140,7 @@ public enum CommandType {
 	GENERATE_SBVR("Transform current project into a SBVR business vocabulary"),
 	GLOSSARY_SETTINGS("Transform current project into Natural Language"),	
 	SEARCH_FOR_ANTIPATTERNS("Search for semantic anti-patterns in current project"),
+	SEARCH_FOR_PATTERNS("Search for Onto-UML patterns in current project"),
 	VALIDATE_PARTHOOD_TRANSITIVITY("Validate the transitivity of parthood relationships"),
 	
 	SELECT_EDITOR("Select tab"),
