@@ -9,7 +9,11 @@ import net.menthor.editor.v2.util.SystemUtil;
 import net.menthor.editor.v2.util.UIFontUtil;
 import net.menthor.editor.v2.util.Util;
 import net.menthor.swt.SWTConfigurer;
-
+/**
+ * 
+ * @author Guylerme
+ *
+ */
 public final class MenthorEditor {
 	
 	/**
