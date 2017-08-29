@@ -59,6 +59,7 @@ import net.menthor.patternRecognition.Pattern;
 import net.menthor.patternRecognition.PatternInfo;
 import net.menthor.patternRecognition.PatternList;
 import net.menthor.patternRecognition.kindPattern.KindPattern;
+import net.menthor.patternRecognition.parthoodStructurePattern.ParthoodStructurePattern;
 import net.menthor.patternRecognition.phasePattern.PhasePattern;
 import net.menthor.patternRecognition.rolePattern.RolePattern;
 import net.menthor.patternRecognition.subKindPattern.SubKindPattern;
@@ -84,6 +85,7 @@ public class PatternSearchDialog extends JDialog {
 	private PatternTask SubKindPatternTask;
 	private PatternTask PhasePatternTask;
 	private PatternTask RolePatternTask;
+	private PatternTask ParthoodStructurePatternTask;
 
 	private ArrayList<PatternTask> allTasks = new ArrayList<PatternTask>();
 
@@ -92,6 +94,7 @@ public class PatternSearchDialog extends JDialog {
 	private JCheckBox cbxSubKindPattern;
 	private JCheckBox cbxPhasePattern;
 	private JCheckBox cbxRolePattern;
+	private JCheckBox cbxParthoodStructurePattern;
 
 	ArrayList<JCheckBox> cbxList = new ArrayList<JCheckBox>();
 
@@ -100,6 +103,7 @@ public class PatternSearchDialog extends JDialog {
 	private JButton lblSubKindPatternIco;
 	private JButton lblPhasePatternIco;
 	private JButton lblRolePatternIco;
+	private JButton lblParthoodStructurePatternIco;
 
 	ArrayList<JButton> lblIcoList = new ArrayList<JButton>();
 
@@ -111,6 +115,7 @@ public class PatternSearchDialog extends JDialog {
 	private JLabel lblSubKindPatternRes;
 	private JLabel lblPhasePatternRes;
 	private JLabel lblRolePatternRes;
+	private JLabel lblParthoodStructurePatternRes;
 
 	ArrayList<JLabel> lblResultList = new ArrayList<JLabel>();
 
@@ -165,6 +170,10 @@ public class PatternSearchDialog extends JDialog {
 
 	public Boolean rolePatternIsSelected() {
 		return cbxRolePattern.isSelected();
+	}
+
+	public Boolean parthoodStructurePatternIsSelected() {
+		return cbxParthoodStructurePattern.isSelected();
 	}
 
 	/**
@@ -383,6 +392,22 @@ public class PatternSearchDialog extends JDialog {
 		lblRolePatternRes.setForeground(Color.BLUE);
 		rightPanel.add(lblRolePatternRes);
 
+		lblParthoodStructurePatternIco = new JButton();
+		lblParthoodStructurePatternIco.setPreferredSize(new Dimension(20, 20));
+		lblParthoodStructurePatternIco.setOpaque(false);
+		lblParthoodStructurePatternIco.setContentAreaFilled(false);
+		lblParthoodStructurePatternIco.setBorderPainted(false);
+		leftPanel.add(lblParthoodStructurePatternIco);
+		cbxParthoodStructurePattern = new JCheckBox(ParthoodStructurePattern.getPatternInfo().getAcronym() + ": "
+				+ ParthoodStructurePattern.getPatternInfo().getName());
+		cbxParthoodStructurePattern.setPreferredSize(new Dimension(230, 20));
+		cbxParthoodStructurePattern.setBackground(UIManager.getColor("Panel.background"));
+		leftPanel.add(cbxParthoodStructurePattern);
+		lblParthoodStructurePatternRes = new JLabel("");
+		lblParthoodStructurePatternRes.setPreferredSize(new Dimension(110, 20));
+		lblParthoodStructurePatternRes.setForeground(Color.BLUE);
+		leftPanel.add(lblParthoodStructurePatternRes);
+
 		JPanel buttonPane = new JPanel();
 		getContentPane().add(buttonPane, BorderLayout.CENTER);
 		buttonPane.setPreferredSize(new Dimension(60, 65));
@@ -416,18 +441,21 @@ public class PatternSearchDialog extends JDialog {
 		cbxList.add(cbxSubKindPattern);
 		cbxList.add(cbxPhasePattern);
 		cbxList.add(cbxRolePattern);
+		cbxList.add(cbxParthoodStructurePattern);
 
 		lblIcoList.add(lblKindPatternIco);
 		lblIcoList.add(lblSubstanceSortalPatternIco);
 		lblIcoList.add(lblSubKindPatternIco);
 		lblIcoList.add(lblPhasePatternIco);
 		lblIcoList.add(lblRolePatternIco);
+		lblIcoList.add(lblParthoodStructurePatternIco);
 
 		lblResultList.add(lblKindPatternRes);
 		lblResultList.add(lblSubstanceSortalPatternRes);
 		lblResultList.add(lblSubKindPatternRes);
 		lblResultList.add(lblPhasePatternRes);
 		lblResultList.add(lblRolePatternRes);
+		lblResultList.add(lblParthoodStructurePatternRes);
 
 		setIcons();
 		showAllPatternIconLabels(true);
@@ -670,6 +698,7 @@ public class PatternSearchDialog extends JDialog {
 			SubKindPattern subKindPattern = new SubKindPattern(parser);
 			PhasePattern phasePattern = new PhasePattern(parser);
 			RolePattern rolePattern = new RolePattern(parser);
+			ParthoodStructurePattern parthoodStructurePattern = new ParthoodStructurePattern(parser);
 
 			incrementalValue = 100;
 
@@ -702,8 +731,13 @@ public class PatternSearchDialog extends JDialog {
 				executePattern(RolePatternTask, rolePattern, RolePattern.getPatternInfo(), lblRolePatternRes,
 						cbxRolePattern, incrementalValue, latch, executor, preLatch);
 
+			if (parthoodStructurePatternIsSelected())
+				executePattern(ParthoodStructurePatternTask, parthoodStructurePattern,
+						ParthoodStructurePattern.getPatternInfo(), lblParthoodStructurePatternRes,
+						cbxParthoodStructurePattern, incrementalValue, latch, executor, preLatch);
+
 			patternRecognitionList = new PatternList(kindPattern, substanceSortalPattern, subKindPattern, phasePattern,
-					rolePattern);
+					rolePattern, parthoodStructurePattern);
 
 			transferResult(patternRecognitionList);
 

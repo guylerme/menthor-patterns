@@ -3,12 +3,11 @@ package net.menthor.patternRecognition.subKindPattern;
 import java.util.ArrayList;
 import java.util.List;
 
-import RefOntoUML.SubKind;
-import RefOntoUML.SubstanceSortal;
 import RefOntoUML.Generalization;
 import RefOntoUML.Package;
-import RefOntoUML.Relationship;
 import RefOntoUML.RigidSortalClass;
+import RefOntoUML.SubKind;
+import RefOntoUML.SubstanceSortal;
 import RefOntoUML.parser.OntoUMLParser;
 import net.menthor.patternRecognition.Pattern;
 import net.menthor.patternRecognition.PatternInfo;

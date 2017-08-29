@@ -24,6 +24,7 @@ package net.menthor.patternRecognition;
 import java.util.ArrayList;
 
 import net.menthor.patternRecognition.kindPattern.KindPattern;
+import net.menthor.patternRecognition.parthoodStructurePattern.ParthoodStructurePattern;
 import net.menthor.patternRecognition.phasePattern.PhasePattern;
 import net.menthor.patternRecognition.rolePattern.RolePattern;
 import net.menthor.patternRecognition.subKindPattern.SubKindPattern;
@@ -43,15 +44,18 @@ public class PatternList {
 	private SubKindPattern subKindPattern;
 	private PhasePattern phasePattern;
 	private RolePattern rolePattern;
+	private ParthoodStructurePattern parthoodStructurePattern;
 
 	public PatternList(KindPattern kindPattern, SubstanceSortalPattern substanceSortalPattern,
-			SubKindPattern subKindPattern, PhasePattern phasePattern, RolePattern rolePattern) {
+			SubKindPattern subKindPattern, PhasePattern phasePattern, RolePattern rolePattern,
+			ParthoodStructurePattern parthoodStructurePattern) {
 
 		this.kindPattern = kindPattern;
 		this.substanceSortalPattern = substanceSortalPattern;
 		this.subKindPattern = subKindPattern;
 		this.phasePattern = phasePattern;
 		this.rolePattern = rolePattern;
+		this.parthoodStructurePattern = parthoodStructurePattern;
 
 	}
 
@@ -66,6 +70,7 @@ public class PatternList {
 		result.addAll(subKindPattern.getOccurrences());
 		result.addAll(phasePattern.getOccurrences());
 		result.addAll(rolePattern.getOccurrences());
+		result.addAll(parthoodStructurePattern.getOccurrences());
 
 		return result;
 	}
@@ -108,6 +113,14 @@ public class PatternList {
 
 	public void setRolePattern(RolePattern rolePattern) {
 		this.rolePattern = rolePattern;
+	}
+
+	public ParthoodStructurePattern getParthoodStructurePattern() {
+		return parthoodStructurePattern;
+	}
+
+	public void setParthoodStructurePattern(ParthoodStructurePattern parthoodStructurePattern) {
+		this.parthoodStructurePattern = parthoodStructurePattern;
 	}
 
 }

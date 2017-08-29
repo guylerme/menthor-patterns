@@ -60,6 +60,8 @@ import net.menthor.patternRecognition.PatternList;
 import net.menthor.patternRecognition.PatternOccurrence;
 import net.menthor.patternRecognition.kindPattern.KindOccurrence;
 import net.menthor.patternRecognition.kindPattern.KindPattern;
+import net.menthor.patternRecognition.parthoodStructurePattern.ParthoodStructureOccurrence;
+import net.menthor.patternRecognition.parthoodStructurePattern.ParthoodStructurePattern;
 import net.menthor.patternRecognition.phasePattern.PhaseOccurrence;
 import net.menthor.patternRecognition.phasePattern.PhasePattern;
 import net.menthor.patternRecognition.rolePattern.RoleOccurrence;
@@ -69,6 +71,7 @@ import net.menthor.patternRecognition.subKindPattern.SubKindPattern;
 import net.menthor.patternRecognition.substanceSortalPattern.SubstanceSortalOccurrence;
 import net.menthor.patternRecognition.substanceSortalPattern.SubstanceSortalPattern;
 import net.menthor.patternRecognition.wizard.kindPattern.KindPatternWizard;
+import net.menthor.patternRecognition.wizard.parthoodStructurePattern.ParthoodStructurePatternWizard;
 import net.menthor.patternRecognition.wizard.phasePattern.PhasePatternWizard;
 import net.menthor.patternRecognition.wizard.rolePattern.RolePatternWizard;
 import net.menthor.patternRecognition.wizard.subKindPattern.SubKindPatternWizard;
@@ -321,6 +324,8 @@ public class PatternResultDialog extends Dialog {
 					return PhasePattern.getPatternInfo().getAcronym();
 				if (element instanceof RoleOccurrence)
 					return RolePattern.getPatternInfo().getAcronym();
+				if (element instanceof ParthoodStructureOccurrence)
+					return ParthoodStructurePattern.getPatternInfo().getAcronym();
 				return "<error>";
 			}
 		});
@@ -387,6 +392,9 @@ public class PatternResultDialog extends Dialog {
 			wizardDialog = new WizardDialog(new Shell(d), new PhasePatternWizard((PhaseOccurrence) apOccur));
 		if (apOccur instanceof RoleOccurrence)
 			wizardDialog = new WizardDialog(new Shell(d), new RolePatternWizard((RoleOccurrence) apOccur));
+		if (apOccur instanceof ParthoodStructureOccurrence)
+			wizardDialog = new WizardDialog(new Shell(d),
+					new ParthoodStructurePatternWizard((ParthoodStructureOccurrence) apOccur));
 
 		return wizardDialog;
 	}

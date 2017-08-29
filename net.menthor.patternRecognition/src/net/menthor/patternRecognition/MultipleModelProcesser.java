@@ -19,6 +19,7 @@ import net.menthor.common.ontoumlparser.OntoUMLModelStatistic;
 import net.menthor.common.ontoumlparser.OntoUMLModelStatistic.InfoType;
 import net.menthor.common.ontoumlparser.OntoUMLModelStatistic.LineType;
 import net.menthor.patternRecognition.kindPattern.KindPattern;
+import net.menthor.patternRecognition.parthoodStructurePattern.ParthoodStructurePattern;
 import net.menthor.patternRecognition.phasePattern.PhasePattern;
 import net.menthor.patternRecognition.rolePattern.RolePattern;
 import net.menthor.patternRecognition.substanceSortalPattern.SubstanceSortalPattern;
@@ -115,6 +116,7 @@ public class MultipleModelProcesser {
 		apList.add(new SubKindPattern(parser));
 		apList.add(new PhasePattern(parser));
 		apList.add(new RolePattern(parser));
+		apList.add(new ParthoodStructurePattern(parser));
 
 		return apList;
 	}
