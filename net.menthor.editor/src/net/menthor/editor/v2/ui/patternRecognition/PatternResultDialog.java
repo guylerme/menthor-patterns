@@ -64,6 +64,8 @@ import net.menthor.patternRecognition.parthoodStructurePattern.ParthoodStructure
 import net.menthor.patternRecognition.parthoodStructurePattern.ParthoodStructurePattern;
 import net.menthor.patternRecognition.phasePattern.PhaseOccurrence;
 import net.menthor.patternRecognition.phasePattern.PhasePattern;
+import net.menthor.patternRecognition.relatorPattern.RelatorOccurrence;
+import net.menthor.patternRecognition.relatorPattern.RelatorPattern;
 import net.menthor.patternRecognition.rolePattern.RoleOccurrence;
 import net.menthor.patternRecognition.rolePattern.RolePattern;
 import net.menthor.patternRecognition.subKindPattern.SubKindOccurrence;
@@ -73,6 +75,7 @@ import net.menthor.patternRecognition.substanceSortalPattern.SubstanceSortalPatt
 import net.menthor.patternRecognition.wizard.kindPattern.KindPatternWizard;
 import net.menthor.patternRecognition.wizard.parthoodStructurePattern.ParthoodStructurePatternWizard;
 import net.menthor.patternRecognition.wizard.phasePattern.PhasePatternWizard;
+import net.menthor.patternRecognition.wizard.relatorPattern.RelatorPatternWizard;
 import net.menthor.patternRecognition.wizard.rolePattern.RolePatternWizard;
 import net.menthor.patternRecognition.wizard.subKindPattern.SubKindPatternWizard;
 import net.menthor.patternRecognition.wizard.substanceSortalPattern.SubstanceSortalPatternWizard;
@@ -326,6 +329,8 @@ public class PatternResultDialog extends Dialog {
 					return RolePattern.getPatternInfo().getAcronym();
 				if (element instanceof ParthoodStructureOccurrence)
 					return ParthoodStructurePattern.getPatternInfo().getAcronym();
+				if (element instanceof RelatorOccurrence)
+					return RelatorPattern.getPatternInfo().getAcronym();
 				return "<error>";
 			}
 		});
@@ -395,6 +400,8 @@ public class PatternResultDialog extends Dialog {
 		if (apOccur instanceof ParthoodStructureOccurrence)
 			wizardDialog = new WizardDialog(new Shell(d),
 					new ParthoodStructurePatternWizard((ParthoodStructureOccurrence) apOccur));
+		if (apOccur instanceof RelatorOccurrence)
+			wizardDialog = new WizardDialog(new Shell(d), new RelatorPatternWizard((RelatorOccurrence) apOccur));
 
 		return wizardDialog;
 	}

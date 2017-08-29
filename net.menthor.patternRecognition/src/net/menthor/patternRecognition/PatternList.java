@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import net.menthor.patternRecognition.kindPattern.KindPattern;
 import net.menthor.patternRecognition.parthoodStructurePattern.ParthoodStructurePattern;
 import net.menthor.patternRecognition.phasePattern.PhasePattern;
+import net.menthor.patternRecognition.relatorPattern.RelatorPattern;
 import net.menthor.patternRecognition.rolePattern.RolePattern;
 import net.menthor.patternRecognition.subKindPattern.SubKindPattern;
 import net.menthor.patternRecognition.substanceSortalPattern.SubstanceSortalPattern;
@@ -45,10 +46,11 @@ public class PatternList {
 	private PhasePattern phasePattern;
 	private RolePattern rolePattern;
 	private ParthoodStructurePattern parthoodStructurePattern;
+	private RelatorPattern relatorPattern;
 
 	public PatternList(KindPattern kindPattern, SubstanceSortalPattern substanceSortalPattern,
 			SubKindPattern subKindPattern, PhasePattern phasePattern, RolePattern rolePattern,
-			ParthoodStructurePattern parthoodStructurePattern) {
+			ParthoodStructurePattern parthoodStructurePattern, RelatorPattern relatorPattern) {
 
 		this.kindPattern = kindPattern;
 		this.substanceSortalPattern = substanceSortalPattern;
@@ -56,6 +58,7 @@ public class PatternList {
 		this.phasePattern = phasePattern;
 		this.rolePattern = rolePattern;
 		this.parthoodStructurePattern = parthoodStructurePattern;
+		this.relatorPattern = relatorPattern;
 
 	}
 
@@ -71,6 +74,7 @@ public class PatternList {
 		result.addAll(phasePattern.getOccurrences());
 		result.addAll(rolePattern.getOccurrences());
 		result.addAll(parthoodStructurePattern.getOccurrences());
+		result.addAll(relatorPattern.getOccurrences());
 
 		return result;
 	}
@@ -121,6 +125,14 @@ public class PatternList {
 
 	public void setParthoodStructurePattern(ParthoodStructurePattern parthoodStructurePattern) {
 		this.parthoodStructurePattern = parthoodStructurePattern;
+	}
+
+	public RelatorPattern getRelatorPattern() {
+		return relatorPattern;
+	}
+
+	public void setRelatorPattern(RelatorPattern relatorPattern) {
+		this.relatorPattern = relatorPattern;
 	}
 
 }
