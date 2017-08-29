@@ -24,6 +24,7 @@ package net.menthor.patternRecognition;
 import java.util.ArrayList;
 
 import net.menthor.patternRecognition.kindPattern.KindPattern;
+import net.menthor.patternRecognition.nonSortalPattern.NonSortalPattern;
 import net.menthor.patternRecognition.parthoodStructurePattern.ParthoodStructurePattern;
 import net.menthor.patternRecognition.phasePattern.PhasePattern;
 import net.menthor.patternRecognition.relatorPattern.RelatorPattern;
@@ -47,10 +48,12 @@ public class PatternList {
 	private RolePattern rolePattern;
 	private ParthoodStructurePattern parthoodStructurePattern;
 	private RelatorPattern relatorPattern;
+	private NonSortalPattern nonSortalPattern;
 
 	public PatternList(KindPattern kindPattern, SubstanceSortalPattern substanceSortalPattern,
 			SubKindPattern subKindPattern, PhasePattern phasePattern, RolePattern rolePattern,
-			ParthoodStructurePattern parthoodStructurePattern, RelatorPattern relatorPattern) {
+			ParthoodStructurePattern parthoodStructurePattern, RelatorPattern relatorPattern,
+			NonSortalPattern nonSortalPattern) {
 
 		this.kindPattern = kindPattern;
 		this.substanceSortalPattern = substanceSortalPattern;
@@ -59,6 +62,7 @@ public class PatternList {
 		this.rolePattern = rolePattern;
 		this.parthoodStructurePattern = parthoodStructurePattern;
 		this.relatorPattern = relatorPattern;
+		this.nonSortalPattern = nonSortalPattern;
 
 	}
 
@@ -75,6 +79,7 @@ public class PatternList {
 		result.addAll(rolePattern.getOccurrences());
 		result.addAll(parthoodStructurePattern.getOccurrences());
 		result.addAll(relatorPattern.getOccurrences());
+		result.addAll(nonSortalPattern.getOccurrences());
 
 		return result;
 	}
@@ -133,6 +138,14 @@ public class PatternList {
 
 	public void setRelatorPattern(RelatorPattern relatorPattern) {
 		this.relatorPattern = relatorPattern;
+	}
+
+	public NonSortalPattern getNonSortalPattern() {
+		return nonSortalPattern;
+	}
+
+	public void setNonSortalPattern(NonSortalPattern nonSortalPattern) {
+		this.nonSortalPattern = nonSortalPattern;
 	}
 
 }

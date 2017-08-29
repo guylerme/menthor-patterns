@@ -59,6 +59,7 @@ import net.menthor.patternRecognition.Pattern;
 import net.menthor.patternRecognition.PatternInfo;
 import net.menthor.patternRecognition.PatternList;
 import net.menthor.patternRecognition.kindPattern.KindPattern;
+import net.menthor.patternRecognition.nonSortalPattern.NonSortalPattern;
 import net.menthor.patternRecognition.parthoodStructurePattern.ParthoodStructurePattern;
 import net.menthor.patternRecognition.phasePattern.PhasePattern;
 import net.menthor.patternRecognition.relatorPattern.RelatorPattern;
@@ -136,6 +137,8 @@ public class PatternSearchDialog extends JDialog {
 
 	private JCheckBox cbxSubKindPattern;
 
+	private JCheckBox cbxNonSortalPattern;
+
 	private JCheckBox cbxSubstanceSortalPattern;
 	private JButton closeButton;
 	private final JPanel contentPanel = new JPanel();
@@ -166,6 +169,8 @@ public class PatternSearchDialog extends JDialog {
 	private JLabel lblSubKindPatternRes;
 	private JButton lblSubstanceSortalPatternIco;
 	private JLabel lblSubstanceSortalPatternRes;
+	private JButton lblNonSortalPatternIco;
+	private JLabel lblNonSortalPatternRes;
 
 	private JPanel panel_1;
 
@@ -193,6 +198,8 @@ public class PatternSearchDialog extends JDialog {
 	private PatternTask SubKindPatternTask;
 
 	private PatternTask SubstanceSortalPatternTask;
+
+	private PatternTask NonSortalPatternTask;
 
 	/**
 	 * Create the dialog.
@@ -420,6 +427,22 @@ public class PatternSearchDialog extends JDialog {
 		lblRelatorPatternIco.setContentAreaFilled(false);
 		lblRelatorPatternIco.setBorderPainted(false);
 
+		cbxNonSortalPattern = new JCheckBox(
+				NonSortalPattern.getPatternInfo().getAcronym() + ": " + NonSortalPattern.getPatternInfo().getName());
+		cbxNonSortalPattern.setBounds(33, 90, 303, 20);
+		cbxNonSortalPattern.setPreferredSize(new Dimension(225, 20));
+		cbxNonSortalPattern.setBackground(UIManager.getColor("Panel.background"));
+		lblNonSortalPatternRes = new JLabel("");
+		lblNonSortalPatternRes.setBounds(299, 90, 93, 20);
+		lblNonSortalPatternRes.setPreferredSize(new Dimension(115, 20));
+		lblNonSortalPatternRes.setForeground(Color.BLUE);
+		lblNonSortalPatternIco = new JButton();
+		lblNonSortalPatternIco.setBounds(33, 110, -21, -22);
+		lblNonSortalPatternIco.setPreferredSize(new Dimension(20, 20));
+		lblNonSortalPatternIco.setOpaque(false);
+		lblNonSortalPatternIco.setContentAreaFilled(false);
+		lblNonSortalPatternIco.setBorderPainted(false);
+
 		JPanel buttonPane = new JPanel();
 		getContentPane().add(buttonPane, BorderLayout.CENTER);
 		buttonPane.setPreferredSize(new Dimension(60, 65));
@@ -455,6 +478,7 @@ public class PatternSearchDialog extends JDialog {
 		cbxList.add(cbxRolePattern);
 		cbxList.add(cbxParthoodStructurePattern);
 		cbxList.add(cbxRelatorPattern);
+		cbxList.add(cbxNonSortalPattern);
 
 		lblIcoList.add(lblKindPatternIco);
 		lblIcoList.add(lblSubstanceSortalPatternIco);
@@ -463,6 +487,7 @@ public class PatternSearchDialog extends JDialog {
 		lblIcoList.add(lblRolePatternIco);
 		lblIcoList.add(lblParthoodStructurePatternIco);
 		lblIcoList.add(lblRelatorPatternIco);
+		lblIcoList.add(lblNonSortalPatternIco);
 
 		lblResultList.add(lblKindPatternRes);
 		lblResultList.add(lblSubstanceSortalPatternRes);
@@ -470,6 +495,7 @@ public class PatternSearchDialog extends JDialog {
 		lblResultList.add(lblRolePatternRes);
 		lblResultList.add(lblParthoodStructurePatternRes);
 		lblResultList.add(lblRelatorPatternRes);
+		lblResultList.add(lblNonSortalPatternRes);
 
 		contentPanel.setLayout(null);
 		contentPanel.add(lblChooseWhichPattern);
@@ -496,6 +522,10 @@ public class PatternSearchDialog extends JDialog {
 		rightPanel.add(lblRelatorPatternIco);
 		rightPanel.add(cbxRelatorPattern);
 		rightPanel.add(lblRelatorPatternRes);
+
+		leftPanel.add(lblNonSortalPatternIco);
+		leftPanel.add(cbxNonSortalPattern);
+		leftPanel.add(lblNonSortalPatternRes);
 
 		setIcons();
 		showAllPatternIconLabels(true);
@@ -594,6 +624,7 @@ public class PatternSearchDialog extends JDialog {
 			RolePattern rolePattern = new RolePattern(parser);
 			ParthoodStructurePattern parthoodStructurePattern = new ParthoodStructurePattern(parser);
 			RelatorPattern relatorPattern = new RelatorPattern(parser);
+			NonSortalPattern nonSortalPattern = new NonSortalPattern(parser);
 
 			incrementalValue = 100;
 
@@ -635,8 +666,12 @@ public class PatternSearchDialog extends JDialog {
 				executePattern(RelatorPatternTask, relatorPattern, RelatorPattern.getPatternInfo(),
 						lblRelatorPatternRes, cbxRelatorPattern, incrementalValue, latch, executor, preLatch);
 
+			if (nonSortalPatternIsSelected())
+				executePattern(NonSortalPatternTask, nonSortalPattern, NonSortalPattern.getPatternInfo(),
+						lblNonSortalPatternRes, cbxNonSortalPattern, incrementalValue, latch, executor, preLatch);
+
 			patternRecognitionList = new PatternList(kindPattern, substanceSortalPattern, subKindPattern, phasePattern,
-					rolePattern, parthoodStructurePattern, relatorPattern);
+					rolePattern, parthoodStructurePattern, relatorPattern, nonSortalPattern);
 
 			transferResult(patternRecognitionList);
 
@@ -689,6 +724,10 @@ public class PatternSearchDialog extends JDialog {
 
 	public Boolean rolePatternIsSelected() {
 		return cbxRolePattern.isSelected();
+	}
+
+	public Boolean nonSortalPatternIsSelected() {
+		return cbxNonSortalPattern.isSelected();
 	}
 
 	public void setIcons() {

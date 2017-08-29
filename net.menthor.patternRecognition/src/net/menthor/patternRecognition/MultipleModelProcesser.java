@@ -19,6 +19,7 @@ import net.menthor.common.ontoumlparser.OntoUMLModelStatistic;
 import net.menthor.common.ontoumlparser.OntoUMLModelStatistic.InfoType;
 import net.menthor.common.ontoumlparser.OntoUMLModelStatistic.LineType;
 import net.menthor.patternRecognition.kindPattern.KindPattern;
+import net.menthor.patternRecognition.nonSortalPattern.NonSortalPattern;
 import net.menthor.patternRecognition.parthoodStructurePattern.ParthoodStructurePattern;
 import net.menthor.patternRecognition.phasePattern.PhasePattern;
 import net.menthor.patternRecognition.relatorPattern.RelatorPattern;
@@ -43,13 +44,13 @@ public class MultipleModelProcesser {
 		// gen.run();
 		// gen.createFile();
 
-		generateAntipatternCSVFile();
+		generatePatternCSVFile();
 
 		System.out.println(TimeHelper.getTime() + " - Finished!");
 
 	}
 
-	public static void generateAntipatternCSVFile() {
+	public static void generatePatternCSVFile() {
 		ArrayList<String> fileList = getFileList(DIR);
 		PrintWriter fileWriter;
 
@@ -60,17 +61,17 @@ public class MultipleModelProcesser {
 			return;
 		}
 
-		setAntipatternHeaders(fileWriter);
+		setPatternHeaders(fileWriter);
 
 		for (String fileName : fileList) {
-			runAntipatterns(DIR + fileName, fileWriter);
+			runPatterns(DIR + fileName, fileWriter);
 		}
 
 		fileWriter.close();
 
 	}
 
-	private static void setAntipatternHeaders(PrintWriter fileWriter) {
+	private static void setPatternHeaders(PrintWriter fileWriter) {
 		RefOntoUMLFactory factory = RefOntoUMLFactory.eINSTANCE;
 
 		ArrayList<Pattern<?>> apList = createApList(new OntoUMLParser(factory.createModel()));
@@ -83,7 +84,7 @@ public class MultipleModelProcesser {
 
 	}
 
-	private static void runAntipatterns(String fileName, PrintWriter fileWriter) {
+	private static void runPatterns(String fileName, PrintWriter fileWriter) {
 		OntoUMLParser parser;
 		System.out.println(TimeHelper.getTime() + " - " + fileName + ": Loading parser...");
 
@@ -119,6 +120,7 @@ public class MultipleModelProcesser {
 		apList.add(new RolePattern(parser));
 		apList.add(new ParthoodStructurePattern(parser));
 		apList.add(new RelatorPattern(parser));
+		apList.add(new NonSortalPattern(parser));
 
 		return apList;
 	}

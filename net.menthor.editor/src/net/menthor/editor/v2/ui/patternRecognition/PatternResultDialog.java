@@ -60,6 +60,8 @@ import net.menthor.patternRecognition.PatternList;
 import net.menthor.patternRecognition.PatternOccurrence;
 import net.menthor.patternRecognition.kindPattern.KindOccurrence;
 import net.menthor.patternRecognition.kindPattern.KindPattern;
+import net.menthor.patternRecognition.nonSortalPattern.NonSortalOccurrence;
+import net.menthor.patternRecognition.nonSortalPattern.NonSortalPattern;
 import net.menthor.patternRecognition.parthoodStructurePattern.ParthoodStructureOccurrence;
 import net.menthor.patternRecognition.parthoodStructurePattern.ParthoodStructurePattern;
 import net.menthor.patternRecognition.phasePattern.PhaseOccurrence;
@@ -73,6 +75,7 @@ import net.menthor.patternRecognition.subKindPattern.SubKindPattern;
 import net.menthor.patternRecognition.substanceSortalPattern.SubstanceSortalOccurrence;
 import net.menthor.patternRecognition.substanceSortalPattern.SubstanceSortalPattern;
 import net.menthor.patternRecognition.wizard.kindPattern.KindPatternWizard;
+import net.menthor.patternRecognition.wizard.nonSortalPattern.NonSortalPatternWizard;
 import net.menthor.patternRecognition.wizard.parthoodStructurePattern.ParthoodStructurePatternWizard;
 import net.menthor.patternRecognition.wizard.phasePattern.PhasePatternWizard;
 import net.menthor.patternRecognition.wizard.relatorPattern.RelatorPatternWizard;
@@ -331,6 +334,8 @@ public class PatternResultDialog extends Dialog {
 					return ParthoodStructurePattern.getPatternInfo().getAcronym();
 				if (element instanceof RelatorOccurrence)
 					return RelatorPattern.getPatternInfo().getAcronym();
+				if (element instanceof NonSortalOccurrence)
+					return NonSortalPattern.getPatternInfo().getAcronym();
 				return "<error>";
 			}
 		});
@@ -402,6 +407,8 @@ public class PatternResultDialog extends Dialog {
 					new ParthoodStructurePatternWizard((ParthoodStructureOccurrence) apOccur));
 		if (apOccur instanceof RelatorOccurrence)
 			wizardDialog = new WizardDialog(new Shell(d), new RelatorPatternWizard((RelatorOccurrence) apOccur));
+		if (apOccur instanceof NonSortalOccurrence)
+			wizardDialog = new WizardDialog(new Shell(d), new NonSortalPatternWizard((NonSortalOccurrence) apOccur));
 
 		return wizardDialog;
 	}
