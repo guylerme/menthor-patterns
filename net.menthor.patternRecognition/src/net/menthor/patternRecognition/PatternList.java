@@ -24,6 +24,10 @@ package net.menthor.patternRecognition;
 import java.util.ArrayList;
 
 import net.menthor.patternRecognition.kindPattern.KindPattern;
+import net.menthor.patternRecognition.phasePattern.PhasePattern;
+import net.menthor.patternRecognition.rolePattern.RolePattern;
+import net.menthor.patternRecognition.subKindPattern.SubKindPattern;
+import net.menthor.patternRecognition.substanceSortalPattern.SubstanceSortalPattern;
 
 /**
  * 
@@ -35,10 +39,19 @@ import net.menthor.patternRecognition.kindPattern.KindPattern;
 public class PatternList {
 	/** TODO Colocar aqui os padroes */
 	private KindPattern kindPattern;
+	private SubstanceSortalPattern substanceSortalPattern;
+	private SubKindPattern subKindPattern;
+	private PhasePattern phasePattern;
+	private RolePattern rolePattern;
 
-	public PatternList(KindPattern kindPattern) {
+	public PatternList(KindPattern kindPattern, SubstanceSortalPattern substanceSortalPattern,
+			SubKindPattern subKindPattern, PhasePattern phasePattern, RolePattern rolePattern) {
 
 		this.kindPattern = kindPattern;
+		this.substanceSortalPattern = substanceSortalPattern;
+		this.subKindPattern = subKindPattern;
+		this.phasePattern = phasePattern;
+		this.rolePattern = rolePattern;
 
 	}
 
@@ -49,6 +62,10 @@ public class PatternList {
 	public ArrayList<PatternOccurrence> getAll() {
 		ArrayList<PatternOccurrence> result = new ArrayList<PatternOccurrence>();
 		result.addAll(kindPattern.getOccurrences());
+		result.addAll(substanceSortalPattern.getOccurrences());
+		result.addAll(subKindPattern.getOccurrences());
+		result.addAll(phasePattern.getOccurrences());
+		result.addAll(rolePattern.getOccurrences());
 
 		return result;
 	}
@@ -59,6 +76,38 @@ public class PatternList {
 
 	public void setKindPattern(KindPattern kindPattern) {
 		this.kindPattern = kindPattern;
+	}
+
+	public SubstanceSortalPattern getSubstanceSortalPattern() {
+		return substanceSortalPattern;
+	}
+
+	public void setSubstanceSortalPattern(SubstanceSortalPattern substanceSortalPattern) {
+		this.substanceSortalPattern = substanceSortalPattern;
+	}
+
+	public SubKindPattern getSubKindPattern() {
+		return subKindPattern;
+	}
+
+	public void setSubKindPattern(SubKindPattern subKindPattern) {
+		this.subKindPattern = subKindPattern;
+	}
+
+	public PhasePattern getPhasePattern() {
+		return phasePattern;
+	}
+
+	public void setPhasePattern(PhasePattern phasePattern) {
+		this.phasePattern = phasePattern;
+	}
+
+	public RolePattern getRolePattern() {
+		return rolePattern;
+	}
+
+	public void setRolePattern(RolePattern rolePattern) {
+		this.rolePattern = rolePattern;
 	}
 
 }

@@ -59,6 +59,10 @@ import net.menthor.patternRecognition.Pattern;
 import net.menthor.patternRecognition.PatternInfo;
 import net.menthor.patternRecognition.PatternList;
 import net.menthor.patternRecognition.kindPattern.KindPattern;
+import net.menthor.patternRecognition.phasePattern.PhasePattern;
+import net.menthor.patternRecognition.rolePattern.RolePattern;
+import net.menthor.patternRecognition.subKindPattern.SubKindPattern;
+import net.menthor.patternRecognition.substanceSortalPattern.SubstanceSortalPattern;
 import net.menthor.swt.Util;
 
 /**
@@ -76,14 +80,26 @@ public class PatternSearchDialog extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 
 	private PatternTask KindPatternTask;
+	private PatternTask SubstanceSortalPatternTask;
+	private PatternTask SubKindPatternTask;
+	private PatternTask PhasePatternTask;
+	private PatternTask RolePatternTask;
 
 	private ArrayList<PatternTask> allTasks = new ArrayList<PatternTask>();
 
 	private JCheckBox cbxKindPattern;
+	private JCheckBox cbxSubstanceSortalPattern;
+	private JCheckBox cbxSubKindPattern;
+	private JCheckBox cbxPhasePattern;
+	private JCheckBox cbxRolePattern;
 
 	ArrayList<JCheckBox> cbxList = new ArrayList<JCheckBox>();
 
 	private JButton lblKindPatternIco;
+	private JButton lblSubstanceSortalPatternIco;
+	private JButton lblSubKindPatternIco;
+	private JButton lblPhasePatternIco;
+	private JButton lblRolePatternIco;
 
 	ArrayList<JButton> lblIcoList = new ArrayList<JButton>();
 
@@ -91,6 +107,10 @@ public class PatternSearchDialog extends JDialog {
 	private JLabel progressBarDescr;
 
 	private JLabel lblKindPatternRes;
+	private JLabel lblSubstanceSortalPatternRes;
+	private JLabel lblSubKindPatternRes;
+	private JLabel lblPhasePatternRes;
+	private JLabel lblRolePatternRes;
 
 	ArrayList<JLabel> lblResultList = new ArrayList<JLabel>();
 
@@ -129,6 +149,22 @@ public class PatternSearchDialog extends JDialog {
 
 	public Boolean kindPatternIsSelected() {
 		return cbxKindPattern.isSelected();
+	}
+
+	public Boolean substanceSortalPatternIsSelected() {
+		return cbxSubstanceSortalPattern.isSelected();
+	}
+
+	public Boolean subKindPatternIsSelected() {
+		return cbxSubKindPattern.isSelected();
+	}
+
+	public Boolean phasePatternIsSelected() {
+		return cbxPhasePattern.isSelected();
+	}
+
+	public Boolean rolePatternIsSelected() {
+		return cbxRolePattern.isSelected();
 	}
 
 	/**
@@ -283,6 +319,70 @@ public class PatternSearchDialog extends JDialog {
 		lblKindPatternRes.setForeground(Color.BLUE);
 		leftPanel.add(lblKindPatternRes);
 
+		lblSubstanceSortalPatternIco = new JButton();
+		lblSubstanceSortalPatternIco.setPreferredSize(new Dimension(20, 20));
+		lblSubstanceSortalPatternIco.setOpaque(false);
+		lblSubstanceSortalPatternIco.setContentAreaFilled(false);
+		lblSubstanceSortalPatternIco.setBorderPainted(false);
+		leftPanel.add(lblSubstanceSortalPatternIco);
+		cbxSubstanceSortalPattern = new JCheckBox(SubstanceSortalPattern.getPatternInfo().getAcronym() + ": "
+				+ SubstanceSortalPattern.getPatternInfo().getName());
+		cbxSubstanceSortalPattern.setPreferredSize(new Dimension(230, 20));
+		cbxSubstanceSortalPattern.setBackground(UIManager.getColor("Panel.background"));
+		leftPanel.add(cbxSubstanceSortalPattern);
+		lblSubstanceSortalPatternRes = new JLabel("");
+		lblSubstanceSortalPatternRes.setPreferredSize(new Dimension(110, 20));
+		lblSubstanceSortalPatternRes.setForeground(Color.BLUE);
+		leftPanel.add(lblSubstanceSortalPatternRes);
+
+		lblSubKindPatternIco = new JButton();
+		lblSubKindPatternIco.setPreferredSize(new Dimension(20, 20));
+		lblSubKindPatternIco.setOpaque(false);
+		lblSubKindPatternIco.setContentAreaFilled(false);
+		lblSubKindPatternIco.setBorderPainted(false);
+		rightPanel.add(lblSubKindPatternIco);
+		cbxSubKindPattern = new JCheckBox(
+				SubKindPattern.getPatternInfo().getAcronym() + ": " + SubKindPattern.getPatternInfo().getName());
+		cbxSubKindPattern.setPreferredSize(new Dimension(230, 20));
+		cbxSubKindPattern.setBackground(UIManager.getColor("Panel.background"));
+		rightPanel.add(cbxSubKindPattern);
+		lblSubKindPatternRes = new JLabel("");
+		lblSubKindPatternRes.setPreferredSize(new Dimension(110, 20));
+		lblSubKindPatternRes.setForeground(Color.BLUE);
+		rightPanel.add(lblSubKindPatternRes);
+
+		lblPhasePatternIco = new JButton();
+		lblPhasePatternIco.setPreferredSize(new Dimension(20, 20));
+		lblPhasePatternIco.setOpaque(false);
+		lblPhasePatternIco.setContentAreaFilled(false);
+		lblPhasePatternIco.setBorderPainted(false);
+		rightPanel.add(lblPhasePatternIco);
+		cbxPhasePattern = new JCheckBox(
+				PhasePattern.getPatternInfo().getAcronym() + ": " + PhasePattern.getPatternInfo().getName());
+		cbxPhasePattern.setPreferredSize(new Dimension(230, 20));
+		cbxPhasePattern.setBackground(UIManager.getColor("Panel.background"));
+		rightPanel.add(cbxPhasePattern);
+		lblPhasePatternRes = new JLabel("");
+		lblPhasePatternRes.setPreferredSize(new Dimension(110, 20));
+		lblPhasePatternRes.setForeground(Color.BLUE);
+		rightPanel.add(lblPhasePatternRes);
+
+		lblRolePatternIco = new JButton();
+		lblRolePatternIco.setPreferredSize(new Dimension(20, 20));
+		lblRolePatternIco.setOpaque(false);
+		lblRolePatternIco.setContentAreaFilled(false);
+		lblRolePatternIco.setBorderPainted(false);
+		rightPanel.add(lblRolePatternIco);
+		cbxRolePattern = new JCheckBox(
+				RolePattern.getPatternInfo().getAcronym() + ": " + RolePattern.getPatternInfo().getName());
+		cbxRolePattern.setPreferredSize(new Dimension(230, 20));
+		cbxRolePattern.setBackground(UIManager.getColor("Panel.background"));
+		rightPanel.add(cbxRolePattern);
+		lblRolePatternRes = new JLabel("");
+		lblRolePatternRes.setPreferredSize(new Dimension(110, 20));
+		lblRolePatternRes.setForeground(Color.BLUE);
+		rightPanel.add(lblRolePatternRes);
+
 		JPanel buttonPane = new JPanel();
 		getContentPane().add(buttonPane, BorderLayout.CENTER);
 		buttonPane.setPreferredSize(new Dimension(60, 65));
@@ -312,10 +412,22 @@ public class PatternSearchDialog extends JDialog {
 		buttonPane.setLayout(gl_buttonPane);
 
 		cbxList.add(cbxKindPattern);
+		cbxList.add(cbxSubstanceSortalPattern);
+		cbxList.add(cbxSubKindPattern);
+		cbxList.add(cbxPhasePattern);
+		cbxList.add(cbxRolePattern);
 
 		lblIcoList.add(lblKindPatternIco);
+		lblIcoList.add(lblSubstanceSortalPatternIco);
+		lblIcoList.add(lblSubKindPatternIco);
+		lblIcoList.add(lblPhasePatternIco);
+		lblIcoList.add(lblRolePatternIco);
 
 		lblResultList.add(lblKindPatternRes);
+		lblResultList.add(lblSubstanceSortalPatternRes);
+		lblResultList.add(lblSubKindPatternRes);
+		lblResultList.add(lblPhasePatternRes);
+		lblResultList.add(lblRolePatternRes);
 
 		setIcons();
 		showAllPatternIconLabels(true);
@@ -554,6 +666,10 @@ public class PatternSearchDialog extends JDialog {
 				return;
 
 			KindPattern kindPattern = new KindPattern(parser);
+			SubstanceSortalPattern substanceSortalPattern = new SubstanceSortalPattern(parser);
+			SubKindPattern subKindPattern = new SubKindPattern(parser);
+			PhasePattern phasePattern = new PhasePattern(parser);
+			RolePattern rolePattern = new RolePattern(parser);
 
 			incrementalValue = 100;
 
@@ -569,7 +685,25 @@ public class PatternSearchDialog extends JDialog {
 				executePattern(KindPatternTask, kindPattern, KindPattern.getPatternInfo(), lblKindPatternRes,
 						cbxKindPattern, incrementalValue, latch, executor, preLatch);
 
-			patternRecognitionList = new PatternList(kindPattern);
+			if (substanceSortalPatternIsSelected())
+				executePattern(SubstanceSortalPatternTask, substanceSortalPattern,
+						SubstanceSortalPattern.getPatternInfo(), lblSubstanceSortalPatternRes,
+						cbxSubstanceSortalPattern, incrementalValue, latch, executor, preLatch);
+
+			if (subKindPatternIsSelected())
+				executePattern(SubKindPatternTask, subKindPattern, SubKindPattern.getPatternInfo(),
+						lblSubKindPatternRes, cbxSubKindPattern, incrementalValue, latch, executor, preLatch);
+
+			if (phasePatternIsSelected())
+				executePattern(PhasePatternTask, phasePattern, PhasePattern.getPatternInfo(), lblPhasePatternRes,
+						cbxPhasePattern, incrementalValue, latch, executor, preLatch);
+
+			if (rolePatternIsSelected())
+				executePattern(RolePatternTask, rolePattern, RolePattern.getPatternInfo(), lblRolePatternRes,
+						cbxRolePattern, incrementalValue, latch, executor, preLatch);
+
+			patternRecognitionList = new PatternList(kindPattern, substanceSortalPattern, subKindPattern, phasePattern,
+					rolePattern);
 
 			transferResult(patternRecognitionList);
 

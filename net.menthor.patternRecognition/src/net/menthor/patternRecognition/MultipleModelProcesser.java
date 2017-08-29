@@ -19,6 +19,10 @@ import net.menthor.common.ontoumlparser.OntoUMLModelStatistic;
 import net.menthor.common.ontoumlparser.OntoUMLModelStatistic.InfoType;
 import net.menthor.common.ontoumlparser.OntoUMLModelStatistic.LineType;
 import net.menthor.patternRecognition.kindPattern.KindPattern;
+import net.menthor.patternRecognition.phasePattern.PhasePattern;
+import net.menthor.patternRecognition.rolePattern.RolePattern;
+import net.menthor.patternRecognition.substanceSortalPattern.SubstanceSortalPattern;
+import net.menthor.patternRecognition.subKindPattern.SubKindPattern;
 
 public class MultipleModelProcesser {
 
@@ -48,7 +52,7 @@ public class MultipleModelProcesser {
 		PrintWriter fileWriter;
 
 		try {
-			fileWriter = new PrintWriter(DIR + "Antipatterns" + CSV);
+			fileWriter = new PrintWriter(DIR + "Patterns" + CSV);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return;
@@ -107,6 +111,10 @@ public class MultipleModelProcesser {
 	private static ArrayList<Pattern<?>> createApList(OntoUMLParser parser) {
 		ArrayList<Pattern<?>> apList = new ArrayList<Pattern<?>>();
 		apList.add(new KindPattern(parser));
+		apList.add(new SubstanceSortalPattern(parser));
+		apList.add(new SubKindPattern(parser));
+		apList.add(new PhasePattern(parser));
+		apList.add(new RolePattern(parser));
 
 		return apList;
 	}

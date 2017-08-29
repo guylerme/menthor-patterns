@@ -60,7 +60,19 @@ import net.menthor.patternRecognition.PatternList;
 import net.menthor.patternRecognition.PatternOccurrence;
 import net.menthor.patternRecognition.kindPattern.KindOccurrence;
 import net.menthor.patternRecognition.kindPattern.KindPattern;
+import net.menthor.patternRecognition.phasePattern.PhaseOccurrence;
+import net.menthor.patternRecognition.phasePattern.PhasePattern;
+import net.menthor.patternRecognition.rolePattern.RoleOccurrence;
+import net.menthor.patternRecognition.rolePattern.RolePattern;
+import net.menthor.patternRecognition.subKindPattern.SubKindOccurrence;
+import net.menthor.patternRecognition.subKindPattern.SubKindPattern;
+import net.menthor.patternRecognition.substanceSortalPattern.SubstanceSortalOccurrence;
+import net.menthor.patternRecognition.substanceSortalPattern.SubstanceSortalPattern;
 import net.menthor.patternRecognition.wizard.kindPattern.KindPatternWizard;
+import net.menthor.patternRecognition.wizard.phasePattern.PhasePatternWizard;
+import net.menthor.patternRecognition.wizard.rolePattern.RolePatternWizard;
+import net.menthor.patternRecognition.wizard.subKindPattern.SubKindPatternWizard;
+import net.menthor.patternRecognition.wizard.substanceSortalPattern.SubstanceSortalPatternWizard;
 
 /**
  * @author Guylerme Figueiredo
@@ -89,7 +101,6 @@ public class PatternResultDialog extends Dialog {
 		if (wizardDialog != null && wizardDialog.open() == Window.OK) {
 
 			ProjectUIController.get().addDiagram();
-			
 
 			refresh();
 		}
@@ -302,6 +313,14 @@ public class PatternResultDialog extends Dialog {
 			public String getText(Object element) {
 				if (element instanceof KindOccurrence)
 					return KindPattern.getPatternInfo().getAcronym();
+				if (element instanceof SubstanceSortalOccurrence)
+					return SubstanceSortalPattern.getPatternInfo().getAcronym();
+				if (element instanceof SubKindOccurrence)
+					return SubKindPattern.getPatternInfo().getAcronym();
+				if (element instanceof PhaseOccurrence)
+					return PhasePattern.getPatternInfo().getAcronym();
+				if (element instanceof RoleOccurrence)
+					return RolePattern.getPatternInfo().getAcronym();
 				return "<error>";
 			}
 		});
@@ -359,6 +378,15 @@ public class PatternResultDialog extends Dialog {
 
 		if (apOccur instanceof KindOccurrence)
 			wizardDialog = new WizardDialog(new Shell(d), new KindPatternWizard((KindOccurrence) apOccur));
+		if (apOccur instanceof SubstanceSortalOccurrence)
+			wizardDialog = new WizardDialog(new Shell(d),
+					new SubstanceSortalPatternWizard((SubstanceSortalOccurrence) apOccur));
+		if (apOccur instanceof SubKindOccurrence)
+			wizardDialog = new WizardDialog(new Shell(d), new SubKindPatternWizard((SubKindOccurrence) apOccur));
+		if (apOccur instanceof PhaseOccurrence)
+			wizardDialog = new WizardDialog(new Shell(d), new PhasePatternWizard((PhaseOccurrence) apOccur));
+		if (apOccur instanceof RoleOccurrence)
+			wizardDialog = new WizardDialog(new Shell(d), new RolePatternWizard((RoleOccurrence) apOccur));
 
 		return wizardDialog;
 	}
