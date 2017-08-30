@@ -60,7 +60,6 @@ public class RelatorOccurrence extends PatternOccurrence {
 	}
 
 	public List<Association> getOnlyAssociations() {
-		// TODO Implementar metodo para pegar as relacoes
 		List<Association> associations = new ArrayList<Association>();
 		for (Association a : parser.getAllInstances(Association.class)) {
 
@@ -76,4 +75,12 @@ public class RelatorOccurrence extends PatternOccurrence {
 		return associations;
 	}
 
+	@Override
+	public List<Element> getAllElements() {
+		List<Element> elements = new ArrayList<Element>();
+		elements.add(this.relator);
+		for (Element e : mediatedList)
+			elements.add(e);
+		return elements;
+	}
 }

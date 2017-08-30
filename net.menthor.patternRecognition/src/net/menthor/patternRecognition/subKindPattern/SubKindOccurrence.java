@@ -7,7 +7,6 @@ import org.eclipse.emf.ecore.EObject;
 
 import RefOntoUML.Association;
 import RefOntoUML.Element;
-import RefOntoUML.Relationship;
 import RefOntoUML.RigidSortalClass;
 import RefOntoUML.SubKind;
 import RefOntoUML.parser.OntoUMLParser;
@@ -17,7 +16,7 @@ import net.menthor.patternRecognition.PatternOccurrence;
 public class SubKindOccurrence extends PatternOccurrence {
 
 	SubKind subKind;
-	ArrayList<Relationship> relationshipList;
+	List<RigidSortalClass> generalizations;
 
 	public static int OPEN = 0, CLOSED = 1;
 
@@ -25,7 +24,7 @@ public class SubKindOccurrence extends PatternOccurrence {
 			throws Exception {
 		super(ptn);
 		this.subKind = subKind;
-
+		this.generalizations = generalizations;
 	}
 
 	@Override
@@ -54,7 +53,6 @@ public class SubKindOccurrence extends PatternOccurrence {
 	}
 
 	public List<Association> getOnlyAssociations() {
-		// TODO Implementar metodo para pegar as relacoes
 		List<Association> associations = new ArrayList<Association>();
 		for (Association a : parser.getAllInstances(Association.class)) {
 
@@ -70,4 +68,12 @@ public class SubKindOccurrence extends PatternOccurrence {
 		return associations;
 	}
 
+	@Override
+	public List<Element> getAllElements() {
+		List<Element> elements = new ArrayList<Element>();
+		elements.add(this.subKind);
+		for (Element e : generalizations)
+			elements.add(e);
+		return elements;
+	}
 }

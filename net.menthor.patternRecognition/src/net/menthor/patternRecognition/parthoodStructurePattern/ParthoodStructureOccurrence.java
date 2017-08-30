@@ -1,10 +1,12 @@
 package net.menthor.patternRecognition.parthoodStructurePattern;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 
 import RefOntoUML.Classifier;
+import RefOntoUML.Element;
 import RefOntoUML.Meronymic;
 import RefOntoUML.parser.OntoUMLParser;
 import net.menthor.patternRecognition.PatternOccurrence;
@@ -52,4 +54,11 @@ public class ParthoodStructureOccurrence extends PatternOccurrence {
 		return parser.getStringRepresentation(parthoodRelation);
 	}
 
+	@Override
+	public List<Element> getAllElements() {
+		List<Element> elements = new ArrayList<Element>();
+		elements.add(this.whole);
+		elements.add(this.part);
+		return elements;
+	}
 }

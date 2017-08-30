@@ -69,4 +69,12 @@ public class ModeOccurrence extends PatternOccurrence {
 		return associations;
 	}
 
+	@Override
+	public List<Element> getAllElements() {
+		List<Element> elements = new ArrayList<Element>();
+		elements.add(this.mode);
+		elements.add(characterized);
+		return elements;
+	}
+
 }

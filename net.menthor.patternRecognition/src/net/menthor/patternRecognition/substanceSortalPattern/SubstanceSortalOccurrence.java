@@ -7,7 +7,6 @@ import org.eclipse.emf.ecore.EObject;
 
 import RefOntoUML.Association;
 import RefOntoUML.Element;
-import RefOntoUML.Relationship;
 import RefOntoUML.SubstanceSortal;
 import RefOntoUML.parser.OntoUMLParser;
 import net.menthor.patternRecognition.PatternOccurrence;
@@ -16,7 +15,6 @@ import net.menthor.patternRecognition.PatternOccurrence;
 public class SubstanceSortalOccurrence extends PatternOccurrence {
 
 	SubstanceSortal substanceSortal;
-	ArrayList<Relationship> relationshipList;
 
 	public static int OPEN = 0, CLOSED = 1;
 
@@ -52,7 +50,6 @@ public class SubstanceSortalOccurrence extends PatternOccurrence {
 	}
 
 	public List<Association> getOnlyAssociations() {
-		// TODO Implementar metodo para pegar as relacoes
 		List<Association> associations = new ArrayList<Association>();
 		for (Association a : parser.getAllInstances(Association.class)) {
 
@@ -68,4 +65,10 @@ public class SubstanceSortalOccurrence extends PatternOccurrence {
 		return associations;
 	}
 
+	@Override
+	public List<Element> getAllElements() {
+		List<Element> elements = new ArrayList<Element>();
+		elements.add(this.substanceSortal);
+		return elements;
+	}
 }

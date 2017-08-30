@@ -235,8 +235,23 @@ public class PatternResultDialog extends Dialog {
 				feedBackLabel.setText("Pattern Wizard Open!");
 				feedBackLabel.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLUE));
 				feedBackLabel.setVisible(true);
-				showWizard((PatternOccurrence) viewer.getElementAt(table.getSelectionIndex()), display);
+				// showWizard((PatternOccurrence)
+				// viewer.getElementAt(table.getSelectionIndex()), display);
 
+				PatternProjectUIController c = new PatternProjectUIController();
+
+				List<PatternOccurrence> occurrencies = new ArrayList<PatternOccurrence>();
+
+				String padrao = ((PatternOccurrence) viewer.getElementAt(table.getSelectionIndex())).getPattern().info()
+						.getAcronym();
+
+				for (PatternOccurrence o : result) {
+					if (o.getPattern().info().getAcronym().equalsIgnoreCase(padrao)) {
+						occurrencies.add(o);
+					}
+				}
+
+				c.createPatternDiagram(occurrencies, padrao);
 			}
 		});
 

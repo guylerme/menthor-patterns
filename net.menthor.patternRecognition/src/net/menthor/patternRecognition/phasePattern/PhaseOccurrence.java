@@ -9,7 +9,6 @@ import RefOntoUML.Association;
 import RefOntoUML.Element;
 import RefOntoUML.ObjectClass;
 import RefOntoUML.Phase;
-import RefOntoUML.Relationship;
 import RefOntoUML.parser.OntoUMLParser;
 import net.menthor.patternRecognition.PatternOccurrence;
 
@@ -17,14 +16,14 @@ import net.menthor.patternRecognition.PatternOccurrence;
 public class PhaseOccurrence extends PatternOccurrence {
 
 	Phase phase;
-	ArrayList<Relationship> relationshipList;
+	List<ObjectClass> generalizations;
 
 	public static int OPEN = 0, CLOSED = 1;
 
 	public PhaseOccurrence(Phase phase, List<ObjectClass> generalizations, PhasePattern ptn) throws Exception {
 		super(ptn);
 		this.phase = phase;
-
+		this.generalizations = generalizations;
 	}
 
 	@Override
@@ -53,7 +52,6 @@ public class PhaseOccurrence extends PatternOccurrence {
 	}
 
 	public List<Association> getOnlyAssociations() {
-		// TODO Implementar metodo para pegar as relacoes
 		List<Association> associations = new ArrayList<Association>();
 		for (Association a : parser.getAllInstances(Association.class)) {
 
@@ -69,4 +67,12 @@ public class PhaseOccurrence extends PatternOccurrence {
 		return associations;
 	}
 
+	@Override
+	public List<Element> getAllElements() {
+		List<Element> elements = new ArrayList<Element>();
+		elements.add(this.phase);
+		for (Element e : generalizations)
+			elements.add(e);
+		return elements;
+	}
 }

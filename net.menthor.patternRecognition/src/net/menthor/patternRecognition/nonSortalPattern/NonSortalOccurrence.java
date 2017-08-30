@@ -6,6 +6,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 
 import RefOntoUML.Classifier;
+import RefOntoUML.Element;
 import RefOntoUML.MixinClass;
 import RefOntoUML.parser.OntoUMLParser;
 import net.menthor.patternRecognition.PatternOccurrence;
@@ -48,6 +49,15 @@ public class NonSortalOccurrence extends PatternOccurrence {
 	public String getShortName() {
 
 		return parser.getStringRepresentation(nonSortal);
+	}
+
+	@Override
+	public List<Element> getAllElements() {
+		List<Element> elements = new ArrayList<Element>();
+		elements.add(this.nonSortal);
+		for (Element e : subTypes)
+			elements.add(e);
+		return elements;
 	}
 
 }
