@@ -24,6 +24,7 @@ package net.menthor.patternRecognition;
 import java.util.ArrayList;
 
 import net.menthor.patternRecognition.kindPattern.KindPattern;
+import net.menthor.patternRecognition.modePattern.ModePattern;
 import net.menthor.patternRecognition.nonSortalPattern.NonSortalPattern;
 import net.menthor.patternRecognition.parthoodStructurePattern.ParthoodStructurePattern;
 import net.menthor.patternRecognition.phasePattern.PhasePattern;
@@ -49,11 +50,12 @@ public class PatternList {
 	private ParthoodStructurePattern parthoodStructurePattern;
 	private RelatorPattern relatorPattern;
 	private NonSortalPattern nonSortalPattern;
+	private ModePattern modePattern;
 
 	public PatternList(KindPattern kindPattern, SubstanceSortalPattern substanceSortalPattern,
 			SubKindPattern subKindPattern, PhasePattern phasePattern, RolePattern rolePattern,
 			ParthoodStructurePattern parthoodStructurePattern, RelatorPattern relatorPattern,
-			NonSortalPattern nonSortalPattern) {
+			NonSortalPattern nonSortalPattern, ModePattern modePattern) {
 
 		this.kindPattern = kindPattern;
 		this.substanceSortalPattern = substanceSortalPattern;
@@ -63,6 +65,7 @@ public class PatternList {
 		this.parthoodStructurePattern = parthoodStructurePattern;
 		this.relatorPattern = relatorPattern;
 		this.nonSortalPattern = nonSortalPattern;
+		this.modePattern = modePattern;
 
 	}
 
@@ -80,6 +83,7 @@ public class PatternList {
 		result.addAll(parthoodStructurePattern.getOccurrences());
 		result.addAll(relatorPattern.getOccurrences());
 		result.addAll(nonSortalPattern.getOccurrences());
+		result.addAll(modePattern.getOccurrences());
 
 		return result;
 	}
@@ -146,6 +150,14 @@ public class PatternList {
 
 	public void setNonSortalPattern(NonSortalPattern nonSortalPattern) {
 		this.nonSortalPattern = nonSortalPattern;
+	}
+
+	public ModePattern getModePattern() {
+		return modePattern;
+	}
+
+	public void setModePattern(ModePattern modePattern) {
+		this.modePattern = modePattern;
 	}
 
 }
