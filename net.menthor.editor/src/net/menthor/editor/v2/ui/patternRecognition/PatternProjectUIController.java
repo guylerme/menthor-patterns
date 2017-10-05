@@ -4,6 +4,7 @@
 package net.menthor.editor.v2.ui.patternRecognition;
 
 import net.menthor.editor.ui.UmlProject;
+import net.menthor.editor.v2.OntoumlDiagram;
 import net.menthor.editor.v2.commanders.SelectCommanderMode;
 import net.menthor.editor.v2.ui.controller.BrowserUIController;
 import net.menthor.editor.v2.ui.controller.MessageUIController;
@@ -17,6 +18,7 @@ import net.menthor.patternRecognition.PatternOccurrence;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
+import org.tinyuml.draw.AbstractCompositeNode;
 import org.tinyuml.draw.DiagramElement;
 import org.tinyuml.draw.LineStyle;
 import org.tinyuml.ui.diagram.OntoumlEditor;
@@ -65,7 +67,6 @@ public class PatternProjectUIController {
 					TabbedAreaUIController.get().getOntoumlEditor(diagram));
 		}
 
-		TabbedAreaUIController.get().getOntoumlEditor(diagram).redraw();
 	}
 
 	private void addElementsToDiagram(StructureDiagram diagram, List<Element> allElements, OntoumlEditor d) {
@@ -182,9 +183,30 @@ public class PatternProjectUIController {
 	public void addClassToDiagram(RefOntoUML.Element element, OntoumlEditor d) {
 		UmlNode node = MenthorFactory.get().createNode((RefOntoUML.Type) element,
 				(RefOntoUML.Element) element.eContainer());
-		AddNodeOperation cmd = new AddNodeOperation(d, node, (int) (Math.random() * 100), (int) (Math.random() * 100));
+		// Find Diagram0
+		OntoumlDiagram diagram0 = this.getDiagram0();
+
+		double x = 0, y = 0;
+		// Get the position of the element
+		for (DiagramElement diagramElement : ((AbstractCompositeNode) diagram0).getChildren()) {
+			if (diagramElement.toString().equalsIgnoreCase(element.toString())) {
+				x = diagramElement.getAbsCenterX();
+				y = diagramElement.getAbsCenterY();
+			}
+		}
+		// Add the element to thw new diagram at the same position
+		AddNodeOperation cmd = new AddNodeOperation(d, node, x, y);
 		cmd.run();
 		addGeneralizationsToDiagram(element, d);
 		addAssociationsToDiagram(element, d);
+	}
+
+	private OntoumlDiagram getDiagram0() {
+		for (OntoumlDiagram diagram0 : ProjectUIController.get().getProject().getDiagrams()) {
+			if (diagram0.getName().equalsIgnoreCase("Diagram0"))
+				return diagram0;
+		}
+
+		return null;
 	}
 }
