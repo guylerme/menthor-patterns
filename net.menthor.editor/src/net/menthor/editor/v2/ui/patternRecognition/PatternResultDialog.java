@@ -103,6 +103,7 @@ public class PatternResultDialog extends Dialog {
 	protected Label searchLabel;
 	protected Text searchText;
 	protected Button btnNewDiagram;
+	protected Button btnGenerateHtml;
 
 	protected Table table;
 
@@ -160,6 +161,7 @@ public class PatternResultDialog extends Dialog {
 						.add(gl_container.createSequentialGroup().add(searchLabel).addPreferredGap(LayoutStyle.RELATED)
 								.add(searchText, GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE).add(66)
 								.add(btnNewDiagram, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+								.add(btnGenerateHtml, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
 								.addPreferredGap(LayoutStyle.RELATED))
 						.add(table, GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
 						.add(feedBackLabel, GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE))
@@ -172,6 +174,8 @@ public class PatternResultDialog extends Dialog {
 								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 
 								.add(btnNewDiagram, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
+								.add(btnGenerateHtml, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
 										Short.MAX_VALUE)))
 				.addPreferredGap(LayoutStyle.UNRELATED).add(table, GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
 				.addPreferredGap(LayoutStyle.RELATED).add(feedBackLabel).add(15)));
@@ -252,6 +256,36 @@ public class PatternResultDialog extends Dialog {
 				}
 
 				c.createPatternDiagram(occurrencies, padrao);
+			}
+		});
+		
+		btnGenerateHtml = new Button(container, SWT.NONE);
+		btnGenerateHtml.setText("Generate HTML");
+		btnGenerateHtml.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+
+				/*feedBackLabel.setVisible(false);
+				feedBackLabel.setText("Pattern Wizard Open!");
+				feedBackLabel.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLUE));
+				feedBackLabel.setVisible(true);
+				// showWizard((PatternOccurrence)
+				// viewer.getElementAt(table.getSelectionIndex()), display);
+
+				PatternProjectUIController c = new PatternProjectUIController();
+
+				List<PatternOccurrence> occurrencies = new ArrayList<PatternOccurrence>();
+
+				String padrao = ((PatternOccurrence) viewer.getElementAt(table.getSelectionIndex())).getPattern().info()
+						.getAcronym();
+
+				for (PatternOccurrence o : result) {
+					if (o.getPattern().info().getAcronym().equalsIgnoreCase(padrao)) {
+						occurrencies.add(o);
+					}
+				}
+
+				c.createPatternDiagram(occurrencies, padrao);*/
 			}
 		});
 
