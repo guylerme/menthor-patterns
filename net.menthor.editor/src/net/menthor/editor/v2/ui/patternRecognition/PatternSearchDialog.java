@@ -321,30 +321,30 @@ public class PatternSearchDialog extends JDialog {
 		});
 
 		lblKindPatternIco = new JButton();
-		lblKindPatternIco.setBounds(2, 8, 20, 17);
+		lblKindPatternIco.setBounds(6, 23, 20, 17);
 		lblKindPatternIco.setPreferredSize(new Dimension(20, 20));
 		lblKindPatternIco.setOpaque(false);
 		lblKindPatternIco.setContentAreaFilled(false);
 		lblKindPatternIco.setBorderPainted(false);
 		cbxKindPattern = new JCheckBox(
 				KindPattern.getPatternInfo().getAcronym() + ": " + KindPattern.getPatternInfo().getName());
-		cbxKindPattern.setBounds(34, 8, 195, 23);
+		cbxKindPattern.setBounds(33, 23, 195, 23);
 		cbxKindPattern.setPreferredSize(new Dimension(230, 20));
 		cbxKindPattern.setBackground(UIManager.getColor("Panel.background"));
 		lblKindPatternRes = new JLabel("");
-		lblKindPatternRes.setBounds(247, 11, 150, 20);
+		lblKindPatternRes.setBounds(240, 20, 150, 20);
 		lblKindPatternRes.setPreferredSize(new Dimension(110, 20));
 		lblKindPatternRes.setForeground(Color.BLUE);
 
 		lblSubstanceSortalPatternIco = new JButton();
-		lblSubstanceSortalPatternIco.setBounds(2, 37, 20, 29);
+		lblSubstanceSortalPatternIco.setBounds(6, 69, 20, 29);
 		lblSubstanceSortalPatternIco.setPreferredSize(new Dimension(20, 20));
 		lblSubstanceSortalPatternIco.setOpaque(false);
 		lblSubstanceSortalPatternIco.setContentAreaFilled(false);
 		lblSubstanceSortalPatternIco.setBorderPainted(false);
 		cbxSubstanceSortalPattern = new JCheckBox(SubstanceSortalPattern.getPatternInfo().getAcronym() + ": "
 				+ SubstanceSortalPattern.getPatternInfo().getName());
-		cbxSubstanceSortalPattern.setBounds(34, 37, 302, 23);
+		cbxSubstanceSortalPattern.setBounds(33, 69, 302, 23);
 		cbxSubstanceSortalPattern.setPreferredSize(new Dimension(230, 20));
 		cbxSubstanceSortalPattern.setBackground(UIManager.getColor("Panel.background"));
 		lblSubstanceSortalPatternRes = new JLabel("");
@@ -352,9 +352,15 @@ public class PatternSearchDialog extends JDialog {
 		lblSubstanceSortalPatternRes.setPreferredSize(new Dimension(110, 20));
 		lblSubstanceSortalPatternRes.setForeground(Color.BLUE);
 		rightPanel.setLayout(null);
+		lblRelatorPatternRes = new JLabel("");
+		lblRelatorPatternRes.setBounds(266, 213, 146, -18);
+		lblRelatorPatternRes.setPreferredSize(new Dimension(115, 20));
+		lblRelatorPatternRes.setForeground(Color.BLUE);
+		lblResultList.add(lblRelatorPatternRes);
+		rightPanel.add(lblRelatorPatternRes);
 
 		lblSubKindPatternIco = new JButton();
-		lblSubKindPatternIco.setBounds(33, 7, -21, 20);
+		lblSubKindPatternIco.setBounds(33, 57, -21, -29);
 		lblSubKindPatternIco.setPreferredSize(new Dimension(20, 20));
 		lblSubKindPatternIco.setOpaque(false);
 		lblSubKindPatternIco.setContentAreaFilled(false);
@@ -362,13 +368,13 @@ public class PatternSearchDialog extends JDialog {
 		rightPanel.add(lblSubKindPatternIco);
 		cbxSubKindPattern = new JCheckBox(
 				SubKindPattern.getPatternInfo().getAcronym() + ": " + SubKindPattern.getPatternInfo().getName());
-		cbxSubKindPattern.setBounds(33, 7, 246, 20);
+		cbxSubKindPattern.setBounds(33, 33, 246, 20);
 		cbxSubKindPattern.setPreferredSize(new Dimension(230, 20));
 		cbxSubKindPattern.setBackground(UIManager.getColor("Panel.background"));
 		rightPanel.add(cbxSubKindPattern);
 
 		lblPhasePatternIco = new JButton();
-		lblPhasePatternIco.setBounds(6, 32, 20, 20);
+		lblPhasePatternIco.setBounds(16, 192, 20, 20);
 		lblPhasePatternIco.setPreferredSize(new Dimension(20, 20));
 		lblPhasePatternIco.setOpaque(false);
 		lblPhasePatternIco.setContentAreaFilled(false);
@@ -376,18 +382,18 @@ public class PatternSearchDialog extends JDialog {
 		rightPanel.add(lblPhasePatternIco);
 		cbxPhasePattern = new JCheckBox(
 				PhasePattern.getPatternInfo().getAcronym() + ": " + PhasePattern.getPatternInfo().getName());
-		cbxPhasePattern.setBounds(33, 32, 230, 20);
+		cbxPhasePattern.setBounds(33, 86, 230, 20);
 		cbxPhasePattern.setPreferredSize(new Dimension(230, 20));
 		cbxPhasePattern.setBackground(UIManager.getColor("Panel.background"));
 		rightPanel.add(cbxPhasePattern);
 		lblPhasePatternRes = new JLabel("");
-		lblPhasePatternRes.setBounds(242, 32, 174, 20);
+		lblPhasePatternRes.setBounds(240, 86, 174, 20);
 		lblPhasePatternRes.setPreferredSize(new Dimension(110, 20));
 		lblPhasePatternRes.setForeground(Color.BLUE);
 		rightPanel.add(lblPhasePatternRes);
 
 		lblRolePatternIco = new JButton();
-		lblRolePatternIco.setBounds(6, 57, 20, 20);
+		lblRolePatternIco.setBounds(16, 139, 20, 20);
 		lblRolePatternIco.setPreferredSize(new Dimension(20, 20));
 		lblRolePatternIco.setOpaque(false);
 		lblRolePatternIco.setContentAreaFilled(false);
@@ -395,76 +401,49 @@ public class PatternSearchDialog extends JDialog {
 		rightPanel.add(lblRolePatternIco);
 		cbxRolePattern = new JCheckBox(
 				RolePattern.getPatternInfo().getAcronym() + ": " + RolePattern.getPatternInfo().getName());
-		cbxRolePattern.setBounds(33, 57, 230, 20);
+		cbxRolePattern.setBounds(33, 139, 230, 20);
 		cbxRolePattern.setPreferredSize(new Dimension(230, 20));
 		cbxRolePattern.setBackground(UIManager.getColor("Panel.background"));
 		rightPanel.add(cbxRolePattern);
 		lblRolePatternRes = new JLabel("");
-		lblRolePatternRes.setBounds(230, 57, 161, 20);
+		lblRolePatternRes.setBounds(240, 139, 161, 20);
 		lblRolePatternRes.setPreferredSize(new Dimension(110, 20));
 		lblRolePatternRes.setForeground(Color.BLUE);
 		rightPanel.add(lblRolePatternRes);
 		cbxParthoodStructurePattern = new JCheckBox(ParthoodStructurePattern.getPatternInfo().getAcronym() + ": "
 				+ ParthoodStructurePattern.getPatternInfo().getName());
-		cbxParthoodStructurePattern.setBounds(34, 65, 302, 23);
+		cbxParthoodStructurePattern.setBounds(33, 115, 302, 23);
 		cbxParthoodStructurePattern.setPreferredSize(new Dimension(230, 20));
 		cbxParthoodStructurePattern.setBackground(UIManager.getColor("Panel.background"));
-
-		lblParthoodStructurePatternIco = new JButton();
-		lblParthoodStructurePatternIco.setBounds(1213, 90, 75, 29);
-		lblParthoodStructurePatternIco.setPreferredSize(new Dimension(20, 20));
-		lblParthoodStructurePatternIco.setOpaque(false);
 		lblParthoodStructurePatternRes = new JLabel("");
 		lblParthoodStructurePatternRes.setPreferredSize(new Dimension(110, 20));
 		lblParthoodStructurePatternRes.setForeground(Color.BLUE);
 
 		cbxRelatorPattern = new JCheckBox(
 				RelatorPattern.getPatternInfo().getAcronym() + ": " + RelatorPattern.getPatternInfo().getName());
-		cbxRelatorPattern.setBounds(33, 79, 230, 20);
+		cbxRelatorPattern.setBounds(33, 192, 230, 20);
 		cbxRelatorPattern.setPreferredSize(new Dimension(225, 20));
 		cbxRelatorPattern.setBackground(UIManager.getColor("Panel.background"));
-		lblRelatorPatternRes = new JLabel("");
-		lblRelatorPatternRes.setBounds(266, 95, 150, -18);
-		lblRelatorPatternRes.setPreferredSize(new Dimension(115, 20));
-		lblRelatorPatternRes.setForeground(Color.BLUE);
 		lblRelatorPatternIco = new JButton();
 		lblRelatorPatternIco.setBounds(33, 95, -21, -18);
 		lblRelatorPatternIco.setPreferredSize(new Dimension(20, 20));
 		lblRelatorPatternIco.setOpaque(false);
 		lblRelatorPatternIco.setContentAreaFilled(false);
 		lblRelatorPatternIco.setBorderPainted(false);
-
-		cbxNonSortalPattern = new JCheckBox(
-				NonSortalPattern.getPatternInfo().getAcronym() + ": " + NonSortalPattern.getPatternInfo().getName());
-		cbxNonSortalPattern.setBounds(33, 90, 303, 20);
-		cbxNonSortalPattern.setPreferredSize(new Dimension(225, 20));
-		cbxNonSortalPattern.setBackground(UIManager.getColor("Panel.background"));
 		lblNonSortalPatternRes = new JLabel("");
-		lblNonSortalPatternRes.setBounds(299, 90, 93, 20);
+		lblNonSortalPatternRes.setBounds(299, 161, 93, 20);
 		lblNonSortalPatternRes.setPreferredSize(new Dimension(115, 20));
 		lblNonSortalPatternRes.setForeground(Color.BLUE);
-		lblNonSortalPatternIco = new JButton();
-		lblNonSortalPatternIco.setBounds(33, 110, -21, -22);
-		lblNonSortalPatternIco.setPreferredSize(new Dimension(20, 20));
-		lblNonSortalPatternIco.setOpaque(false);
-		lblNonSortalPatternIco.setContentAreaFilled(false);
-		lblNonSortalPatternIco.setBorderPainted(false);
 
 		cbxModePattern = new JCheckBox(
 				ModePattern.getPatternInfo().getAcronym() + ": " + ModePattern.getPatternInfo().getName());
-		cbxModePattern.setBounds(33, 110, 303, 20);
+		cbxModePattern.setBounds(33, 204, 303, 20);
 		cbxModePattern.setPreferredSize(new Dimension(225, 20));
 		cbxModePattern.setBackground(UIManager.getColor("Panel.background"));
 		lblModePatternRes = new JLabel("");
-		lblModePatternRes.setBounds(250, 113, 142, 17);
+		lblModePatternRes.setBounds(250, 207, 142, 17);
 		lblModePatternRes.setPreferredSize(new Dimension(115, 20));
 		lblModePatternRes.setForeground(Color.BLUE);
-		lblModePatternIco = new JButton();
-		lblModePatternIco.setBounds(33, 136, -21, -17);
-		lblModePatternIco.setPreferredSize(new Dimension(20, 20));
-		lblModePatternIco.setOpaque(false);
-		lblModePatternIco.setContentAreaFilled(false);
-		lblModePatternIco.setBorderPainted(false);
 
 		JPanel buttonPane = new JPanel();
 		getContentPane().add(buttonPane, BorderLayout.CENTER);
@@ -501,7 +480,6 @@ public class PatternSearchDialog extends JDialog {
 		cbxList.add(cbxRolePattern);
 		cbxList.add(cbxParthoodStructurePattern);
 		cbxList.add(cbxRelatorPattern);
-		cbxList.add(cbxNonSortalPattern);
 		cbxList.add(cbxModePattern);
 
 		lblIcoList.add(lblKindPatternIco);
@@ -509,17 +487,13 @@ public class PatternSearchDialog extends JDialog {
 		lblIcoList.add(lblSubKindPatternIco);
 		lblIcoList.add(lblPhasePatternIco);
 		lblIcoList.add(lblRolePatternIco);
-		lblIcoList.add(lblParthoodStructurePatternIco);
 		lblIcoList.add(lblRelatorPatternIco);
-		lblIcoList.add(lblNonSortalPatternIco);
-		lblIcoList.add(lblModePatternIco);
 
 		lblResultList.add(lblKindPatternRes);
 		lblResultList.add(lblSubstanceSortalPatternRes);
 		lblResultList.add(lblPhasePatternRes);
 		lblResultList.add(lblRolePatternRes);
 		lblResultList.add(lblParthoodStructurePatternRes);
-		lblResultList.add(lblRelatorPatternRes);
 		lblResultList.add(lblNonSortalPatternRes);
 		lblResultList.add(lblModePatternRes);
 
@@ -528,32 +502,60 @@ public class PatternSearchDialog extends JDialog {
 		contentPanel.add(panel);
 		contentPanel.add(leftPanel);
 		leftPanel.setLayout(null);
+		lblNonSortalPatternIco = new JButton();
+		lblNonSortalPatternIco.setBounds(28, 179, -21, -17);
+		lblNonSortalPatternIco.setPreferredSize(new Dimension(20, 20));
+		lblNonSortalPatternIco.setOpaque(false);
+		lblNonSortalPatternIco.setContentAreaFilled(false);
+		lblNonSortalPatternIco.setBorderPainted(false);
+		lblIcoList.add(lblNonSortalPatternIco);
+
+		leftPanel.add(lblNonSortalPatternIco);
 		leftPanel.add(lblSubstanceSortalPatternIco);
 		leftPanel.add(lblKindPatternIco);
+
+		lblParthoodStructurePatternIco = new JButton();
+		lblParthoodStructurePatternIco.setBounds(6, 122, 20, 17);
+		lblParthoodStructurePatternIco.setPreferredSize(new Dimension(20, 20));
+		lblParthoodStructurePatternIco.setOpaque(false);
+		lblParthoodStructurePatternIco.setContentAreaFilled(false);
+		lblParthoodStructurePatternIco.setBorderPainted(false);
+		lblIcoList.add(lblParthoodStructurePatternIco);
+		leftPanel.add(lblParthoodStructurePatternIco);
+		lblModePatternIco = new JButton();
+		lblModePatternIco.setBounds(36, 221, -29, -17);
+		lblModePatternIco.setPreferredSize(new Dimension(20, 20));
+		lblModePatternIco.setOpaque(false);
+		lblModePatternIco.setContentAreaFilled(false);
+		lblModePatternIco.setBorderPainted(false);
+		lblIcoList.add(lblModePatternIco);
+
+		leftPanel.add(lblModePatternIco);
 		leftPanel.add(cbxSubstanceSortalPattern);
 		leftPanel.add(cbxKindPattern);
 		leftPanel.add(cbxParthoodStructurePattern);
+
+		cbxNonSortalPattern = new JCheckBox(
+				NonSortalPattern.getPatternInfo().getAcronym() + ": " + NonSortalPattern.getPatternInfo().getName());
+		cbxNonSortalPattern.setBounds(33, 161, 303, 20);
+		cbxNonSortalPattern.setPreferredSize(new Dimension(225, 20));
+		cbxNonSortalPattern.setBackground(UIManager.getColor("Panel.background"));
+		cbxList.add(cbxNonSortalPattern);
+		leftPanel.add(cbxNonSortalPattern);
 		leftPanel.add(lblSubstanceSortalPatternRes);
-		leftPanel.add(lblParthoodStructurePatternIco);
 		leftPanel.add(lblKindPatternRes);
-		lblSubKindPatternRes = new JLabel("");
-		lblSubKindPatternRes.setBounds(354, 40, 38, 20);
-		leftPanel.add(lblSubKindPatternRes);
-		lblSubKindPatternRes.setPreferredSize(new Dimension(110, 20));
-		lblSubKindPatternRes.setForeground(Color.BLUE);
-		lblResultList.add(lblSubKindPatternRes);
 		contentPanel.add(rightPanel);
 		contentPanel.add(panel_1);
 
 		rightPanel.add(lblRelatorPatternIco);
 		rightPanel.add(cbxRelatorPattern);
-		rightPanel.add(lblRelatorPatternRes);
-
-		leftPanel.add(lblNonSortalPatternIco);
-		leftPanel.add(cbxNonSortalPattern);
+		lblSubKindPatternRes = new JLabel("");
+		lblSubKindPatternRes.setBounds(276, 33, 98, 20);
+		rightPanel.add(lblSubKindPatternRes);
+		lblSubKindPatternRes.setPreferredSize(new Dimension(110, 20));
+		lblSubKindPatternRes.setForeground(Color.BLUE);
+		lblResultList.add(lblSubKindPatternRes);
 		leftPanel.add(lblNonSortalPatternRes);
-
-		leftPanel.add(lblModePatternIco);
 		leftPanel.add(cbxModePattern);
 		leftPanel.add(lblModePatternRes);
 
