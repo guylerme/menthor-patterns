@@ -3,20 +3,6 @@
  */
 package net.menthor.editor.v2.ui.patternRecognition;
 
-import net.menthor.editor.ui.UmlProject;
-import net.menthor.editor.v2.commanders.SelectCommanderMode;
-import net.menthor.editor.v2.ui.controller.BrowserUIController;
-import net.menthor.editor.v2.ui.controller.ExportUIController;
-import net.menthor.editor.v2.ui.controller.MessageUIController;
-import net.menthor.editor.v2.ui.controller.ProjectUIController;
-import net.menthor.editor.v2.ui.controller.SplitPaneUIController;
-import net.menthor.editor.v2.ui.controller.TabbedAreaUIController;
-import net.menthor.editor.v2.OntoumlDiagram;
-import net.menthor.editor.v2.ui.operation.diagram.AddNodeOperation;
-import net.menthor.editor.v2.util.Util;
-import net.menthor.patternRecognition.PatternOccurrence;
-import org.tinyuml.draw.AbstractCompositeNode;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -24,15 +10,16 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EObject;
+import org.tinyuml.draw.AbstractCompositeNode;
 import org.tinyuml.draw.DiagramElement;
 import org.tinyuml.draw.LineStyle;
 import org.tinyuml.ui.diagram.OntoumlEditor;
 import org.tinyuml.umldraw.AssociationElement;
+import org.tinyuml.umldraw.AssociationElement.ReadingDesign;
 import org.tinyuml.umldraw.ClassElement;
 import org.tinyuml.umldraw.MenthorFactory;
 import org.tinyuml.umldraw.OccurenceMap;
 import org.tinyuml.umldraw.StructureDiagram;
-import org.tinyuml.umldraw.AssociationElement.ReadingDesign;
 import org.tinyuml.umldraw.shared.UmlConnection;
 import org.tinyuml.umldraw.shared.UmlNode;
 
@@ -46,6 +33,18 @@ import RefOntoUML.NamedElement;
 import RefOntoUML.Package;
 import RefOntoUML.Type;
 import RefOntoUML.parser.OntoUMLParser;
+import net.menthor.editor.ui.UmlProject;
+import net.menthor.editor.v2.OntoumlDiagram;
+import net.menthor.editor.v2.commanders.SelectCommanderMode;
+import net.menthor.editor.v2.ui.controller.BrowserUIController;
+import net.menthor.editor.v2.ui.controller.ExportUIController;
+import net.menthor.editor.v2.ui.controller.MessageUIController;
+import net.menthor.editor.v2.ui.controller.ProjectUIController;
+import net.menthor.editor.v2.ui.controller.SplitPaneUIController;
+import net.menthor.editor.v2.ui.controller.TabbedAreaUIController;
+import net.menthor.editor.v2.ui.operation.diagram.AddNodeOperation;
+import net.menthor.editor.v2.util.Util;
+import net.menthor.patternRecognition.PatternOccurrence;
 
 /**
  * @author Guylerme Figueiredo
@@ -72,7 +71,6 @@ public class PatternProjectUIController {
 					TabbedAreaUIController.get().getOntoumlEditor(diagram));
 		}
 
-		TabbedAreaUIController.get().getOntoumlEditor(diagram).redraw();
 	}
 
 	public void createPatternsHTML(HashMap<String, List<PatternOccurrence>> occurrenciesPatterns) {
@@ -247,14 +245,11 @@ public class PatternProjectUIController {
 	}
 
 	private OntoumlDiagram getDiagram0() {
-
 		for (OntoumlDiagram diagram0 : ProjectUIController.get().getProject().getDiagrams()) {
 			if (diagram0.getName().equalsIgnoreCase("Diagram0"))
 				return diagram0;
 		}
 
 		return null;
-
 	}
-
 }
