@@ -22,6 +22,7 @@ package net.menthor.editor.v2.ui.patternRecognition;
  */
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -39,7 +40,6 @@ import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
@@ -56,6 +56,7 @@ import org.eclipse.wb.swt.layout.grouplayout.GroupLayout;
 import org.eclipse.wb.swt.layout.grouplayout.LayoutStyle;
 
 import net.menthor.editor.v2.ui.controller.ProjectUIController;
+import net.menthor.patternRecognition.Pattern;
 import net.menthor.patternRecognition.PatternList;
 import net.menthor.patternRecognition.PatternOccurrence;
 import net.menthor.patternRecognition.kindPattern.KindOccurrence;
@@ -173,8 +174,7 @@ public class PatternResultDialog extends Dialog {
 						.add(gl_container.createParallelGroup(GroupLayout.BASELINE).add(searchText,
 								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 
-								.add(btnNewDiagram, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
-										Short.MAX_VALUE)
+								.add(btnNewDiagram, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.add(btnGenerateHtml, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
 										Short.MAX_VALUE)))
 				.addPreferredGap(LayoutStyle.UNRELATED).add(table, GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
@@ -244,48 +244,60 @@ public class PatternResultDialog extends Dialog {
 
 				PatternProjectUIController c = new PatternProjectUIController();
 
-				List<PatternOccurrence> occurrencies = new ArrayList<PatternOccurrence>();
+				List<PatternOccurrence> occurrencies;
 
-				String padrao = ((PatternOccurrence) viewer.getElementAt(table.getSelectionIndex())).getPattern().info()
-						.getAcronym();
+				for (int i : table.getSelectionIndices()) {
 
-				for (PatternOccurrence o : result) {
-					if (o.getPattern().info().getAcronym().equalsIgnoreCase(padrao)) {
-						occurrencies.add(o);
+					occurrencies = new ArrayList<PatternOccurrence>();
+
+					String padrao = ((PatternOccurrence) viewer.getElementAt(i)).getPattern().info().getAcronym();
+
+					for (PatternOccurrence o : result) {
+						if (o.getPattern().info().getAcronym().equalsIgnoreCase(padrao)) {
+							occurrencies.add(o);
+						}
 					}
+
+					c.createPatternDiagram(occurrencies, padrao);
 				}
 
-				c.createPatternDiagram(occurrencies, padrao);
+				PatternResultDialog.this.cancelPressed();
 			}
 		});
-		
+
 		btnGenerateHtml = new Button(container, SWT.NONE);
 		btnGenerateHtml.setText("Generate HTML");
 		btnGenerateHtml.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 
-				/*feedBackLabel.setVisible(false);
-				feedBackLabel.setText("Pattern Wizard Open!");
+				feedBackLabel.setVisible(false);
+				feedBackLabel.setText("HTML Generation Open!");
 				feedBackLabel.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLUE));
 				feedBackLabel.setVisible(true);
-				// showWizard((PatternOccurrence)
-				// viewer.getElementAt(table.getSelectionIndex()), display);
 
 				PatternProjectUIController c = new PatternProjectUIController();
 
-				List<PatternOccurrence> occurrencies = new ArrayList<PatternOccurrence>();
+				List<PatternOccurrence> occurrencies;
 
-				String padrao = ((PatternOccurrence) viewer.getElementAt(table.getSelectionIndex())).getPattern().info()
-						.getAcronym();
+				HashMap<String, List<PatternOccurrence>> occurrenciesPatterns = new HashMap<String, List<PatternOccurrence>>();
 
-				for (PatternOccurrence o : result) {
-					if (o.getPattern().info().getAcronym().equalsIgnoreCase(padrao)) {
-						occurrencies.add(o);
+				for (int i = 0; i < table.getItems().length; i++) {
+
+					occurrencies = new ArrayList<PatternOccurrence>();
+
+					String padrao = ((PatternOccurrence) viewer.getElementAt(i)).getPattern().info().getAcronym();
+
+					for (PatternOccurrence o : result) {
+						if (o.getPattern().info().getAcronym().equalsIgnoreCase(padrao)) {
+							occurrencies.add(o);
+						}
 					}
-				}
+					occurrenciesPatterns.put(padrao, occurrencies);
 
-				c.createPatternDiagram(occurrencies, padrao);*/
+				}
+				c.createPatternsHTML(occurrenciesPatterns);
+				PatternResultDialog.this.cancelPressed();
 			}
 		});
 
@@ -327,7 +339,16 @@ public class PatternResultDialog extends Dialog {
 		// Get the content for the viewer, setInput will call getElements in the
 		// contentProvider
 		viewer.setContentProvider(new ArrayContentProvider());
-		viewer.setInput(result);
+
+		// eliminar valores repatidos na lista
+		ArrayList<PatternOccurrence> resultNew = new ArrayList<PatternOccurrence>();
+
+		for (PatternOccurrence p : result) {
+
+			if (!existsInList(p.getPattern(), resultNew))
+				resultNew.add(p);
+		}
+		viewer.setInput(resultNew);
 
 		// Define layout for the viewer
 		GridData gridData = new GridData();
@@ -340,6 +361,14 @@ public class PatternResultDialog extends Dialog {
 
 	}
 
+	private boolean existsInList(Pattern<?> pattern, ArrayList<PatternOccurrence> resultNew) {
+		for (PatternOccurrence p : resultNew) {
+			if (p.getPattern() == pattern)
+				return true;
+		}
+		return false;
+	}
+
 	public TableViewer getViewer() {
 		return viewer;
 	}
@@ -348,26 +377,27 @@ public class PatternResultDialog extends Dialog {
 	 * Create the columns for the table
 	 */
 	private void createColumns(final Composite parent, final TableViewer viewer) {
-		String[] titles = { "Name", "Type" };
-		int[] bounds = { 350, 140 };
+		String[] titles = { "Type" };
+		int[] bounds = { 350 };
 
-		// First column is for a short description of the pattern
-		TableViewerColumn col = createTableViewerColumn(titles[0], bounds[0], 0);
-
-		col.setLabelProvider(new ColumnLabelProvider() {
-			@Override
-			public String getText(Object element) {
-				return ((PatternOccurrence) element).getShortName();
-			}
-
-			@Override
-			public Image getImage(Object element) {
-				return super.getImage(element);
-			}
-		});
+		// // First column is for a short description of the pattern
+		// TableViewerColumn col = createTableViewerColumn(titles[0], bounds[0],
+		// 0);
+		//
+		// col.setLabelProvider(new ColumnLabelProvider() {
+		// @Override
+		// public String getText(Object element) {
+		// return ((PatternOccurrence) element).getShortName();
+		// }
+		//
+		// @Override
+		// public Image getImage(Object element) {
+		// return super.getImage(element);
+		// }
+		// });
 
 		// Sets the type of the pattern
-		col = createTableViewerColumn(titles[1], bounds[1], 1);
+		TableViewerColumn col = createTableViewerColumn(titles[0], bounds[0], 0);
 
 		col.setLabelProvider(new ColumnLabelProvider() {
 			@Override
@@ -438,11 +468,7 @@ public class PatternResultDialog extends Dialog {
 		viewer.refresh();
 	}
 
-	public WizardDialog getWizardDialog(final PatternOccurrence apOccur,
-			Display d) {/**
-						 * TODO Definir a lista dos padroes para adequar as
-						 * telas
-						 */
+	public WizardDialog getWizardDialog(final PatternOccurrence apOccur, Display d) {
 		WizardDialog wizardDialog = null;
 
 		if (apOccur instanceof KindOccurrence)

@@ -6,15 +6,22 @@ package net.menthor.editor.v2.ui.patternRecognition;
 import net.menthor.editor.ui.UmlProject;
 import net.menthor.editor.v2.commanders.SelectCommanderMode;
 import net.menthor.editor.v2.ui.controller.BrowserUIController;
+import net.menthor.editor.v2.ui.controller.ExportUIController;
 import net.menthor.editor.v2.ui.controller.MessageUIController;
 import net.menthor.editor.v2.ui.controller.ProjectUIController;
 import net.menthor.editor.v2.ui.controller.SplitPaneUIController;
 import net.menthor.editor.v2.ui.controller.TabbedAreaUIController;
+import net.menthor.editor.v2.OntoumlDiagram;
 import net.menthor.editor.v2.ui.operation.diagram.AddNodeOperation;
 import net.menthor.editor.v2.util.Util;
 import net.menthor.patternRecognition.PatternOccurrence;
+import org.tinyuml.draw.AbstractCompositeNode;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EObject;
 import org.tinyuml.draw.DiagramElement;
@@ -66,6 +73,45 @@ public class PatternProjectUIController {
 		}
 
 		TabbedAreaUIController.get().getOntoumlEditor(diagram).redraw();
+	}
+
+	public void createPatternsHTML(HashMap<String, List<PatternOccurrence>> occurrenciesPatterns) {
+
+		UmlProject project = ProjectUIController.get().getProject();
+		StructureDiagram diagram;
+		Package container;
+
+		List<PatternOccurrence> occurrencies;
+		String padrao;
+
+		List<StructureDiagram> diagrams = new ArrayList<StructureDiagram>();
+
+		Iterator<Entry<String, List<PatternOccurrence>>> it = occurrenciesPatterns.entrySet().iterator();
+		while (it.hasNext()) {
+			Entry<String, List<PatternOccurrence>> pair = it.next();
+			padrao = (String) pair.getKey();
+			occurrencies = (List<PatternOccurrence>) pair.getValue();
+
+			container = (Package) (BrowserUIController.get().root()).getUserObject();
+
+			diagram = new StructureDiagram(project);
+			diagram.setContainer(container);
+			setDefaultDiagramSize(diagram);
+			diagram.setLabelText("HTMLDiagram" + padrao);
+			project.addDiagram(diagram);
+			project.saveDiagramNeeded(diagram, false);
+			TabbedAreaUIController.get().add(diagram);
+			BrowserUIController.get().add(diagram, container);
+
+			for (PatternOccurrence o : occurrencies) {
+				this.addElementsToDiagram(diagram, o.getAllElements(),
+						TabbedAreaUIController.get().getOntoumlEditor(diagram));
+			}
+
+			diagrams.add(diagram);
+		}
+
+		ExportUIController.get().exportToHtml(diagrams);
 	}
 
 	private void addElementsToDiagram(StructureDiagram diagram, List<Element> allElements, OntoumlEditor d) {
@@ -182,9 +228,33 @@ public class PatternProjectUIController {
 	public void addClassToDiagram(RefOntoUML.Element element, OntoumlEditor d) {
 		UmlNode node = MenthorFactory.get().createNode((RefOntoUML.Type) element,
 				(RefOntoUML.Element) element.eContainer());
-		AddNodeOperation cmd = new AddNodeOperation(d, node, (int) (Math.random() * 100), (int) (Math.random() * 100));
+		// Find Diagram0
+		OntoumlDiagram diagram0 = this.getDiagram0();
+
+		double x = 0, y = 0;
+		// Get the position of the element
+		for (DiagramElement diagramElement : ((AbstractCompositeNode) diagram0).getChildren()) {
+			if (diagramElement.toString().equalsIgnoreCase(element.toString())) {
+				x = diagramElement.getAbsCenterX();
+				y = diagramElement.getAbsCenterY();
+			}
+		}
+		// Add the element to thw new diagram at the same position
+		AddNodeOperation cmd = new AddNodeOperation(d, node, x, y);
 		cmd.run();
 		addGeneralizationsToDiagram(element, d);
 		addAssociationsToDiagram(element, d);
 	}
+
+	private OntoumlDiagram getDiagram0() {
+
+		for (OntoumlDiagram diagram0 : ProjectUIController.get().getProject().getDiagrams()) {
+			if (diagram0.getName().equalsIgnoreCase("Diagram0"))
+				return diagram0;
+		}
+
+		return null;
+
+	}
+
 }

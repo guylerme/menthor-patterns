@@ -132,7 +132,8 @@ public class Util {
 		fileChooser.addChoosableFileFilter(filter);
 		if(SystemUtil.onWindows()) fileChooser.setFileFilter(filter);
 		fileChooser.setAcceptAllFileFilterUsed(false);
-		if (fileChooser.showDialog(parent, "Ok") == JFileChooser.APPROVE_OPTION) {
+		int returnVal = fileChooser.showDialog(parent, "Ok");
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fileChooser.getSelectedFile();
 			if(!file.getName().endsWith("."+fileExtension)) {
 				file = new File(file.getCanonicalFile() + "."+fileExtension);

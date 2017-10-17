@@ -2,6 +2,7 @@ package net.menthor.editor.v2.ui.controller;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
 
 /**
  * ============================================================================================
@@ -25,6 +26,7 @@ import java.awt.image.BufferedImage;
  */
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -35,6 +37,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.tinyuml.ui.diagram.OntoumlEditor;
+import org.tinyuml.umldraw.StructureDiagram;
 
 import net.menthor.ontouml2ecore.OntoUML2Ecore;
 import net.menthor.ontouml2ecore.OntoUML2EcoreOption;
@@ -47,126 +50,216 @@ import net.menthor.editor.v2.util.Util;
 public class ExportUIController {
 
 	FrameUI frame = FrameUI.get();
-	
+
 	// -------- Lazy Initialization
 
 	private static class ExportLoader {
-        private static final ExportUIController INSTANCE = new ExportUIController();
-    }	
-	public static ExportUIController get() { 
-		return ExportLoader.INSTANCE; 
-	}	
-    private ExportUIController() {
-        if (ExportLoader.INSTANCE != null) throw new IllegalStateException(this.getClass().getName()+" already instantiated");
-    }		
-    
-    // ----------------------------
-	
+		private static final ExportUIController INSTANCE = new ExportUIController();
+	}
+
+	public static ExportUIController get() {
+		return ExportLoader.INSTANCE;
+	}
+
+	private ExportUIController() {
+		if (ExportLoader.INSTANCE != null)
+			throw new IllegalStateException(this.getClass().getName() + " already instantiated");
+	}
+
+	// ----------------------------
+
 	public String lastRefOntoPath = new String();
 	public String lastUmlPath = new String();
 	public String lastEcorePath = new String();
 	public String lastPngPath = new String();
-	
-	public File chooseRefOntoumlFile() throws IOException{
-		return Util.chooseFile(frame, lastRefOntoPath, "Export - RefOntouml", "Reference OntoUML (*.refontouml)", "refontouml",true);
+	public String lastHtmlPath = new String();
+
+	public File chooseRefOntoumlFile() throws IOException {
+		return Util.chooseFile(frame, lastRefOntoPath, "Export - RefOntouml", "Reference OntoUML (*.refontouml)",
+				"refontouml", true);
 	}
-	
-	public File chooseEcoreFile() throws IOException{
-		return Util.chooseFile(frame, lastEcorePath, "Export - Ecore", "Ecore (*.ecore)", "ecore",true);
+
+	public File chooseEcoreFile() throws IOException {
+		return Util.chooseFile(frame, lastEcorePath, "Export - Ecore", "Ecore (*.ecore)", "ecore", true);
 	}
-	
-	public File chooseUMLFile() throws IOException{
-		return Util.chooseFile(frame, lastUmlPath, "Export - UML", "UML2 (*.uml)", "uml",true);
+
+	public File chooseUMLFile() throws IOException {
+		return Util.chooseFile(frame, lastUmlPath, "Export - UML", "UML2 (*.uml)", "uml", true);
 	}
-	
-	public File choosePNGFile() throws IOException{
-		return Util.chooseFile(frame, lastPngPath, "Export - PNG", "Portable Network Graphics (*.png)", "png",true);
+
+	public File choosePNGFile() throws IOException {
+		return Util.chooseFile(frame, lastPngPath, "Export - PNG", "Portable Network Graphics (*.png)", "png", true);
 	}
-	
-	public void exportToReferenceOntouml(){				
+
+	public File chooseHTMLFile() throws IOException {
+		return Util.chooseFile(frame, lastHtmlPath, "Export - HTML", "HyperText Markup Language  (*.html)", "html",
+				true);
+	}
+
+	public void exportToReferenceOntouml() {
 		try {
 			File file = chooseRefOntoumlFile();
-			if(file==null) return;
+			if (file == null)
+				return;
 			CursorUIController.get().waitCursor();
 			RefOntoUML.Package model = ProjectUIController.get().getProject().getModel();
-			//save to an external resource
+			// save to an external resource
 			ResourceSet rset = MenthorDomain.get().getResourceSet();
 			Resource r = rset.createResource(URI.createFileURI(file.getAbsolutePath()));
 			r.getContents().add(ProjectUIController.get().getProject().getModel());
-			try{
-		    	r.save(Collections.emptyMap());
-		    }catch(IOException e){
-		    	e.printStackTrace();
-		    }
-			//bring back reference in memory to the menthor resource
-			ProjectUIController.get().getProject().getResource().getContents().add(model);					
-			lastRefOntoPath = file.getAbsolutePath();			
-			MessageUIController.get().showSuccess("Export - RefOntouml", "Project successfully exported to Reference OntoUML.\nLocation: "+lastRefOntoPath);
+			try {
+				r.save(Collections.emptyMap());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			// bring back reference in memory to the menthor resource
+			ProjectUIController.get().getProject().getResource().getContents().add(model);
+			lastRefOntoPath = file.getAbsolutePath();
+			MessageUIController.get().showSuccess("Export - RefOntouml",
+					"Project successfully exported to Reference OntoUML.\nLocation: " + lastRefOntoPath);
 		} catch (Exception ex) {
-			MessageUIController.get().showError(ex,"Export - RefOntouml","Current project could not be exported to Reference OntoUML.");
-		}		
+			MessageUIController.get().showError(ex, "Export - RefOntouml",
+					"Current project could not be exported to Reference OntoUML.");
+		}
 		CursorUIController.get().defaultCursor();
-	}	
-		
-	public void exportToEcore(){
+	}
+
+	public void exportToEcore() {
 		try {
 			File file = chooseEcoreFile();
-			if(file==null) return;
-			CursorUIController.get().waitCursor();				
-			OntoUML2EcoreOption opt = new OntoUML2EcoreOption(false,false);
-			OntoUML2Ecore.convertToEcore(ProjectUIController.get().getProject().getRefParser(), file.getAbsolutePath(), opt);
-			lastEcorePath = file.getAbsolutePath();				
-			MessageUIController.get().showSuccess("Export - Ecore", "Project successfully exported to Ecore.\nLocation: "+lastEcorePath);										
+			if (file == null)
+				return;
+			CursorUIController.get().waitCursor();
+			OntoUML2EcoreOption opt = new OntoUML2EcoreOption(false, false);
+			OntoUML2Ecore.convertToEcore(ProjectUIController.get().getProject().getRefParser(), file.getAbsolutePath(),
+					opt);
+			lastEcorePath = file.getAbsolutePath();
+			MessageUIController.get().showSuccess("Export - Ecore",
+					"Project successfully exported to Ecore.\nLocation: " + lastEcorePath);
 		} catch (Exception ex) {
-			MessageUIController.get().showError(ex, "Export - Ecore", "Current project could not be exported to Ecore");									
-		}		
-		CursorUIController.get().defaultCursor();		
-	}
-	
-	public void exportToProfileUML(){		
-		try {
-			File file = chooseUMLFile();
-			if(file==null) return;
-			CursorUIController.get().waitCursor();				
-			OntoUML2UMLOption opt = new OntoUML2UMLOption(false,false);
-			OntoUML2UML.convertToUMLProfile(ProjectUIController.get().getProject().getRefParser(),file.getAbsolutePath(),opt);							
-			lastUmlPath = file.getAbsolutePath();				
-			MessageUIController.get().showSuccess("Export - UML Profile", "Project successfully exported to Profile UML.\nLocation: "+lastUmlPath);										
-		} catch (Exception ex) {
-			MessageUIController.get().showError(ex,"Export - UML Profile", "Current project could not be exported to UML Profile");
-		}		
+			MessageUIController.get().showError(ex, "Export - Ecore", "Current project could not be exported to Ecore");
+		}
 		CursorUIController.get().defaultCursor();
-	}	
-	
-	public void exportToUML(){
+	}
+
+	public void exportToProfileUML() {
 		try {
 			File file = chooseUMLFile();
-			if(file==null) return;
-			CursorUIController.get().waitCursor();			
-			OntoUML2UMLOption opt = new OntoUML2UMLOption(false,false);
-			OntoUML2UML.convertToUML(ProjectUIController.get().getProject().getRefParser(),file.getAbsolutePath(),opt);			
-			lastUmlPath = file.getAbsolutePath();				
-			MessageUIController.get().showSuccess("Export - UML", "Project successfully exported to UML.\nLocation: "+lastUmlPath);																			
-		} catch (Exception ex) {					
-			MessageUIController.get().showError(ex, "Export - UML", "Current project could not be exported to UML.");			
-		}		
-		CursorUIController.get().defaultCursor();		
+			if (file == null)
+				return;
+			CursorUIController.get().waitCursor();
+			OntoUML2UMLOption opt = new OntoUML2UMLOption(false, false);
+			OntoUML2UML.convertToUMLProfile(ProjectUIController.get().getProject().getRefParser(),
+					file.getAbsolutePath(), opt);
+			lastUmlPath = file.getAbsolutePath();
+			MessageUIController.get().showSuccess("Export - UML Profile",
+					"Project successfully exported to Profile UML.\nLocation: " + lastUmlPath);
+		} catch (Exception ex) {
+			MessageUIController.get().showError(ex, "Export - UML Profile",
+					"Current project could not be exported to UML Profile");
+		}
+		CursorUIController.get().defaultCursor();
 	}
-	
-	public void exportToPng(){		
+
+	public void exportToUML() {
+		try {
+			File file = chooseUMLFile();
+			if (file == null)
+				return;
+			CursorUIController.get().waitCursor();
+			OntoUML2UMLOption opt = new OntoUML2UMLOption(false, false);
+			OntoUML2UML.convertToUML(ProjectUIController.get().getProject().getRefParser(), file.getAbsolutePath(),
+					opt);
+			lastUmlPath = file.getAbsolutePath();
+			MessageUIController.get().showSuccess("Export - UML",
+					"Project successfully exported to UML.\nLocation: " + lastUmlPath);
+		} catch (Exception ex) {
+			MessageUIController.get().showError(ex, "Export - UML", "Current project could not be exported to UML.");
+		}
+		CursorUIController.get().defaultCursor();
+	}
+
+	public void exportToPng() {
 		try {
 			File file = choosePNGFile();
-			if(file==null) return;			
+			if (file == null)
+				return;
 			OntoumlEditor editor = TabbedAreaUIController.get().getSelectedTopOntoumlEditor();
 			List<Point> points = editor.getUsedCanvasSize();
 			Point origin = points.get(0);
-			Point end = points.get(1);			
-			BufferedImage image = new BufferedImage((int) end.x+20, (int) end.y+20, BufferedImage.TYPE_INT_RGB);
+			Point end = points.get(1);
+			BufferedImage image = new BufferedImage((int) end.x + 20, (int) end.y + 20, BufferedImage.TYPE_INT_RGB);
 			editor.paintComponentNonScreen(image.getGraphics());
-			BufferedImage croped = image.getSubimage(origin.x - 20, origin.y - 20, (end.x + 40 - origin.x), (end.y + 40 - origin.y));
+			BufferedImage croped = image.getSubimage(origin.x - 20, origin.y - 20, (end.x + 40 - origin.x),
+					(end.y + 40 - origin.y));
 			ImageIO.write(croped, "png", file);
 		} catch (IOException ex) {
-			MessageUIController.get().showError(ex, "Export - PNG", "Could not export current diagram into a PNG image.");
-		}		
+			MessageUIController.get().showError(ex, "Export - PNG",
+					"Could not export current diagram into a PNG image.");
+		}
 	}
+
+	public String exportToPng(StructureDiagram diagram) {
+		String path;
+		if (lastHtmlPath.equalsIgnoreCase(""))
+			path = diagram.getName() + ".jpg";
+		else
+			path = lastHtmlPath + '\\' + diagram.getName() + ".jpg";
+
+		try {
+			File file = new File(path);
+			OntoumlEditor editor = TabbedAreaUIController.get().getOntoumlEditor(diagram);
+			List<Point> points = editor.getUsedCanvasSize();
+			Point origin = points.get(0);
+			Point end = points.get(1);
+			BufferedImage image = new BufferedImage((int) end.x + 20, (int) end.y + 20, BufferedImage.TYPE_INT_RGB);
+			editor.paintComponentNonScreen(image.getGraphics());
+			BufferedImage croped = image.getSubimage(origin.x - 20, origin.y - 20, (end.x + 40 - origin.x),
+					(end.y + 40 - origin.y));
+			ImageIO.write(croped, "png", file);
+		} catch (IOException ex) {
+			MessageUIController.get().showError(ex, "Export - PNG",
+					"Could not export current diagram into a PNG image.");
+		}
+		return path;
+	}
+
+	public void exportToHtml(List<StructureDiagram> diagrams) {
+		String path;
+		String pattern;
+
+		try {
+			String htmlPath;
+			if (lastHtmlPath.equalsIgnoreCase(""))
+				htmlPath = "patterns.html";
+			else
+				htmlPath = lastHtmlPath + '\\' + "patterns.html";
+
+			File file = new File(htmlPath);
+			FileWriter fWriter = new FileWriter(file);
+			BufferedWriter writer = new BufferedWriter(fWriter);
+
+			for (StructureDiagram diagram : diagrams) {
+				pattern = diagram.getName().replaceAll("HTMLDiagram", "");
+				writer.write("<h1>" + pattern + "</h1>");
+				writer.newLine();
+
+				path = this.exportToPng(diagram);
+
+				writer.write("<img src=\"" + path + "\">");
+				writer.newLine();
+
+			}
+
+			// this is not actually needed for html files
+			// -
+			// can make your code more readable though
+
+			writer.close(); // make sure you close the writer object
+		} catch (IOException ex) {
+			MessageUIController.get().showError(ex, "Export - HTML",
+					"Could not export current diagram into a HTML page.");
+		}
+	}
+
 }
