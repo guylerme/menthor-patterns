@@ -7,7 +7,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import RefOntoUML.Association;
 import RefOntoUML.Element;
-import RefOntoUML.RigidSortalClass;
+import RefOntoUML.ObjectClass;
 import RefOntoUML.SubKind;
 import RefOntoUML.parser.OntoUMLParser;
 import net.menthor.patternRecognition.PatternOccurrence;
@@ -16,12 +16,11 @@ import net.menthor.patternRecognition.PatternOccurrence;
 public class SubKindOccurrence extends PatternOccurrence {
 
 	SubKind subKind;
-	List<RigidSortalClass> generalizations;
+	List<ObjectClass> generalizations;
 
 	public static int OPEN = 0, CLOSED = 1;
 
-	public SubKindOccurrence(SubKind subKind, List<RigidSortalClass> generalizations, SubKindPattern ptn)
-			throws Exception {
+	public SubKindOccurrence(SubKind subKind, List<ObjectClass> generalizations, SubKindPattern ptn) throws Exception {
 		super(ptn);
 		this.subKind = subKind;
 		this.generalizations = generalizations;

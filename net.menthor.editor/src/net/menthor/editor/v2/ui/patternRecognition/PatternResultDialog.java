@@ -297,6 +297,7 @@ public class PatternResultDialog extends Dialog {
 
 				}
 				c.createPatternsHTML(occurrenciesPatterns);
+				
 				PatternResultDialog.this.cancelPressed();
 			}
 		});

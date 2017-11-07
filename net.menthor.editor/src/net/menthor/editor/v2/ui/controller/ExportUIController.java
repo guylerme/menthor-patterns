@@ -214,8 +214,11 @@ public class ExportUIController {
 			Point end = points.get(1);
 			BufferedImage image = new BufferedImage((int) end.x + 20, (int) end.y + 20, BufferedImage.TYPE_INT_RGB);
 			editor.paintComponentNonScreen(image.getGraphics());
-			BufferedImage croped = image.getSubimage(origin.x - 20, origin.y - 20, (end.x + 40 - origin.x),
-					(end.y + 40 - origin.y));
+
+			BufferedImage croped;
+
+			croped = image.getSubimage(origin.x, origin.y, (end.x+2 - origin.x), (end.y +2 - origin.y));
+
 			ImageIO.write(croped, "png", file);
 		} catch (IOException ex) {
 			MessageUIController.get().showError(ex, "Export - PNG",

@@ -88,8 +88,10 @@ public class PhasePattern extends Pattern<PhaseOccurrence> {
 		for (Generalization g : k.getGeneralization()) {
 			if (g.getGeneral() instanceof SubstanceSortal)
 				generalizations.add((RigidSortalClass) g.getGeneral());
-			else
+			else {
+				generalizations.add((ObjectClass) g.getGeneral());
 				generalizations.addAll(this.getGeneralizations((ObjectClass) g.getGeneral()));
+			}
 		}
 		return generalizations;
 	}

@@ -29,16 +29,13 @@ import RefOntoUML.Derivation;
 import RefOntoUML.Element;
 import RefOntoUML.Generalization;
 import RefOntoUML.MaterialAssociation;
-import RefOntoUML.NamedElement;
 import RefOntoUML.Package;
 import RefOntoUML.Type;
 import RefOntoUML.parser.OntoUMLParser;
 import net.menthor.editor.ui.UmlProject;
 import net.menthor.editor.v2.OntoumlDiagram;
-import net.menthor.editor.v2.commanders.SelectCommanderMode;
 import net.menthor.editor.v2.ui.controller.BrowserUIController;
 import net.menthor.editor.v2.ui.controller.ExportUIController;
-import net.menthor.editor.v2.ui.controller.MessageUIController;
 import net.menthor.editor.v2.ui.controller.ProjectUIController;
 import net.menthor.editor.v2.ui.controller.SplitPaneUIController;
 import net.menthor.editor.v2.ui.controller.TabbedAreaUIController;
@@ -66,10 +63,14 @@ public class PatternProjectUIController {
 		TabbedAreaUIController.get().add(diagram);
 		BrowserUIController.get().add(diagram, container);
 
+		List<Element> allOccurrenciesElements = new ArrayList<Element>();
+
 		for (PatternOccurrence o : occurrencies) {
-			this.addElementsToDiagram(diagram, o.getAllElements(),
-					TabbedAreaUIController.get().getOntoumlEditor(diagram));
+			allOccurrenciesElements.addAll(o.getAllElements());
 		}
+
+		this.addElementsToDiagram(diagram, allOccurrenciesElements,
+				TabbedAreaUIController.get().getOntoumlEditor(diagram));
 
 	}
 
@@ -101,10 +102,14 @@ public class PatternProjectUIController {
 			TabbedAreaUIController.get().add(diagram);
 			BrowserUIController.get().add(diagram, container);
 
+			List<Element> allOccurrenciesElements = new ArrayList<Element>();
+
 			for (PatternOccurrence o : occurrencies) {
-				this.addElementsToDiagram(diagram, o.getAllElements(),
-						TabbedAreaUIController.get().getOntoumlEditor(diagram));
+				allOccurrenciesElements.addAll(o.getAllElements());
 			}
+
+			this.addElementsToDiagram(diagram, allOccurrenciesElements,
+					TabbedAreaUIController.get().getOntoumlEditor(diagram));
 
 			diagrams.add(diagram);
 		}
@@ -115,17 +120,17 @@ public class PatternProjectUIController {
 	private void addElementsToDiagram(StructureDiagram diagram, List<Element> allElements, OntoumlEditor d) {
 		for (Element e : allElements) {
 			if (diagram.containsChild(e)) {
-				if (e instanceof NamedElement) {
-					MessageUIController.get().showInfo("Move Element",
-							e + "\" already exists in diagram " + diagram.getName());
-				} else if (e instanceof Generalization) {
-					MessageUIController.get().showInfo("Move Generalization",
-							e + " already exists in diagram " + diagram.getName());
-				}
-				DiagramElement de = OccurenceMap.get().getDiagramElement(e, diagram);
-				if (de != null)
-					SelectCommanderMode.get().select(de);
-				return;
+				/*
+				 * if (e instanceof NamedElement) {
+				 * MessageUIController.get().showInfo("Move Element", e +
+				 * "\" already exists in diagram " + diagram.getName()); } else
+				 * if (e instanceof Generalization) {
+				 * MessageUIController.get().showInfo("Move Generalization", e +
+				 * " already exists in diagram " + diagram.getName()); }
+				 * DiagramElement de = OccurenceMap.get().getDiagramElement(e,
+				 * diagram); if (de != null)
+				 * SelectCommanderMode.get().select(de); return;
+				 */
 			}
 			if ((e instanceof RefOntoUML.Class) || (e instanceof RefOntoUML.DataType)) {
 				addClassToDiagram(e, d);
