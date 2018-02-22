@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EObject;
@@ -115,6 +116,43 @@ public class PatternProjectUIController {
 		}
 
 		ExportUIController.get().exportToHtml(diagrams);
+	}
+
+	public void createPlantUML(HashMap<String, List<PatternOccurrence>> occurrenciesPatterns) {
+
+		List<PatternOccurrence> occurrencies = null;
+
+		List<Element> allOccurrenciesElements;
+
+		for (String chave : occurrenciesPatterns.keySet()) {
+			occurrencies = new ArrayList<PatternOccurrence>();
+			for (Map.Entry<String, List<PatternOccurrence>> par : occurrenciesPatterns.entrySet()) {
+				if (par.getKey() == chave) {
+					occurrencies.addAll(par.getValue());
+				}
+			}
+
+			allOccurrenciesElements = new ArrayList<Element>();
+			for (PatternOccurrence o : occurrencies) {
+				allOccurrenciesElements.addAll(o.getAllElements());
+			}
+
+			this.removeEquals(allOccurrenciesElements);
+
+			ExportUIController.get().exportToPlantUML(chave, allOccurrenciesElements);
+		}
+
+	}
+
+	private void removeEquals(List<Element> lista) {
+		for (int i = 0; i < lista.size(); i++) {
+			// Comparando com os outros valores do vetor
+			for (int j = 0; j < lista.size(); j++) {
+				if ((i != j) && (lista.get(j) != null) && (lista.get(i).equals(lista.get(j)))) {
+					lista.remove(j);
+				}
+			}
+		}
 	}
 
 	private void addElementsToDiagram(StructureDiagram diagram, List<Element> allElements, OntoumlEditor d) {

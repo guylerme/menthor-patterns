@@ -105,6 +105,7 @@ public class PatternResultDialog extends Dialog {
 	protected Text searchText;
 	protected Button btnNewDiagram;
 	protected Button btnGenerateHtml;
+	protected Button btnGeneratePlantUML;
 
 	protected Table table;
 
@@ -156,29 +157,46 @@ public class PatternResultDialog extends Dialog {
 		createPartControl(container);
 
 		GroupLayout gl_container = new GroupLayout(container);
-		gl_container.setHorizontalGroup(gl_container.createParallelGroup(GroupLayout.LEADING).add(gl_container
-				.createSequentialGroup().addContainerGap()
-				.add(gl_container.createParallelGroup(GroupLayout.LEADING)
-						.add(gl_container.createSequentialGroup().add(searchLabel).addPreferredGap(LayoutStyle.RELATED)
-								.add(searchText, GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE).add(66)
-								.add(btnNewDiagram, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-								.add(btnGenerateHtml, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(LayoutStyle.RELATED))
-						.add(table, GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
-						.add(feedBackLabel, GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE))
-				.addContainerGap()));
-		gl_container.setVerticalGroup(gl_container.createParallelGroup(GroupLayout.LEADING).add(gl_container
-				.createSequentialGroup().addContainerGap()
-				.add(gl_container.createParallelGroup(GroupLayout.LEADING, false)
-						.add(searchLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.add(gl_container.createParallelGroup(GroupLayout.BASELINE).add(searchText,
-								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+		gl_container
+				.setHorizontalGroup(gl_container.createParallelGroup(GroupLayout.LEADING)
+						.add(gl_container.createSequentialGroup()
+								.addContainerGap().add(
+										gl_container
+												.createParallelGroup(GroupLayout.LEADING).add(
+														gl_container.createSequentialGroup().add(searchLabel)
+																.addPreferredGap(LayoutStyle.RELATED)
+																.add(searchText, GroupLayout.DEFAULT_SIZE, 285,
+																		Short.MAX_VALUE)
+																.add(66)
+																.add(btnNewDiagram, GroupLayout.PREFERRED_SIZE, 120,
+																		GroupLayout.PREFERRED_SIZE)
+																.add(btnGenerateHtml, GroupLayout.PREFERRED_SIZE, 120,
+																		GroupLayout.PREFERRED_SIZE)
+																.add(btnGeneratePlantUML, GroupLayout.PREFERRED_SIZE,
+																		120, GroupLayout.PREFERRED_SIZE)
+																.addPreferredGap(LayoutStyle.RELATED))
+												.add(table, GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
+												.add(feedBackLabel, GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE))
+								.addContainerGap()));
+		gl_container
+				.setVerticalGroup(gl_container.createParallelGroup(GroupLayout.LEADING)
+						.add(gl_container.createSequentialGroup().addContainerGap()
+								.add(gl_container.createParallelGroup(GroupLayout.LEADING, false)
+										.add(searchLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.add(gl_container.createParallelGroup(GroupLayout.BASELINE)
+												.add(searchText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
 
-								.add(btnNewDiagram, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.add(btnGenerateHtml, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
-										Short.MAX_VALUE)))
-				.addPreferredGap(LayoutStyle.UNRELATED).add(table, GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
-				.addPreferredGap(LayoutStyle.RELATED).add(feedBackLabel).add(15)));
+												.add(btnNewDiagram, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+														Short.MAX_VALUE)
+												.add(btnGenerateHtml, GroupLayout.DEFAULT_SIZE,
+														GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.add(btnGeneratePlantUML, GroupLayout.DEFAULT_SIZE,
+														GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+								.addPreferredGap(LayoutStyle.UNRELATED)
+								.add(table, GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
+								.addPreferredGap(LayoutStyle.RELATED).add(feedBackLabel).add(15)));
 		container.setLayout(gl_container);
 
 		return container;
@@ -297,7 +315,43 @@ public class PatternResultDialog extends Dialog {
 
 				}
 				c.createPatternsHTML(occurrenciesPatterns);
-				
+
+				PatternResultDialog.this.cancelPressed();
+			}
+		});
+
+		btnGeneratePlantUML = new Button(container, SWT.NONE);
+		btnGeneratePlantUML.setText("Generate PlantUML");
+		btnGeneratePlantUML.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+
+				feedBackLabel.setVisible(false);
+				feedBackLabel.setText("PlantUML Generation Open!");
+				feedBackLabel.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLUE));
+				feedBackLabel.setVisible(true);
+
+				PatternProjectUIController c = new PatternProjectUIController();
+				List<PatternOccurrence> occurrencies;
+
+				HashMap<String, List<PatternOccurrence>> occurrenciesPatterns = new HashMap<String, List<PatternOccurrence>>();
+
+				for (int i = 0; i < table.getItems().length; i++) {
+
+					occurrencies = new ArrayList<PatternOccurrence>();
+
+					String padrao = ((PatternOccurrence) viewer.getElementAt(i)).getPattern().info().getAcronym();
+
+					for (PatternOccurrence o : result) {
+						if (o.getPattern().info().getAcronym().equalsIgnoreCase(padrao)) {
+							occurrencies.add(o);
+						}
+					}
+					occurrenciesPatterns.put(padrao, occurrencies);
+
+				}
+				c.createPlantUML(occurrenciesPatterns);
+
 				PatternResultDialog.this.cancelPressed();
 			}
 		});

@@ -33,19 +33,26 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.tinyuml.ui.diagram.OntoumlEditor;
 import org.tinyuml.umldraw.StructureDiagram;
 
+import RefOntoUML.Classifier;
+import RefOntoUML.Derivation;
+import RefOntoUML.Element;
+import RefOntoUML.Package;
+import RefOntoUML.PackageableElement;
+import RefOntoUML.Relationship;
+import net.menthor.editor.v2.MenthorDomain;
+import net.menthor.editor.v2.ui.FrameUI;
+import net.menthor.editor.v2.util.Util;
 import net.menthor.ontouml2ecore.OntoUML2Ecore;
 import net.menthor.ontouml2ecore.OntoUML2EcoreOption;
 import net.menthor.ontouml2uml.OntoUML2UML;
 import net.menthor.ontouml2uml.OntoUML2UMLOption;
-import net.menthor.editor.v2.MenthorDomain;
-import net.menthor.editor.v2.ui.FrameUI;
-import net.menthor.editor.v2.util.Util;
 
 public class ExportUIController {
 
@@ -217,7 +224,7 @@ public class ExportUIController {
 
 			BufferedImage croped;
 
-			croped = image.getSubimage(origin.x, origin.y, (end.x+2 - origin.x), (end.y +2 - origin.y));
+			croped = image.getSubimage(origin.x, origin.y, (end.x + 2 - origin.x), (end.y + 2 - origin.y));
 
 			ImageIO.write(croped, "png", file);
 		} catch (IOException ex) {
@@ -263,6 +270,197 @@ public class ExportUIController {
 			MessageUIController.get().showError(ex, "Export - HTML",
 					"Could not export current diagram into a HTML page.");
 		}
+	}
+
+	public void exportToPlantUML() {
+
+		Package container = (Package) (BrowserUIController.get().root()).getUserObject();
+		try {
+			String plantUMLPath;
+			if (lastHtmlPath.equalsIgnoreCase(""))
+				plantUMLPath = "plantuml-complete" + ".txt";
+			else
+				plantUMLPath = lastHtmlPath + '\\' + "plantuml-complete" + ".txt";
+
+			File file = new File(plantUMLPath);
+			FileWriter fWriter = new FileWriter(file);
+			BufferedWriter writer = new BufferedWriter(fWriter);
+
+			writer.write("@startuml");
+
+			this.exportAllClassesToPlantUML(container, writer);
+
+			this.identifyRelationships(container.getPackagedElement(), writer);
+
+			writer.newLine();
+			writer.write("@enduml");
+
+			// this is not actually needed for html files
+			// -
+			// can make your code more readable though
+
+			writer.close(); // make sure you close the writer object
+		} catch (
+
+		IOException ex) {
+			MessageUIController.get().showError(ex, "Export - PlantUML",
+					"Could not export current diagram into a PlantUML File.");
+		}
+	}
+
+	private void exportAllClassesToPlantUML(Package container, BufferedWriter writer) throws IOException {
+		for (PackageableElement p : container.getPackagedElement()) {
+			if (!(p instanceof Package)) {
+
+				writer.newLine();
+				writer.write(this.parseToPlantUML(p));
+
+				try {
+					for (Classifier c : ((Classifier) p).parents()) {
+
+						writer.newLine();
+						writer.write(this.parseGeneralizationToPlantUML(c, p));
+
+					}
+				} catch (ClassCastException ex) {
+					System.out
+							.println("Export - PlantUML" + "Could not export Generalization Set into a PlantUML File.");
+				}
+
+			} else {
+				this.exportAllClassesToPlantUML((Package) p, writer);
+			}
+
+		}
+
+	}
+
+	public void exportToPlantUML(String padrao, List<Element> occurrencies) {
+
+		Package container = (Package) (BrowserUIController.get().root()).getUserObject();
+
+		try {
+			String plantUMLPath;
+			if (lastHtmlPath.equalsIgnoreCase(""))
+				plantUMLPath = "plantuml-" + padrao + ".txt";
+			else
+				plantUMLPath = lastHtmlPath + '\\' + "plantuml-" + padrao + ".txt";
+
+			File file = new File(plantUMLPath);
+			FileWriter fWriter = new FileWriter(file);
+			BufferedWriter writer = new BufferedWriter(fWriter);
+
+			writer.write("@startuml");
+
+			for (Element o : occurrencies) {
+				writer.newLine();
+				writer.write(this.parseToPlantUML(o));
+
+				for (Classifier c : ((Classifier) o).parents()) {
+					if (occurrencies.contains(c)) {
+						writer.newLine();
+						writer.write(this.parseGeneralizationToPlantUML(c, o));
+					}
+				}
+
+				// Pegar a lista de todas as relacoes e filtrar pelos elementos
+				// que existem na ocorrencies
+				/*
+				 * for (Classifier c : ((Classifier) o).getAssociations()) { if
+				 * (occurrencies.contains(c)) { writer.newLine();
+				 * writer.write(this.parseAssociationToPlantUML(c, o)); } }
+				 */
+
+			}
+
+			this.identifyRelationships(container.getPackagedElement(), occurrencies, writer);
+
+			writer.newLine();
+			writer.write("@enduml");
+
+			// this is not actually needed for html files
+			// -
+			// can make your code more readable though
+
+			writer.close(); // make sure you close the writer object
+		} catch (
+
+		IOException ex) {
+			MessageUIController.get().showError(ex, "Export - PlantUML",
+					"Could not export current diagram into a PlantUML File.");
+		}
+	}
+
+	private void identifyRelationships(EList<PackageableElement> packagedElement, List<Element> occurrencies,
+			BufferedWriter writer) throws IOException {
+		for (Element r : packagedElement) {
+			if (r instanceof Package) {
+				this.identifyRelationships(((Package) r).getPackagedElement(), occurrencies, writer);
+			}
+			if (r instanceof Relationship) {
+				{
+					if ((((Relationship) r).getRelatedElement().size() == 2) && !(r instanceof Derivation)) {
+						if ((occurrencies.contains(((Relationship) r).getRelatedElement().get(0)))
+								&& (occurrencies.contains(((Relationship) r).getRelatedElement().get(1)))) {
+							writer.newLine();
+							writer.write(this.parseAssociationToPlantUML((Relationship) r));
+						}
+					}
+				}
+			}
+
+		}
+
+	}
+
+	private void identifyRelationships(EList<PackageableElement> packagedElement, BufferedWriter writer)
+			throws IOException {
+		for (Element r : packagedElement) {
+			if (r instanceof Package) {
+				this.identifyRelationships(((Package) r).getPackagedElement(), writer);
+			}
+			if (r instanceof Relationship) {
+				{
+					if ((((Relationship) r).getRelatedElement().size() == 2) && !(r instanceof Derivation)) {
+
+						writer.newLine();
+						writer.write(this.parseAssociationToPlantUML((Relationship) r));
+
+					}
+				}
+			}
+
+		}
+
+	}
+
+	private String parseAssociationToPlantUML(Relationship r) {
+		String[] parsing_source = ((Relationship) r).getRelatedElement().get(0).toString().split("»");
+		String[] parsing_target = ((Relationship) r).getRelatedElement().get(1).toString().split("»");
+		String[] name = ((Relationship) r).toString().split("»");
+		String parsed = parsing_source[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_") + " -- "
+				+ parsing_target[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_") + " : "
+				+ name[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_");
+		return parsed;
+	}
+
+	private String parseGeneralizationToPlantUML(Classifier c, Element o) {
+		String[] parsing_parent = c.toString().split("»");
+		String[] parsing_child = o.toString().split("»");
+		String parsed = parsing_parent[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_") + " <|-- "
+				+ parsing_child[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_");
+		return parsed;
+	}
+
+	private String parseToPlantUML(Element o) {
+		String[] parsing = o.toString().split("»");
+		String parsed = "";
+		if (parsing.length == 2)
+			parsed = "class " + parsing[1].trim().replaceAll(" ", "_") + " <<"
+					+ parsing[0].trim().replace("«", "").replace("»", "").replaceAll(" ", "_") + ">>";
+		else
+			System.out.println("Erro");
+		return parsed;
 	}
 
 }
