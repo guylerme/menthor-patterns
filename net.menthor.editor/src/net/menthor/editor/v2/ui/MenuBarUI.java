@@ -305,6 +305,7 @@ public class MenuBarUI extends GenericMenuBar {
 		createMenuItem(diagram, "Zoom at 100%", CommandType.ZOOM_AT_100, background);	
 		diagram.addSeparator();
 		createMenuItem(diagram, "Save As Image", CommandType.EXPORT_TO_PNG, background);
+		createMenuItem(diagram, "Save As PlantUML", CommandType.EXPORT_TO_PLANTUML, background);
 	}
 	
 	private void createHelpMenu(){

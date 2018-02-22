@@ -59,6 +59,7 @@ public enum CommandType {
 	REDRAW_DIAGRAM("Redraw the current class diagram"),
 	SELECT_ALL("Select all elements on current diagram"),
 	EXPORT_TO_PNG("<html>Save diagram as PNG<br><br>TIP: Move your diagram as close as possible <br>to the upper left side of the grid.</hmtl>"),
+	EXPORT_TO_PLANTUML("<html>Save diagram as PlantUML<br>"),
 	SHOW_GRID("Show grid in the diagram"),
 	FIT_TO_WINDOW("Fit the diagram into the visible area of the grid"), 
 	ZOOM_AT_100("Zoom at 100%"), 

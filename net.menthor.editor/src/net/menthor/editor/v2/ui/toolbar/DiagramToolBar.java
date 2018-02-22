@@ -69,6 +69,8 @@ public class DiagramToolBar extends GenericToolBar {
 		
 		new ToolBarButton(IconType.MENTHOR_EXPORT,CommandType.EXPORT_TO_PNG, background, this);
 		
+		new ToolBarButton(IconType.MENTHOR_EXPORT,CommandType.EXPORT_TO_PLANTUML, background, this);
+		
 		btnZoomStatus = new JButton("100%");
 		btnZoomStatus.setContentAreaFilled(false);		
 		btnZoomStatus.setFocusable(false);

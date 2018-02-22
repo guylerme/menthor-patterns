@@ -563,6 +563,8 @@ public class CommandMap {
 				new MethodCall(ExportUIController.class.getMethod("exportToReferenceOntouml")));		
 		cmdMap.put(CommandType.EXPORT_TO_PNG,
 				new MethodCall(ExportUIController.class.getMethod("exportToPng")));
+		cmdMap.put(CommandType.EXPORT_TO_PLANTUML,
+				new MethodCall(ExportUIController.class.getMethod("exportToPlantUML")));
 	}
 	
 		
