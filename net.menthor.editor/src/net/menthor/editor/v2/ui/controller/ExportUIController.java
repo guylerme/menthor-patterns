@@ -351,6 +351,23 @@ public class ExportUIController {
 			BufferedWriter writer = new BufferedWriter(fWriter);
 
 			writer.write("@startuml");
+			writer.newLine();
+			writer.write("hide circle");
+			writer.newLine();
+			writer.write("hide empty members");
+			writer.newLine();
+			writer.write("skinparam class {");
+			writer.newLine();
+			writer.write("BorderColor Black");
+			writer.newLine();
+			writer.write("ArrowColor Black");
+			writer.newLine();
+			writer.write("BackgroundColor<<" + padrao.replaceAll("Pattern", "") + ">> LightGreen");
+			writer.newLine();
+			writer.write("BackgroundColor White");
+			writer.newLine();
+			writer.write("}");
+			writer.newLine();
 
 			for (Element o : occurrencies) {
 				writer.newLine();
