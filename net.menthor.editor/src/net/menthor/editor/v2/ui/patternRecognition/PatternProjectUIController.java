@@ -146,10 +146,12 @@ public class PatternProjectUIController {
 
 	private void removeEquals(List<Element> lista) {
 		for (int i = 0; i < lista.size(); i++) {
-			// Comparando com os outros valores do vetor
-			for (int j = 0; j < lista.size(); j++) {
-				if ((i != j) && (lista.get(j) != null) && (lista.get(i).equals(lista.get(j)))) {
-					lista.remove(j);
+			if (lista.get(i) != null) {
+				// Comparando com os outros valores do vetor
+				for (int j = 0; j < lista.size(); j++) {
+					if ((i != j) && (lista.get(j) != null) && (lista.get(i).equals(lista.get(j)))) {
+						lista.remove(j);
+					}
 				}
 			}
 		}
