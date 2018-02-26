@@ -138,6 +138,7 @@ public class PatternProjectUIController {
 			}
 
 			this.removeEquals(allOccurrenciesElements);
+			this.removeNulls(allOccurrenciesElements);
 
 			ExportUIController.get().exportToPlantUML(chave, allOccurrenciesElements);
 		}
@@ -146,11 +147,22 @@ public class PatternProjectUIController {
 
 	private void removeEquals(List<Element> lista) {
 		for (int i = 0; i < lista.size(); i++) {
-			// Comparando com os outros valores do vetor
-			for (int j = 0; j < lista.size(); j++) {
-				if ((i != j) && (lista.get(j) != null) && (lista.get(i).equals(lista.get(j)))) {
-					lista.remove(j);
+			if (lista.get(i) != null) {
+
+				// Comparando com os outros valores do vetor
+				for (int j = 0; j < lista.size(); j++) {
+					if ((i != j) && (lista.get(j) != null) && (lista.get(i).equals(lista.get(j)))) {
+						lista.remove(j);
+					}
 				}
+			}
+		}
+	}
+
+	private void removeNulls(List<Element> lista) {
+		for (int i = 0; i < lista.size(); i++) {
+			if (lista.get(i) == null) {
+				lista.remove(i);
 			}
 		}
 	}
