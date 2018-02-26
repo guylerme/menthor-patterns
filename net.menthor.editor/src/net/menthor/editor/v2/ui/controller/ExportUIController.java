@@ -40,9 +40,11 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.tinyuml.ui.diagram.OntoumlEditor;
 import org.tinyuml.umldraw.StructureDiagram;
 
+import RefOntoUML.Association;
 import RefOntoUML.Classifier;
 import RefOntoUML.Derivation;
 import RefOntoUML.Element;
+import RefOntoUML.Meronymic;
 import RefOntoUML.Package;
 import RefOntoUML.PackageableElement;
 import RefOntoUML.Relationship;
@@ -352,21 +354,31 @@ public class ExportUIController {
 
 			writer.write("@startuml");
 			writer.newLine();
-			writer.write("hide circle");
-			writer.newLine();
-			writer.write("hide empty members");
-			writer.newLine();
 			writer.write("skinparam class {");
 			writer.newLine();
+
+			if ((padrao.replaceAll("Pattern", "").equalsIgnoreCase("SubstanceSortal"))
+					|| (padrao.replaceAll("Pattern", "").equalsIgnoreCase("ParthoodStructure"))
+					|| (padrao.replaceAll("Pattern", "").equalsIgnoreCase("NonSortal"))) {
+				writer.write("BackgroundColor LightGreen");
+				writer.newLine();
+
+			} else {
+				writer.write("BackgroundColor White");
+				writer.newLine();
+				writer.write("BackgroundColor<<" + padrao.replaceAll("Pattern", "") + ">> LightGreen");
+				writer.newLine();
+			}
+
 			writer.write("BorderColor Black");
 			writer.newLine();
 			writer.write("ArrowColor Black");
 			writer.newLine();
-			writer.write("BackgroundColor<<" + padrao.replaceAll("Pattern", "") + ">> LightGreen");
-			writer.newLine();
-			writer.write("BackgroundColor White");
-			writer.newLine();
 			writer.write("}");
+			writer.newLine();
+			writer.write("hide circle");
+			writer.newLine();
+			writer.write("hide empty members  ");
 			writer.newLine();
 
 			for (Element o : occurrencies) {
@@ -452,12 +464,30 @@ public class ExportUIController {
 	}
 
 	private String parseAssociationToPlantUML(Relationship r) {
+
+		String sharable = "";
+
+		if (r instanceof Meronymic) {
+			if (((Meronymic) r).isIsShareable())
+				sharable = "o";
+			else
+				sharable = "*";
+		}
+
 		String[] parsing_source = ((Relationship) r).getRelatedElement().get(0).toString().split("»");
 		String[] parsing_target = ((Relationship) r).getRelatedElement().get(1).toString().split("»");
+		String cardinality_source = ((Association) r).getMemberEnd().get(0).getLower() + ".."
+				+ ((Association) r).getMemberEnd().get(0).getUpper();
+		String cardinality_target = ((Association) r).getMemberEnd().get(1).getLower() + ".."
+				+ ((Association) r).getMemberEnd().get(1).getUpper();
+
 		String[] name = ((Relationship) r).toString().split("»");
-		String parsed = parsing_source[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_") + " -- "
-				+ parsing_target[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_") + " : "
-				+ name[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_");
+		String parsed = parsing_source[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_") + " \""
+				+ cardinality_source.replaceAll("-1", "*") + "\" " + sharable + "-- \""
+				+ cardinality_target.replaceAll("-1", "*") + "\" "
+				+ parsing_target[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_")
+				+ ((name[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_") == "") ? ""
+						: " : " + name[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_"));
 		return parsed;
 	}
 
