@@ -27,6 +27,12 @@ public class ModeOccurrence extends PatternOccurrence {
 
 	}
 
+	public ModeOccurrence(Mode mode, ModePattern ptn) throws Exception {
+		super(ptn);
+		this.mode = mode;
+
+	}
+
 	@Override
 	public String toString() {
 		String result = "Mode: " + this.mode.getName();

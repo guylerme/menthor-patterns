@@ -2,6 +2,7 @@ package net.menthor.patternRecognition.modePattern;
 
 import java.util.ArrayList;
 
+import RefOntoUML.Classifier;
 import RefOntoUML.Mode;
 import RefOntoUML.Package;
 import RefOntoUML.parser.OntoUMLParser;
@@ -59,15 +60,22 @@ public class ModePattern extends Pattern<ModeOccurrence> {
 	@Override
 	public ArrayList<ModeOccurrence> identify() {
 
+		Classifier c;
+
 		for (Mode k : parser.getAllInstances(Mode.class)) {
 
 			// Aqui já tenho a lista de Modes.
 			// Preciso gerar as ocorrências
 			// Retornar para a tela de resultados
 			// Arrumar um jeito de separar isto em outro diagrama
+			try {
+				c = k.characterized();
+			} catch (ClassCastException e) {
+				c = null;
+			}
 
 			try {
-				occurrence.add(new ModeOccurrence(k, k.characterized(), this));
+				occurrence.add(new ModeOccurrence(k, c, this));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
