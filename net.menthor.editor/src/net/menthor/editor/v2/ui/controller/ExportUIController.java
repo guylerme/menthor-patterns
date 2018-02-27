@@ -337,7 +337,7 @@ public class ExportUIController {
 
 	}
 
-	public void exportToPlantUML(String padrao, List<Element> occurrencies) {
+	public void exportToPlantUML(String padrao, List<Element> occurrencies, int numberOccurrencies) {
 
 		Package container = (Package) (BrowserUIController.get().root()).getUserObject();
 
@@ -353,6 +353,10 @@ public class ExportUIController {
 			BufferedWriter writer = new BufferedWriter(fWriter);
 
 			writer.write("@startuml");
+			writer.newLine();
+			writer.write("\'" + numberOccurrencies + " occurrencies");
+			writer.newLine();
+			writer.write("\'" + occurrencies.size() + " elements");
 			writer.newLine();
 			writer.write("skinparam class {");
 			writer.newLine();

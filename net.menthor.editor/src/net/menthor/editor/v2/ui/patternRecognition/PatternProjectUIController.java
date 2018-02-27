@@ -140,7 +140,7 @@ public class PatternProjectUIController {
 			this.removeEquals(allOccurrenciesElements);
 			this.removeNulls(allOccurrenciesElements);
 
-			ExportUIController.get().exportToPlantUML(chave, allOccurrenciesElements);
+			ExportUIController.get().exportToPlantUML(chave, allOccurrenciesElements, occurrenciesPatterns.size());
 		}
 
 	}
@@ -152,6 +152,7 @@ public class PatternProjectUIController {
 				for (int j = 0; j < lista.size(); j++) {
 					if ((i != j) && (lista.get(j) != null) && (lista.get(i).equals(lista.get(j)))) {
 						lista.remove(j);
+						j--;
 					}
 				}
 			}
