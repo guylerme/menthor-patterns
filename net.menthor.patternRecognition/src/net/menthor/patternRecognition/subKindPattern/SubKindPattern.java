@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import RefOntoUML.Generalization;
-import RefOntoUML.ObjectClass;
 import RefOntoUML.Package;
 import RefOntoUML.RigidSortalClass;
 import RefOntoUML.SubKind;
@@ -82,21 +81,22 @@ public class SubKindPattern extends Pattern<SubKindOccurrence> {
 		return super.getOccurrences();
 	}
 
-	private List<ObjectClass> getGeneralizations(ObjectClass k) {
-		List<ObjectClass> generalizations = new ArrayList<ObjectClass>();
+	private List<RefOntoUML.Class> getGeneralizations(RefOntoUML.Class k) {
+		List<RefOntoUML.Class> generalizations = new ArrayList<RefOntoUML.Class>();
 
 		for (Generalization g : k.getGeneralization()) {
 			if (g.getGeneral() instanceof SubstanceSortal)
 				generalizations.add((RigidSortalClass) g.getGeneral());
 			else {
-				generalizations.add((ObjectClass) g.getGeneral());
-				generalizations.addAll(this.getGeneralizations((ObjectClass) g.getGeneral()));
+				if (g.getGeneral() instanceof SubKind)
+					generalizations.add((SubKind) g.getGeneral());
+				else {
+					generalizations.add((RefOntoUML.Class) g.getGeneral());
+					generalizations.addAll(this.getGeneralizations((RefOntoUML.Class) g.getGeneral()));
+				}
 			}
 		}
 		return generalizations;
 	}
-	
-	
-	
 
 }

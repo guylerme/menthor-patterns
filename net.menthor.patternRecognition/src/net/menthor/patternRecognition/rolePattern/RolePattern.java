@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import RefOntoUML.Generalization;
-import RefOntoUML.ObjectClass;
 import RefOntoUML.Package;
-import RefOntoUML.Role;
 import RefOntoUML.RigidSortalClass;
+import RefOntoUML.Role;
 import RefOntoUML.SubstanceSortal;
 import RefOntoUML.parser.OntoUMLParser;
 import net.menthor.patternRecognition.Pattern;
@@ -82,15 +81,19 @@ public class RolePattern extends Pattern<RoleOccurrence> {
 		return super.getOccurrences();
 	}
 
-	private List<ObjectClass> getGeneralizations(ObjectClass k) {
-		List<ObjectClass> generalizations = new ArrayList<ObjectClass>();
+	private List<RefOntoUML.Class> getGeneralizations(RefOntoUML.Class k) {
+		List<RefOntoUML.Class> generalizations = new ArrayList<RefOntoUML.Class>();
 
 		for (Generalization g : k.getGeneralization()) {
 			if (g.getGeneral() instanceof SubstanceSortal)
 				generalizations.add((RigidSortalClass) g.getGeneral());
 			else {
-				generalizations.add((ObjectClass) g.getGeneral());
-				generalizations.addAll(this.getGeneralizations((ObjectClass) g.getGeneral()));
+				if (g.getGeneral() instanceof Role)
+					generalizations.add((Role) g.getGeneral());
+				else {
+					generalizations.add((RefOntoUML.Class) g.getGeneral());
+					generalizations.addAll(this.getGeneralizations((RefOntoUML.Class) g.getGeneral()));
+				}
 			}
 		}
 		return generalizations;

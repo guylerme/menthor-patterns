@@ -1,5 +1,7 @@
 package net.menthor.editor.v2.ui.patternRecognition;
 
+import java.awt.Component;
+
 /**
  * ============================================================================================
  * Menthor Editor -- Copyright (c) 2015 
@@ -22,6 +24,7 @@ package net.menthor.editor.v2.ui.patternRecognition;
  */
 
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
 import javax.swing.JCheckBox;
@@ -32,7 +35,7 @@ import javax.swing.SwingWorker;
 import net.menthor.patternRecognition.Pattern;
 import net.menthor.patternRecognition.PatternInfo;
 
-public class PatternTask extends SwingWorker<Void, Void>{
+public class PatternTask extends SwingWorker<Void, Void> {
 	private Pattern<?> pattern;
 	private PatternInfo info;
 	private JLabel label;
@@ -40,12 +43,12 @@ public class PatternTask extends SwingWorker<Void, Void>{
 	private JCheckBox checkBox;
 	private JProgressBar progressBar;
 	private int percentage;
-	
+
 	private CountDownLatch latch;
 	private CountDownLatch preLatch;
-	
-	public PatternTask(Pattern<?> pattern, PatternInfo info, JLabel label, JCheckBox checkBox, 
-			JProgressBar progressBar, JLabel progressBarDescr, int percentage, CountDownLatch latch, CountDownLatch preLatch) {
+
+	public PatternTask(Pattern<?> pattern, PatternInfo info, JLabel label, JCheckBox checkBox, JProgressBar progressBar,
+			JLabel progressBarDescr, int percentage, CountDownLatch latch, CountDownLatch preLatch) {
 		this.pattern = pattern;
 		this.label = label;
 		this.checkBox = checkBox;
@@ -58,37 +61,44 @@ public class PatternTask extends SwingWorker<Void, Void>{
 	}
 
 	@Override
-	protected Void doInBackground() throws Exception {	
-		
+	protected Void doInBackground() throws Exception {
+
 		preLatch.await();
-		
-		updateStatus(info.getAcronym()+": Identifying...");
+
+		updateStatus(info.getAcronym() + ": Identifying...");
 		pattern.identify();
-		
-		return null;	
+
+		return null;
 	}
-	
+
 	@Override
 	protected void done() {
-		label.setText("("+pattern.getOccurrences().size()+")");						
-		
-		if(pattern.getOccurrences().size()>0){
-			checkBox.setFont(new Font(checkBox.getFont().getFontName(), Font.BOLD,checkBox.getFont().getSize()));
-			label.setFont(new Font(label.getFont().getFontName(), Font.BOLD,label.getFont().getSize()));
-			progressBar.setValue(progressBar.getValue()+percentage);
-			updateStatus(info.getAcronym()+": "+pattern.getOccurrences().size()+" occurrence(s) found!");
+
+		label.setText("(" + this.removeNulls(pattern.getOccurrences()).size() + ")");
+
+		if (pattern.getOccurrences().size() > 0) {
+			checkBox.setFont(new Font(checkBox.getFont().getFontName(), Font.BOLD, checkBox.getFont().getSize()));
+			label.setFont(new Font(label.getFont().getFontName(), Font.BOLD, label.getFont().getSize()));
+			progressBar.setValue(progressBar.getValue() + percentage);
+			updateStatus(info.getAcronym() + ": " + pattern.getOccurrences().size() + " occurrence(s) found!");
 		}
-		
+
 		latch.countDown();
 	}
-	
+
+	private ArrayList<?> removeNulls(ArrayList<?> occurrences) {
+		for (int i = 0; i < occurrences.size(); i++) {
+			if (occurrences.get(i) == null) {
+				occurrences.remove(i);
+			}
+		}
+		return occurrences;
+	}
+
 	private void updateStatus(String s) {
 		progressBarDescr.setText(s);
 		System.out.println(s);
-		
-	}
 
-	
-	
+	}
 
 }

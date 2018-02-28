@@ -7,6 +7,7 @@ import RefOntoUML.Generalization;
 import RefOntoUML.ObjectClass;
 import RefOntoUML.Package;
 import RefOntoUML.Phase;
+import RefOntoUML.Relator;
 import RefOntoUML.RigidSortalClass;
 import RefOntoUML.SubstanceSortal;
 import RefOntoUML.parser.OntoUMLParser;
@@ -82,15 +83,19 @@ public class PhasePattern extends Pattern<PhaseOccurrence> {
 		return super.getOccurrences();
 	}
 
-	private List<ObjectClass> getGeneralizations(ObjectClass k) {
-		List<ObjectClass> generalizations = new ArrayList<ObjectClass>();
+	private List<RefOntoUML.Class> getGeneralizations(ObjectClass k) {
+		List<RefOntoUML.Class> generalizations = new ArrayList<RefOntoUML.Class>();
 
 		for (Generalization g : k.getGeneralization()) {
 			if (g.getGeneral() instanceof SubstanceSortal)
 				generalizations.add((RigidSortalClass) g.getGeneral());
 			else {
-				generalizations.add((ObjectClass) g.getGeneral());
-				generalizations.addAll(this.getGeneralizations((ObjectClass) g.getGeneral()));
+				if (g.getGeneral() instanceof Relator)
+					generalizations.add((Relator) g.getGeneral());
+				else {
+					generalizations.add((ObjectClass) g.getGeneral());
+					generalizations.addAll(this.getGeneralizations((ObjectClass) g.getGeneral()));
+				}
 			}
 		}
 		return generalizations;

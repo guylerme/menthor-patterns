@@ -139,8 +139,9 @@ public class PatternProjectUIController {
 
 			this.removeEquals(allOccurrenciesElements);
 			this.removeNulls(allOccurrenciesElements);
+			this.removeNulls(occurrencies);
 
-			ExportUIController.get().exportToPlantUML(chave, allOccurrenciesElements, occurrenciesPatterns.size());
+			ExportUIController.get().exportToPlantUML(chave, allOccurrenciesElements, occurrencies.size());
 		}
 
 	}
@@ -159,7 +160,7 @@ public class PatternProjectUIController {
 		}
 	}
 
-	private void removeNulls(List<Element> lista) {
+	private void removeNulls(List<?> lista) {
 		for (int i = 0; i < lista.size(); i++) {
 			if (lista.get(i) == null) {
 				lista.remove(i);

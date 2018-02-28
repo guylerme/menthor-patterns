@@ -386,13 +386,15 @@ public class ExportUIController {
 			writer.newLine();
 
 			for (Element o : occurrencies) {
-				writer.newLine();
-				writer.write(this.parseToPlantUML(o));
+				if (o != null) {
+					writer.newLine();
+					writer.write(this.parseToPlantUML(o));
 
-				for (Classifier c : ((Classifier) o).parents()) {
-					if (occurrencies.contains(c)) {
-						writer.newLine();
-						writer.write(this.parseGeneralizationToPlantUML(c, o));
+					for (Classifier c : ((Classifier) o).parents()) {
+						if (occurrencies.contains(c)) {
+							writer.newLine();
+							writer.write(this.parseGeneralizationToPlantUML(c, o));
+						}
 					}
 				}
 
@@ -486,31 +488,40 @@ public class ExportUIController {
 				+ ((Association) r).getMemberEnd().get(1).getUpper();
 
 		String[] name = ((Relationship) r).toString().split("»");
-		String parsed = parsing_source[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_") + " \""
-				+ cardinality_source.replaceAll("-1", "*") + "\" " + sharable + "-- \""
+		String parsed = parsing_source[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_").replaceAll("-",
+				"_") + " \"" + cardinality_source.replaceAll("-1", "*") + "\" " + sharable + "-- \""
 				+ cardinality_target.replaceAll("-1", "*") + "\" "
-				+ parsing_target[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_")
-				+ ((name[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_") == "") ? ""
-						: " : " + name[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_"));
+				+ parsing_target[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_").replaceAll("-", "_")
+				+ ((name[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_").replaceAll("-", "_") == "")
+						? ""
+						: " : " + name[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_").replaceAll("-",
+								"_"));
 		return parsed;
 	}
 
 	private String parseGeneralizationToPlantUML(Classifier c, Element o) {
 		String[] parsing_parent = c.toString().split("»");
 		String[] parsing_child = o.toString().split("»");
-		String parsed = parsing_parent[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_") + " <|-- "
-				+ parsing_child[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_");
+		String parsed = parsing_parent[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_").replaceAll("-",
+				"_") + " <|-- "
+				+ parsing_child[1].trim().replace("«", "").replace("»", "").replaceAll(" ", "_").replaceAll("-", "_");
 		return parsed;
 	}
 
 	private String parseToPlantUML(Element o) {
-		String[] parsing = o.toString().split("»");
 		String parsed = "";
-		if (parsing.length == 2)
-			parsed = "class " + parsing[1].trim().replaceAll(" ", "_") + " <<"
-					+ parsing[0].trim().replace("«", "").replace("»", "").replaceAll(" ", "_") + ">>";
-		else
-			System.out.println("Erro");
+
+		if (o != null) {
+			String[] parsing = o.toString().split("»");
+
+			if (parsing.length == 2)
+				parsed = "class " + parsing[1].trim().replaceAll(" ", "_").replaceAll("-", "_") + " <<"
+						+ parsing[0].trim().replace("«", "").replace("»", "").replaceAll(" ", "_").replaceAll("-", "_")
+						+ ">>";
+			else
+				System.out.println("Erro");
+		}
+
 		return parsed;
 	}
 

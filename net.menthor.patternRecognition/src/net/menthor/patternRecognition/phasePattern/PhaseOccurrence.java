@@ -7,7 +7,6 @@ import org.eclipse.emf.ecore.EObject;
 
 import RefOntoUML.Association;
 import RefOntoUML.Element;
-import RefOntoUML.ObjectClass;
 import RefOntoUML.Phase;
 import RefOntoUML.parser.OntoUMLParser;
 import net.menthor.patternRecognition.PatternOccurrence;
@@ -16,11 +15,11 @@ import net.menthor.patternRecognition.PatternOccurrence;
 public class PhaseOccurrence extends PatternOccurrence {
 
 	Phase phase;
-	List<ObjectClass> generalizations;
+	List<RefOntoUML.Class> generalizations;
 
 	public static int OPEN = 0, CLOSED = 1;
 
-	public PhaseOccurrence(Phase phase, List<ObjectClass> generalizations, PhasePattern ptn) throws Exception {
+	public PhaseOccurrence(Phase phase, List<RefOntoUML.Class> generalizations, PhasePattern ptn) throws Exception {
 		super(ptn);
 		this.phase = phase;
 		this.generalizations = generalizations;
