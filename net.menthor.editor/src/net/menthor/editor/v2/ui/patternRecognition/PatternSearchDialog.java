@@ -75,6 +75,7 @@ import net.menthor.swt.Util;
  */
 
 public class PatternSearchDialog extends JDialog {
+	private long tempoInicial = 0;
 
 	private class Supervisor extends SwingWorker<Void, Void> {
 
@@ -99,8 +100,11 @@ public class PatternSearchDialog extends JDialog {
 			showButton.setEnabled(true);
 			stopButton.setEnabled(false);
 
-			updateStatus("Patterns: Completed! " + patternRecognitionList.getAll().size() + " occurrence(s) found");
+			updateStatus("Patterns: Completed! " + patternRecognitionList.getAll().size() + " occurrence(s) found"
+					+ "| Executed in " + (System.currentTimeMillis() - tempoInicial) + " ms");
 
+			// execução do método
+			System.out.println("O metodo executou em " + (System.currentTimeMillis() - tempoInicial));
 		}
 	}
 
@@ -466,11 +470,14 @@ public class PatternSearchDialog extends JDialog {
 								.addComponent(progressBar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 789,
 										Short.MAX_VALUE))
 						.addContainerGap(18, Short.MAX_VALUE)));
-		gl_buttonPane.setVerticalGroup(gl_buttonPane.createParallelGroup(Alignment.TRAILING).addGroup(Alignment.LEADING,
-				gl_buttonPane.createSequentialGroup().addContainerGap()
-						.addComponent(progressBar, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED).addComponent(progressBarDescr)
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+		gl_buttonPane
+				.setVerticalGroup(
+						gl_buttonPane.createParallelGroup(Alignment.TRAILING).addGroup(Alignment.LEADING,
+								gl_buttonPane.createSequentialGroup().addContainerGap()
+										.addComponent(progressBar, GroupLayout.PREFERRED_SIZE, 22,
+												GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(ComponentPlacement.RELATED).addComponent(progressBarDescr)
+										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		buttonPane.setLayout(gl_buttonPane);
 
 		cbxList.add(cbxKindPattern);
@@ -600,6 +607,8 @@ public class PatternSearchDialog extends JDialog {
 	 * @param event
 	 */
 	public void IdentifyButtonActionPerformed(ActionEvent event) {
+		tempoInicial = System.currentTimeMillis();
+
 		updateStatus("Patterns: Interrupting current tasks...");
 		interruptAll();
 		int selected = getTotalSelected();

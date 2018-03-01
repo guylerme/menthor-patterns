@@ -1,7 +1,5 @@
 package net.menthor.editor.v2.ui.patternRecognition;
 
-import java.awt.Component;
-
 /**
  * ============================================================================================
  * Menthor Editor -- Copyright (c) 2015 
@@ -81,6 +79,7 @@ public class PatternTask extends SwingWorker<Void, Void> {
 			label.setFont(new Font(label.getFont().getFontName(), Font.BOLD, label.getFont().getSize()));
 			progressBar.setValue(progressBar.getValue() + percentage);
 			updateStatus(info.getAcronym() + ": " + pattern.getOccurrences().size() + " occurrence(s) found!");
+
 		}
 
 		latch.countDown();
