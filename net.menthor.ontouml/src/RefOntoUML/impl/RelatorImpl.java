@@ -29,9 +29,8 @@ import org.eclipse.ocl.ecore.OCL;
 import org.eclipse.ocl.expressions.OCLExpression;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Relator</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Relator</b></em>'. <!-- end-user-doc -->
  * <p>
  * </p>
  *
@@ -39,8 +38,8 @@ import org.eclipse.ocl.expressions.OCLExpression;
  */
 public class RelatorImpl extends MomentClassImpl implements Relator {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected RelatorImpl() {
@@ -48,8 +47,8 @@ public class RelatorImpl extends MomentClassImpl implements Relator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -58,8 +57,8 @@ public class RelatorImpl extends MomentClassImpl implements Relator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EList<Mediation> mediations() {
@@ -69,25 +68,31 @@ public class RelatorImpl extends MomentClassImpl implements Relator {
 			helper.setOperationContext(RefOntoUMLPackage.eINSTANCE.getRelator(), eOperation);
 			EAnnotation ocl = eOperation.getEAnnotation(OCL_ANNOTATION_SOURCE);
 			String body = ocl.getDetails().get("body");
-			
+
 			try {
 				mediationsBodyOCL = helper.createQuery(body);
 			} catch (ParserException e) {
 				throw new UnsupportedOperationException(e.getLocalizedMessage());
 			}
 		}
-		
+
 		Query<EClassifier, ?, ?> query = OCL_ENV.createQuery(mediationsBodyOCL);
-	
-		@SuppressWarnings("unchecked")
-		Collection<Mediation> result = (Collection<Mediation>) query.evaluate(this);
-		return new BasicEList.UnmodifiableEList<Mediation>(result.size(), result.toArray());
-	
+
+		Collection<Mediation> result = null;
+		if (!(query.evaluate(this).toString().equalsIgnoreCase("invalid"))) {
+			result = (Collection<Mediation>) query.evaluate(this);
+		}
+
+		if (result != null)
+			return new BasicEList.UnmodifiableEList<Mediation>(result.size(), result.toArray());
+		else
+			return null;
+
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EList<Classifier> mediated() {
@@ -97,41 +102,49 @@ public class RelatorImpl extends MomentClassImpl implements Relator {
 			helper.setOperationContext(RefOntoUMLPackage.eINSTANCE.getRelator(), eOperation);
 			EAnnotation ocl = eOperation.getEAnnotation(OCL_ANNOTATION_SOURCE);
 			String body = ocl.getDetails().get("body");
-			
+
 			try {
 				mediatedBodyOCL = helper.createQuery(body);
 			} catch (ParserException e) {
 				throw new UnsupportedOperationException(e.getLocalizedMessage());
 			}
 		}
-		
+
 		Query<EClassifier, ?, ?> query = OCL_ENV.createQuery(mediatedBodyOCL);
-	
-		@SuppressWarnings("unchecked")
-		Collection<Classifier> result = (Collection<Classifier>) query.evaluate(this);
-		return new BasicEList.UnmodifiableEList<Classifier>(result.size(), result.toArray());
-	
+
+		Collection<Classifier> result = null;
+		if (!(query.evaluate(this).toString().equalsIgnoreCase("invalid"))) {
+			result = (Collection<Classifier>) query.evaluate(this);
+		}
+
+		if (result != null)
+			return new BasicEList.UnmodifiableEList<Classifier>(result.size(), result.toArray());
+		else
+			return null;
+
 	}
 
 	/**
-	 * The parsed OCL expression for the body of the '{@link #mediations <em>Mediations</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The parsed OCL expression for the body of the '{@link #mediations
+	 * <em>Mediations</em>}' operation. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @see #mediations
 	 * @generated
 	 */
 	private static OCLExpression<EClassifier> mediationsBodyOCL;
-	
+
 	/**
-	 * The parsed OCL expression for the body of the '{@link #mediated <em>Mediated</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The parsed OCL expression for the body of the '{@link #mediated
+	 * <em>Mediated</em>}' operation. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #mediated
 	 * @generated
 	 */
 	private static OCLExpression<EClassifier> mediatedBodyOCL;
-	
+
 	private static final String OCL_ANNOTATION_SOURCE = "http://www.eclipse.org/ocl/examples/OCL";
-	
+
 	private static final OCL OCL_ENV = OCL.newInstance();
-} //RelatorImpl
+} // RelatorImpl

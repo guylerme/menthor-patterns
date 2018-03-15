@@ -8,9 +8,13 @@ package RefOntoUML.impl;
 
 import RefOntoUML.Classifier;
 import RefOntoUML.Derivation;
+import RefOntoUML.Mediation;
 import RefOntoUML.Property;
 import RefOntoUML.RefOntoUMLPackage;
 
+import java.util.Collection;
+
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -24,9 +28,8 @@ import org.eclipse.ocl.ecore.OCL;
 import org.eclipse.ocl.expressions.OCLExpression;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Derivation</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Derivation</b></em>'. <!-- end-user-doc -->
  * <p>
  * </p>
  *
@@ -34,8 +37,8 @@ import org.eclipse.ocl.expressions.OCLExpression;
  */
 public class DerivationImpl extends DependencyRelationshipImpl implements Derivation {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected DerivationImpl() {
@@ -43,8 +46,8 @@ public class DerivationImpl extends DependencyRelationshipImpl implements Deriva
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -53,8 +56,8 @@ public class DerivationImpl extends DependencyRelationshipImpl implements Deriva
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Property materialEnd() {
@@ -64,23 +67,23 @@ public class DerivationImpl extends DependencyRelationshipImpl implements Deriva
 			helper.setOperationContext(RefOntoUMLPackage.eINSTANCE.getDerivation(), eOperation);
 			EAnnotation ocl = eOperation.getEAnnotation(OCL_ANNOTATION_SOURCE);
 			String body = ocl.getDetails().get("body");
-			
+
 			try {
 				materialEndBodyOCL = helper.createQuery(body);
 			} catch (ParserException e) {
 				throw new UnsupportedOperationException(e.getLocalizedMessage());
 			}
 		}
-		
+
 		Query<EClassifier, ?, ?> query = OCL_ENV.createQuery(materialEndBodyOCL);
-	
+
 		return (Property) query.evaluate(this);
-	
+
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Property relatorEnd() {
@@ -90,23 +93,23 @@ public class DerivationImpl extends DependencyRelationshipImpl implements Deriva
 			helper.setOperationContext(RefOntoUMLPackage.eINSTANCE.getDerivation(), eOperation);
 			EAnnotation ocl = eOperation.getEAnnotation(OCL_ANNOTATION_SOURCE);
 			String body = ocl.getDetails().get("body");
-			
+
 			try {
 				relatorEndBodyOCL = helper.createQuery(body);
 			} catch (ParserException e) {
 				throw new UnsupportedOperationException(e.getLocalizedMessage());
 			}
 		}
-		
+
 		Query<EClassifier, ?, ?> query = OCL_ENV.createQuery(relatorEndBodyOCL);
-	
+
 		return (Property) query.evaluate(this);
-	
+
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Classifier relator() {
@@ -116,23 +119,31 @@ public class DerivationImpl extends DependencyRelationshipImpl implements Deriva
 			helper.setOperationContext(RefOntoUMLPackage.eINSTANCE.getDerivation(), eOperation);
 			EAnnotation ocl = eOperation.getEAnnotation(OCL_ANNOTATION_SOURCE);
 			String body = ocl.getDetails().get("body");
-			
+
 			try {
 				relatorBodyOCL = helper.createQuery(body);
 			} catch (ParserException e) {
 				throw new UnsupportedOperationException(e.getLocalizedMessage());
 			}
 		}
-		
+
 		Query<EClassifier, ?, ?> query = OCL_ENV.createQuery(relatorBodyOCL);
-	
-		return (Classifier) query.evaluate(this);
-	
+
+		Classifier result = null;
+		if (!(query.evaluate(this).toString().equalsIgnoreCase("invalid"))) {
+			result = (Classifier) query.evaluate(this);
+		}
+
+		if (result != null)
+			return result;
+		else
+			return null;
+
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Classifier material() {
@@ -142,57 +153,61 @@ public class DerivationImpl extends DependencyRelationshipImpl implements Deriva
 			helper.setOperationContext(RefOntoUMLPackage.eINSTANCE.getDerivation(), eOperation);
 			EAnnotation ocl = eOperation.getEAnnotation(OCL_ANNOTATION_SOURCE);
 			String body = ocl.getDetails().get("body");
-			
+
 			try {
 				materialBodyOCL = helper.createQuery(body);
 			} catch (ParserException e) {
 				throw new UnsupportedOperationException(e.getLocalizedMessage());
 			}
 		}
-		
+
 		Query<EClassifier, ?, ?> query = OCL_ENV.createQuery(materialBodyOCL);
-	
+
 		return (Classifier) query.evaluate(this);
-	
+
 	}
 
 	/**
-	 * The parsed OCL expression for the body of the '{@link #materialEnd <em>Material End</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The parsed OCL expression for the body of the '{@link #materialEnd
+	 * <em>Material End</em>}' operation. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @see #materialEnd
 	 * @generated
 	 */
 	private static OCLExpression<EClassifier> materialEndBodyOCL;
-	
+
 	/**
-	 * The parsed OCL expression for the body of the '{@link #relatorEnd <em>Relator End</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The parsed OCL expression for the body of the '{@link #relatorEnd
+	 * <em>Relator End</em>}' operation. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @see #relatorEnd
 	 * @generated
 	 */
 	private static OCLExpression<EClassifier> relatorEndBodyOCL;
-	
+
 	/**
-	 * The parsed OCL expression for the body of the '{@link #relator <em>Relator</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The parsed OCL expression for the body of the '{@link #relator
+	 * <em>Relator</em>}' operation. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #relator
 	 * @generated
 	 */
 	private static OCLExpression<EClassifier> relatorBodyOCL;
-	
+
 	/**
-	 * The parsed OCL expression for the body of the '{@link #material <em>Material</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The parsed OCL expression for the body of the '{@link #material
+	 * <em>Material</em>}' operation. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #material
 	 * @generated
 	 */
 	private static OCLExpression<EClassifier> materialBodyOCL;
-	
+
 	private static final String OCL_ANNOTATION_SOURCE = "http://www.eclipse.org/ocl/examples/OCL";
-	
+
 	private static final OCL OCL_ENV = OCL.newInstance();
-} //DerivationImpl
+} // DerivationImpl
