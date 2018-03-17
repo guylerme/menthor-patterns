@@ -361,18 +361,35 @@ public class ExportUIController {
 			writer.write("skinparam class {");
 			writer.newLine();
 
-			if ((padrao.replaceAll("Pattern", "").equalsIgnoreCase("SubstanceSortal"))
-					|| (padrao.replaceAll("Pattern", "").equalsIgnoreCase("ParthoodStructure"))
-					|| (padrao.replaceAll("Pattern", "").equalsIgnoreCase("NonSortal"))) {
-				writer.write("BackgroundColor LightGreen");
-				writer.newLine();
+			writer.write("BackgroundColor<<Kind>> Dodgerblue");
+			writer.newLine();
+			writer.write("BackgroundColor<<SubKind>> lightblue");
+			writer.newLine();
+			writer.write("BackgroundColor<<Phase>> lightgreen");
+			writer.newLine();
+			writer.write("BackgroundColor<<Role>> red");
+			writer.newLine();
+			writer.write("BackgroundColor<<Relator>> gold");
+			writer.newLine();
+			writer.write("BackgroundColor<<RoleMixin>> pink");
+			writer.newLine();
+			writer.write("BackgroundColor<<Category>> grey");
+			writer.newLine();
+			writer.write("BackgroundColor<<Mixin>> silver");
+			writer.newLine();
 
-			} else {
-				writer.write("BackgroundColor White");
-				writer.newLine();
-				writer.write("BackgroundColor<<" + padrao.replaceAll("Pattern", "") + ">> LightGreen");
-				writer.newLine();
-			}
+			/*
+			 * if ((padrao.replaceAll("Pattern",
+			 * "").equalsIgnoreCase("SubstanceSortal")) ||
+			 * (padrao.replaceAll("Pattern",
+			 * "").equalsIgnoreCase("ParthoodStructure")) ||
+			 * (padrao.replaceAll("Pattern", "").equalsIgnoreCase("NonSortal")))
+			 * { writer.write("BackgroundColor LightGreen"); writer.newLine();
+			 * 
+			 * } else { writer.write("BackgroundColor White"); writer.newLine();
+			 * writer.write("BackgroundColor<<" + padrao.replaceAll("Pattern",
+			 * "") + ">> LightGreen"); writer.newLine(); }
+			 */
 
 			writer.write("BorderColor Black");
 			writer.newLine();
