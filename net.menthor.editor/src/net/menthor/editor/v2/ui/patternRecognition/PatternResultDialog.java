@@ -55,10 +55,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.wb.swt.layout.grouplayout.GroupLayout;
 import org.eclipse.wb.swt.layout.grouplayout.LayoutStyle;
 
-import net.menthor.editor.v2.ui.controller.ProjectUIController;
-import net.menthor.patternRecognition.Pattern;
 import net.menthor.patternRecognition.PatternList;
-import net.menthor.patternRecognition.PatternOccurrence;
 import net.menthor.patternRecognition.kindPattern.KindOccurrence;
 import net.menthor.patternRecognition.kindPattern.KindPattern;
 import net.menthor.patternRecognition.modePattern.ModeOccurrence;
@@ -86,6 +83,9 @@ import net.menthor.patternRecognition.wizard.relatorPattern.RelatorPatternWizard
 import net.menthor.patternRecognition.wizard.rolePattern.RolePatternWizard;
 import net.menthor.patternRecognition.wizard.subKindPattern.SubKindPatternWizard;
 import net.menthor.patternRecognition.wizard.substanceSortalPattern.SubstanceSortalPatternWizard;
+import net.menthor.editor.v2.ui.controller.ProjectUIController;
+import net.menthor.patternRecognition.Pattern;
+import net.menthor.patternRecognition.PatternOccurrence;
 
 /**
  * @author Guylerme Figueiredo

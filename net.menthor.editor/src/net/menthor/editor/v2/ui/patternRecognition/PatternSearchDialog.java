@@ -54,9 +54,6 @@ import javax.swing.border.EmptyBorder;
 import org.eclipse.swt.widgets.Display;
 
 import RefOntoUML.parser.OntoUMLParser;
-import net.menthor.editor.v2.ui.controller.ProjectUIController;
-import net.menthor.patternRecognition.Pattern;
-import net.menthor.patternRecognition.PatternInfo;
 import net.menthor.patternRecognition.PatternList;
 import net.menthor.patternRecognition.kindPattern.KindPattern;
 import net.menthor.patternRecognition.modePattern.ModePattern;
@@ -67,6 +64,9 @@ import net.menthor.patternRecognition.relatorPattern.RelatorPattern;
 import net.menthor.patternRecognition.rolePattern.RolePattern;
 import net.menthor.patternRecognition.subKindPattern.SubKindPattern;
 import net.menthor.patternRecognition.substanceSortalPattern.SubstanceSortalPattern;
+import net.menthor.editor.v2.ui.controller.ProjectUIController;
+import net.menthor.patternRecognition.Pattern;
+import net.menthor.patternRecognition.PatternInfo;
 import net.menthor.swt.Util;
 
 /**
