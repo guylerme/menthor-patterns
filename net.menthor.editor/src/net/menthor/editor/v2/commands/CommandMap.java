@@ -51,6 +51,7 @@ import net.menthor.editor.v2.commanders.RenameCommander;
 import net.menthor.editor.v2.commanders.SelectCommanderMode;
 import net.menthor.editor.v2.commanders.VisibilityCommander;
 import net.menthor.editor.v2.evaluator.SyntaxEvaluator;
+import net.menthor.editor.v2.managers.AbstractionManager;
 import net.menthor.editor.v2.managers.AlloyFeature;
 import net.menthor.editor.v2.managers.AntiPatternManager;
 import net.menthor.editor.v2.managers.FindManager;
@@ -306,6 +307,7 @@ public class CommandMap {
 			syntaxManager();
 			antiPatternManager();
 			patternManager();
+			abstractionManager();
 			owlManager();
 			sbvrManager();
 			alloyManager();
@@ -538,6 +540,11 @@ public class CommandMap {
 	private void patternManager() throws NoSuchMethodException, SecurityException{
 		cmdMap.put(CommandType.SEARCH_FOR_PATTERNS, 
 				new MethodCall(PatternManager.class.getMethod("detectPatterns")));
+	}
+	
+	private void abstractionManager() throws NoSuchMethodException, SecurityException{
+		cmdMap.put(CommandType.SEARCH_FOR_ABSTRACTIONS, 
+				new MethodCall(AbstractionManager.class.getMethod("detectAbstractions")));
 	}
 	
 	private void parthoodManager()throws NoSuchMethodException, SecurityException{

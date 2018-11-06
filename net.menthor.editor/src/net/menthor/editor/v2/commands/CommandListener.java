@@ -24,6 +24,7 @@ import net.menthor.editor.v2.commanders.VisibilityCommander;
 import net.menthor.editor.v2.evaluator.ErrorEvaluator;
 import net.menthor.editor.v2.evaluator.SyntaxEvaluator;
 import net.menthor.editor.v2.evaluator.WarningEvaluator;
+import net.menthor.editor.v2.managers.AbstractionManager;
 import net.menthor.editor.v2.managers.AlloyFeature;
 import net.menthor.editor.v2.managers.AntiPatternManager;
 import net.menthor.editor.v2.managers.FindManager;
@@ -110,6 +111,8 @@ public class CommandListener extends AbstractCommandListener {
 				return methodcall.call(AntiPatternManager.get());
 			} else if (methodcall.getMethod().getDeclaringClass() == PatternManager.class){
 				return methodcall.call(PatternManager.get());	
+			} else if (methodcall.getMethod().getDeclaringClass() == AbstractionManager.class){
+				return methodcall.call(AbstractionManager.get());
 			}else if(methodcall.getMethod().getDeclaringClass() == ChangeCommander.class){
 				return methodcall.call(ChangeCommander.get());
 			}else if(methodcall.getMethod().getDeclaringClass() == ClipboardCommanderMode.class){
