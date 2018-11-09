@@ -14,19 +14,19 @@ import net.menthor.abstractionRecognition.AbstractionOccurrence;
 /*Kind Pattern*/
 public class RelatorAbstractionOccurrence extends AbstractionOccurrence {
 
-	Relator relator;
+	EObject element;
 
 	public static int OPEN = 0, CLOSED = 1;
 
-	public RelatorAbstractionOccurrence(Relator relator, RelatorAbstraction abs) throws Exception {
+	public RelatorAbstractionOccurrence(EObject element, RelatorAbstraction abs) throws Exception {
 		super(abs);
-		this.relator = relator;
+		this.element = element;
 
 	}
 
 	@Override
 	public String toString() {
-		String result = "Relator Abstraction: " + this.relator.getName();
+		String result = "Relator Abstraction";
 
 		return result;
 	}
@@ -35,7 +35,7 @@ public class RelatorAbstractionOccurrence extends AbstractionOccurrence {
 	public OntoUMLParser setSelected() {
 		ArrayList<EObject> selection = new ArrayList<EObject>();
 
-		selection.add(relator);
+		selection.add(element);
 
 		parser.select(selection, true);
 		parser.autoSelectDependencies(OntoUMLParser.SORTAL_ANCESTORS, false);
@@ -46,7 +46,7 @@ public class RelatorAbstractionOccurrence extends AbstractionOccurrence {
 	@Override
 	public String getShortName() {
 
-		return parser.getStringRepresentation(relator);
+		return parser.getStringRepresentation(element);
 	}
 
 	public List<Association> getOnlyAssociations() {
@@ -68,7 +68,7 @@ public class RelatorAbstractionOccurrence extends AbstractionOccurrence {
 	@Override
 	public List<Element> getAllElements() {
 		List<Element> elements = new ArrayList<Element>();
-		elements.add(this.relator);
+		elements.add((Element) this.element);
 		return elements;
 	}
 

@@ -826,6 +826,17 @@ public class OntoUMLParser {
 		return result;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public  <T> Set<EObject> getAllInstancesExcept(java.lang.Class<T> type)
+	{
+		Set<EObject> result = new HashSet<EObject>();		
+		for (EObject o : getElements()) 
+		{
+			if(isSelected(o) && !type.isInstance(o)) result.add(o);
+		}
+		return result;
+	}
+	
 	public List<RefOntoUML.PackageableElement> getAllTypesSorted(){
 		List<RefOntoUML.PackageableElement> types = new ArrayList<RefOntoUML.PackageableElement>();
 		types.addAll(getAllInstances(RefOntoUML.Type.class));

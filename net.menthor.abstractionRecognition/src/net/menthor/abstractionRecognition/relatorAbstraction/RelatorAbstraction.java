@@ -1,6 +1,9 @@
 package net.menthor.abstractionRecognition.relatorAbstraction;
 
 import java.util.ArrayList;
+import java.util.Set;
+
+import org.eclipse.emf.ecore.EObject;
 
 import RefOntoUML.Package;
 import RefOntoUML.Relator;
@@ -59,7 +62,10 @@ public class RelatorAbstraction extends Abstraction<RelatorAbstractionOccurrence
 	@Override
 	public ArrayList<RelatorAbstractionOccurrence> identify() {
 
-		for (Relator r : parser.getAllInstances(Relator.class)) {
+		Set<EObject> lista = parser.getAllInstancesExcept(Relator.class);
+		System.out.println("Teste");
+
+		for (EObject elem : lista) {
 
 			// Aqui já tenho a lista de Kinds.
 			// Preciso gerar as ocorrências
@@ -67,7 +73,7 @@ public class RelatorAbstraction extends Abstraction<RelatorAbstractionOccurrence
 			// Arrumar um jeito de separar isto em outro diagrama
 
 			try {
-				occurrence.add(new RelatorAbstractionOccurrence(r, this));
+				occurrence.add(new RelatorAbstractionOccurrence(elem, this));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

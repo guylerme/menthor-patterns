@@ -403,7 +403,7 @@ public class ExportUIController {
 			writer.newLine();
 
 			for (Element o : occurrencies) {
-				if (o != null) {
+				if( (o != null) &&(o instanceof RefOntoUML.Class)){
 					writer.newLine();
 					writer.write(this.parseToPlantUML(o));
 
