@@ -1,4 +1,4 @@
-package net.menthor.abstractionRecognition.wizard.kindPattern;
+package net.menthor.abstractionRecognition.wizard.relatorAbstraction;
 
 import net.menthor.abstractionRecognition.relatorAbstraction.RelatorAbstractionOccurrence;
 import net.menthor.abstractionRecognition.relatorAbstraction.RelatorAbstraction;

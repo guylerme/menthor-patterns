@@ -1,4 +1,4 @@
-package net.menthor.abstractionRecognition.wizard.kindPattern;
+package net.menthor.abstractionRecognition.wizard.relatorAbstraction;
 
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.swt.SWT;

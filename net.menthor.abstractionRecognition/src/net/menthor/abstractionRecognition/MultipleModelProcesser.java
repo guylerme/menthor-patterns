@@ -14,6 +14,7 @@ import RefOntoUML.PackageableElement;
 import RefOntoUML.RefOntoUMLFactory;
 import RefOntoUML.parser.OntoUMLParser;
 import RefOntoUML.util.RefOntoUMLResourceUtil;
+import net.menthor.abstractionRecognition.nonSortalAbstraction.NonSortalAbstraction;
 import net.menthor.abstractionRecognition.relatorAbstraction.RelatorAbstraction;
 import net.menthor.common.file.TimeHelper;
 import net.menthor.common.ontoumlparser.OntoUMLModelStatistic;
@@ -107,6 +108,7 @@ public class MultipleModelProcesser {
 	private static ArrayList<Abstraction<?>> createApList(OntoUMLParser parser) {
 		ArrayList<Abstraction<?>> apList = new ArrayList<Abstraction<?>>();
 		apList.add(new RelatorAbstraction(parser));
+		apList.add(new NonSortalAbstraction(parser));
 
 
 		return apList;

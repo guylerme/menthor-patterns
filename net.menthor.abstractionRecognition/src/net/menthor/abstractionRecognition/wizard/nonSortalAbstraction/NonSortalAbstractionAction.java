@@ -1,18 +1,18 @@
-package net.menthor.abstractionRecognition.wizard.kindPattern;
+package net.menthor.abstractionRecognition.wizard.nonSortalAbstraction;
 
 import java.text.Normalizer;
 
 import org.eclipse.emf.ecore.EObject;
 
 import RefOntoUML.Association;
-import net.menthor.abstractionRecognition.relatorAbstraction.RelatorAbstractionOccurrence;
+import net.menthor.abstractionRecognition.nonSortalAbstraction.NonSortalAbstractionOccurrence;
 import net.menthor.abstractionRecognition.wizard.AbstractionAction;
 
-public class RelatorAbstractionAction extends AbstractionAction<RelatorAbstractionOccurrence> {
+public class NonSortalAbstractionAction extends AbstractionAction<NonSortalAbstractionOccurrence> {
 
 	public Association assoc;
 
-	public RelatorAbstractionAction(RelatorAbstractionOccurrence ap) {
+	public NonSortalAbstractionAction(NonSortalAbstractionOccurrence ap) {
 		super(ap);
 	}
 

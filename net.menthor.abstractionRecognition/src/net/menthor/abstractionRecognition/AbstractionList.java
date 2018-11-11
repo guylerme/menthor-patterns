@@ -23,6 +23,7 @@ package net.menthor.abstractionRecognition;
 
 import java.util.ArrayList;
 
+import net.menthor.abstractionRecognition.nonSortalAbstraction.NonSortalAbstraction;
 import net.menthor.abstractionRecognition.relatorAbstraction.RelatorAbstraction;
 
 /**
@@ -33,14 +34,14 @@ import net.menthor.abstractionRecognition.relatorAbstraction.RelatorAbstraction;
  */
 
 public class AbstractionList {
-	
-	private RelatorAbstraction relatorAbstraction;
-	
 
-	public AbstractionList(RelatorAbstraction relatorAbstraction) {
+	private RelatorAbstraction relatorAbstraction;
+	private NonSortalAbstraction nonSortalAbstraction;
+
+	public AbstractionList(RelatorAbstraction relatorAbstraction, NonSortalAbstraction nonSortalAbstraction) {
 
 		this.relatorAbstraction = relatorAbstraction;
-	
+		this.nonSortalAbstraction = nonSortalAbstraction;
 
 	}
 
@@ -51,12 +52,12 @@ public class AbstractionList {
 	public ArrayList<AbstractionOccurrence> getAll() {
 		ArrayList<AbstractionOccurrence> result = new ArrayList<AbstractionOccurrence>();
 		result.addAll(relatorAbstraction.getOccurrences());
-		
+		result.addAll(nonSortalAbstraction.getOccurrences());
 
 		return result;
 	}
 
-	public RelatorAbstraction getKindPattern() {
+	public RelatorAbstraction getRelatorAbstraction() {
 		return relatorAbstraction;
 	}
 
@@ -64,10 +65,12 @@ public class AbstractionList {
 		this.relatorAbstraction = relatorAbstraction;
 	}
 
+	public NonSortalAbstraction getNonSortalAbstraction() {
+		return nonSortalAbstraction;
+	}
 
-	
-
-
-	
+	public void setNonSortalAbstraction(NonSortalAbstraction nonSortalAbstraction) {
+		this.nonSortalAbstraction = nonSortalAbstraction;
+	}
 
 }

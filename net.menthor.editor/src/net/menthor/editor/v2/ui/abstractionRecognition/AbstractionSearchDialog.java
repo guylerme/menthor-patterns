@@ -58,6 +58,7 @@ import net.menthor.abstractionRecognition.Abstraction;
 import net.menthor.abstractionRecognition.AbstractionInfo;
 import net.menthor.abstractionRecognition.AbstractionList;
 import net.menthor.abstractionRecognition.relatorAbstraction.RelatorAbstraction;
+import net.menthor.abstractionRecognition.nonSortalAbstraction.NonSortalAbstraction;
 import net.menthor.editor.v2.ui.controller.ProjectUIController;
 import net.menthor.swt.Util;
 
@@ -126,6 +127,7 @@ public class AbstractionSearchDialog extends JDialog {
 
 	private ArrayList<AbstractionTask> allTasks = new ArrayList<AbstractionTask>();
 	private JCheckBox cbxRelatorAbstraction;
+	private JCheckBox cbxNonSortalAbstraction;
 	ArrayList<JCheckBox> cbxList = new ArrayList<JCheckBox>();
 
 	private JButton closeButton;
@@ -136,11 +138,15 @@ public class AbstractionSearchDialog extends JDialog {
 	private int incrementalValue;
 
 	private AbstractionTask RelatorAbstractionTask;
+	private AbstractionTask NonSortalAbstractionTask;
 
 	private CountDownLatch latch;
 	ArrayList<JButton> lblIcoList = new ArrayList<JButton>();
 	private JButton lblRelatorAbstractionIco;
 	private JLabel lblRelatorAbstractionRes;
+
+	private JButton lblNonSortalAbstractionIco;
+	private JLabel lblNonSortalAbstractionRes;
 
 	ArrayList<JLabel> lblResultList = new ArrayList<JLabel>();
 
@@ -281,13 +287,29 @@ public class AbstractionSearchDialog extends JDialog {
 		lblRelatorAbstractionIco.setBorderPainted(false);
 		cbxRelatorAbstraction = new JCheckBox(RelatorAbstraction.getAbstractionInfo().getAcronym() + ": "
 				+ RelatorAbstraction.getAbstractionInfo().getName());
-		cbxRelatorAbstraction.setBounds(33, 23, 195, 23);
+		cbxRelatorAbstraction.setBounds(38, 23, 258, 23);
 		cbxRelatorAbstraction.setPreferredSize(new Dimension(230, 20));
 		cbxRelatorAbstraction.setBackground(UIManager.getColor("Panel.background"));
 		lblRelatorAbstractionRes = new JLabel("");
-		lblRelatorAbstractionRes.setBounds(240, 20, 150, 20);
+		lblRelatorAbstractionRes.setBounds(324, 20, 66, 20);
 		lblRelatorAbstractionRes.setPreferredSize(new Dimension(110, 20));
 		lblRelatorAbstractionRes.setForeground(Color.BLUE);
+
+		lblNonSortalAbstractionIco = new JButton();
+		lblNonSortalAbstractionIco.setBounds(6, 52, 20, 17);
+		lblNonSortalAbstractionIco.setPreferredSize(new Dimension(20, 20));
+		lblNonSortalAbstractionIco.setOpaque(false);
+		lblNonSortalAbstractionIco.setContentAreaFilled(false);
+		lblNonSortalAbstractionIco.setBorderPainted(false);
+		cbxNonSortalAbstraction = new JCheckBox(NonSortalAbstraction.getAbstractionInfo().getAcronym() + ": "
+				+ NonSortalAbstraction.getAbstractionInfo().getName());
+		cbxNonSortalAbstraction.setBounds(38, 52, 284, 23);
+		cbxNonSortalAbstraction.setPreferredSize(new Dimension(230, 20));
+		cbxNonSortalAbstraction.setBackground(UIManager.getColor("Panel.background"));
+		lblNonSortalAbstractionRes = new JLabel("");
+		lblNonSortalAbstractionRes.setBounds(334, 52, 56, 20);
+		lblNonSortalAbstractionRes.setPreferredSize(new Dimension(110, 20));
+		lblNonSortalAbstractionRes.setForeground(Color.BLUE);
 
 		JPanel buttonPane = new JPanel();
 		getContentPane().add(buttonPane, BorderLayout.CENTER);
@@ -318,10 +340,13 @@ public class AbstractionSearchDialog extends JDialog {
 		buttonPane.setLayout(gl_buttonPane);
 
 		cbxList.add(cbxRelatorAbstraction);
+		cbxList.add(cbxNonSortalAbstraction);
 
 		lblIcoList.add(lblRelatorAbstractionIco);
+		lblIcoList.add(lblNonSortalAbstractionIco);
 
 		lblResultList.add(lblRelatorAbstractionRes);
+		lblResultList.add(lblNonSortalAbstractionRes);
 
 		contentPanel.setLayout(null);
 		contentPanel.add(lblChooseWhichPattern);
@@ -330,10 +355,13 @@ public class AbstractionSearchDialog extends JDialog {
 		leftPanel.setLayout(null);
 
 		leftPanel.add(lblRelatorAbstractionIco);
+		leftPanel.add(lblNonSortalAbstractionIco);
 
 		leftPanel.add(cbxRelatorAbstraction);
+		leftPanel.add(cbxNonSortalAbstraction);
 
 		leftPanel.add(lblRelatorAbstractionRes);
+		leftPanel.add(lblNonSortalAbstractionRes);
 		contentPanel.add(rightPanel);
 		contentPanel.add(panel_1);
 
@@ -430,6 +458,7 @@ public class AbstractionSearchDialog extends JDialog {
 				return;
 
 			RelatorAbstraction relatorAbstraction = new RelatorAbstraction(parser);
+			NonSortalAbstraction nonSortalAbstraction = new NonSortalAbstraction(parser);
 
 			incrementalValue = 100;
 
@@ -444,8 +473,12 @@ public class AbstractionSearchDialog extends JDialog {
 			if (relatorAbstractionIsSelected())
 				executeAbstraction(RelatorAbstractionTask, relatorAbstraction, RelatorAbstraction.getAbstractionInfo(),
 						lblRelatorAbstractionRes, cbxRelatorAbstraction, incrementalValue, latch, executor, preLatch);
+			if (nonSortalAbstractionIsSelected())
+				executeAbstraction(NonSortalAbstractionTask, nonSortalAbstraction,
+						NonSortalAbstraction.getAbstractionInfo(), lblNonSortalAbstractionRes, cbxNonSortalAbstraction,
+						incrementalValue, latch, executor, preLatch);
 
-			abstractionRecognitionList = new AbstractionList(relatorAbstraction);
+			abstractionRecognitionList = new AbstractionList(relatorAbstraction, nonSortalAbstraction);
 
 			transferResult(abstractionRecognitionList);
 
@@ -477,6 +510,10 @@ public class AbstractionSearchDialog extends JDialog {
 
 	public Boolean relatorAbstractionIsSelected() {
 		return cbxRelatorAbstraction.isSelected();
+	}
+
+	public Boolean nonSortalAbstractionIsSelected() {
+		return cbxNonSortalAbstraction.isSelected();
 	}
 
 	/** open the result which in turn can call the wizards */

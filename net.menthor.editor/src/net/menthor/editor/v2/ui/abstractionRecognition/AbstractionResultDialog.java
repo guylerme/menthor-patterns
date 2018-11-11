@@ -58,9 +58,12 @@ import org.eclipse.wb.swt.layout.grouplayout.LayoutStyle;
 import net.menthor.abstractionRecognition.Abstraction;
 import net.menthor.abstractionRecognition.AbstractionList;
 import net.menthor.abstractionRecognition.AbstractionOccurrence;
+import net.menthor.abstractionRecognition.nonSortalAbstraction.NonSortalAbstraction;
+import net.menthor.abstractionRecognition.nonSortalAbstraction.NonSortalAbstractionOccurrence;
 import net.menthor.abstractionRecognition.relatorAbstraction.RelatorAbstraction;
 import net.menthor.abstractionRecognition.relatorAbstraction.RelatorAbstractionOccurrence;
-import net.menthor.abstractionRecognition.wizard.kindPattern.RelatorAbstractionWizard;
+import net.menthor.abstractionRecognition.wizard.nonSortalAbstraction.NonSortalAbstractionWizard;
+import net.menthor.abstractionRecognition.wizard.relatorAbstraction.RelatorAbstractionWizard;
 import net.menthor.editor.v2.ui.controller.ProjectUIController;
 
 /**
@@ -97,7 +100,8 @@ public class AbstractionResultDialog extends Dialog {
 		}
 	}
 
-	public AbstractionResultDialog(Shell parentShell, List<AbstractionOccurrence> result, JFrame frame, Display display) {
+	public AbstractionResultDialog(Shell parentShell, List<AbstractionOccurrence> result, JFrame frame,
+			Display display) {
 		super(parentShell);
 		this.result = new ArrayList<AbstractionOccurrence>(result);
 		this.allOccurrences = new ArrayList<AbstractionOccurrence>(result);
@@ -133,46 +137,32 @@ public class AbstractionResultDialog extends Dialog {
 		createPartControl(container);
 
 		GroupLayout gl_container = new GroupLayout(container);
-		gl_container
-				.setHorizontalGroup(gl_container.createParallelGroup(GroupLayout.LEADING)
-						.add(gl_container.createSequentialGroup()
-								.addContainerGap().add(
-										gl_container
-												.createParallelGroup(GroupLayout.LEADING).add(
-														gl_container.createSequentialGroup().add(searchLabel)
-																.addPreferredGap(LayoutStyle.RELATED)
-																.add(searchText, GroupLayout.DEFAULT_SIZE, 285,
-																		Short.MAX_VALUE)
-																.add(66)
-																.add(btnNewDiagram, GroupLayout.PREFERRED_SIZE, 120,
-																		GroupLayout.PREFERRED_SIZE)
-																.add(btnGenerateHtml, GroupLayout.PREFERRED_SIZE, 120,
-																		GroupLayout.PREFERRED_SIZE)
-																.add(btnGeneratePlantUML, GroupLayout.PREFERRED_SIZE,
-																		120, GroupLayout.PREFERRED_SIZE)
-																.addPreferredGap(LayoutStyle.RELATED))
-												.add(table, GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
-												.add(feedBackLabel, GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE))
-								.addContainerGap()));
-		gl_container
-				.setVerticalGroup(gl_container.createParallelGroup(GroupLayout.LEADING)
-						.add(gl_container.createSequentialGroup().addContainerGap()
-								.add(gl_container.createParallelGroup(GroupLayout.LEADING, false)
-										.add(searchLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
-										.add(gl_container.createParallelGroup(GroupLayout.BASELINE)
-												.add(searchText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE)
+		gl_container.setHorizontalGroup(gl_container.createParallelGroup(GroupLayout.LEADING).add(gl_container
+				.createSequentialGroup().addContainerGap()
+				.add(gl_container.createParallelGroup(GroupLayout.LEADING)
+						.add(gl_container.createSequentialGroup().add(searchLabel).addPreferredGap(LayoutStyle.RELATED)
+								.add(searchText, GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE).add(66)
+								.add(btnNewDiagram, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+								.add(btnGenerateHtml, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+								.add(btnGeneratePlantUML, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(LayoutStyle.RELATED))
+						.add(table, GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
+						.add(feedBackLabel, GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE))
+				.addContainerGap()));
+		gl_container.setVerticalGroup(gl_container.createParallelGroup(GroupLayout.LEADING).add(gl_container
+				.createSequentialGroup().addContainerGap()
+				.add(gl_container.createParallelGroup(GroupLayout.LEADING, false)
+						.add(searchLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.add(gl_container.createParallelGroup(GroupLayout.BASELINE).add(searchText,
+								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 
-												.add(btnNewDiagram, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
-														Short.MAX_VALUE)
-												.add(btnGenerateHtml, GroupLayout.DEFAULT_SIZE,
-														GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.add(btnGeneratePlantUML, GroupLayout.DEFAULT_SIZE,
-														GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-								.addPreferredGap(LayoutStyle.UNRELATED)
-								.add(table, GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
-								.addPreferredGap(LayoutStyle.RELATED).add(feedBackLabel).add(15)));
+								.add(btnNewDiagram, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.add(btnGenerateHtml, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
+								.add(btnGeneratePlantUML, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)))
+				.addPreferredGap(LayoutStyle.UNRELATED).add(table, GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
+				.addPreferredGap(LayoutStyle.RELATED).add(feedBackLabel).add(15)));
 		container.setLayout(gl_container);
 
 		return container;
@@ -244,7 +234,8 @@ public class AbstractionResultDialog extends Dialog {
 
 					occurrencies = new ArrayList<AbstractionOccurrence>();
 
-					String padrao = ((AbstractionOccurrence) viewer.getElementAt(i)).getAbstraction().info().getAcronym();
+					String padrao = ((AbstractionOccurrence) viewer.getElementAt(i)).getAbstraction().info()
+							.getAcronym();
 
 					for (AbstractionOccurrence o : result) {
 						if (o.getAbstraction().info().getAcronym().equalsIgnoreCase(padrao)) {
@@ -280,7 +271,8 @@ public class AbstractionResultDialog extends Dialog {
 
 					occurrencies = new ArrayList<AbstractionOccurrence>();
 
-					String padrao = ((AbstractionOccurrence) viewer.getElementAt(i)).getAbstraction().info().getAcronym();
+					String padrao = ((AbstractionOccurrence) viewer.getElementAt(i)).getAbstraction().info()
+							.getAcronym();
 
 					for (AbstractionOccurrence o : result) {
 						if (o.getAbstraction().info().getAcronym().equalsIgnoreCase(padrao)) {
@@ -316,7 +308,8 @@ public class AbstractionResultDialog extends Dialog {
 
 					occurrencies = new ArrayList<AbstractionOccurrence>();
 
-					String padrao = ((AbstractionOccurrence) viewer.getElementAt(i)).getAbstraction().info().getAcronym();
+					String padrao = ((AbstractionOccurrence) viewer.getElementAt(i)).getAbstraction().info()
+							.getAcronym();
 
 					for (AbstractionOccurrence o : result) {
 						if (o.getAbstraction().info().getAcronym().equalsIgnoreCase(padrao)) {
@@ -435,7 +428,9 @@ public class AbstractionResultDialog extends Dialog {
 			public String getText(Object element) {
 				if (element instanceof RelatorAbstractionOccurrence)
 					return RelatorAbstraction.getAbstractionInfo().getAcronym();
-				
+				if (element instanceof NonSortalAbstractionOccurrence)
+					return NonSortalAbstraction.getAbstractionInfo().getAcronym();
+
 				return "<error>";
 			}
 		});
@@ -488,8 +483,12 @@ public class AbstractionResultDialog extends Dialog {
 		WizardDialog wizardDialog = null;
 
 		if (apOccur instanceof RelatorAbstractionOccurrence)
-			wizardDialog = new WizardDialog(new Shell(d), new RelatorAbstractionWizard((RelatorAbstractionOccurrence) apOccur));
-		
+			wizardDialog = new WizardDialog(new Shell(d),
+					new RelatorAbstractionWizard((RelatorAbstractionOccurrence) apOccur));
+		if (apOccur instanceof NonSortalAbstractionOccurrence)
+			wizardDialog = new WizardDialog(new Shell(d),
+					new NonSortalAbstractionWizard((NonSortalAbstractionOccurrence) apOccur));
+
 		return wizardDialog;
 	}
 }
